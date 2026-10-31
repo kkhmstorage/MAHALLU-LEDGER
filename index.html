@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>മഹല്ല് ലെഡ്ജർ | Mahal Ledger Android App</title>
+    <meta name="description" content="മഹല്ല് പ്രതിമാസ വരിസംഖ്യ, അഡീഷണൽ ഫണ്ടുകൾ, കുടുബങ്ങളുടെ വിവരങ്ങൾ സുതാര്യമായി കൈകാര്യം ചെയ്യാനുള്ള ആൻഡ്രോയിഡ് ആപ്ലിക്കേഷൻ.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #15803d;
+            --primary-dark: #166534;
+            --primary-light: #dcfce7;
+            --accent: #ca8a04;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Manrope', 'Noto Sans Malayalam', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #14532d 0%, #166534 50%, #15803d 100%);
+            color: white;
+            padding: 60px 20px 80px;
+            text-align: center;
+            position: relative;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fef08a;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+        .subtitle {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 650px;
+            margin: 0 auto 30px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            color: #166534;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 16px 36px;
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+            transition: all 0.2s ease;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+            background: #f0fdf4;
+        }
+        .cta-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        .version-tag {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 50px;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .guide-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            margin-bottom: 50px;
+        }
+        .guide-box h2 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .steps-list {
+            padding-left: 20px;
+        }
+        .steps-list li {
+            margin-bottom: 14px;
+            color: var(--text-muted);
+        }
+        .steps-list li strong {
+            color: var(--text-main);
+        }
+        .info-alert {
+            background: #fefce8;
+            border-left: 4px solid var(--accent);
+            padding: 16px 20px;
+            border-radius: 0 10px 10px 0;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #854d0e;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <span class="badge">Official Android Application</span>
+            <h1>മഹല്ല് ലെഡ്ജർ (Mahal Ledger)</h1>
+            <p class="subtitle">
+                മഹല്ല് പ്രതിമാസ വരിസംഖ്യ, പ്രത്യേക ഫണ്ടുകൾ, കുടുംബങ്ങളുടെ ഡാറ്റാബേസ്, സുതാര്യമായ ഓഡിറ്റ് എന്നിവ ഒരു കുടക്കീഴിൽ.
+            </p>
+            <div>
+                <a href="https://github.com/kkhmstorage/MAHALLU-LEDGER/releases/latest" class="cta-btn" id="downloadBtn">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download APK (ആൻഡ്രോയിഡ് ആപ്പ്)
+                </a>
+            </div>
+            <div class="version-tag">Version 1.0 • Android 8.0 & Above • Safe & Direct Install</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Feature Cards -->
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🕌</div>
+                <h3>പ്രതിമാസ വരിസംഖ്യ (Monthly Vari)</h3>
+                <p>ഓരോ കുടുംബത്തിന്റെയും പ്രതിമാസ കുടിശ്ശിക കൃത്യമായി രേഖപ്പെടുത്താനും രസീത് നൽകാനും വാട്സാപ്പ് വഴി ഓർമ്മപ്പെടുത്തൽ അയക്കാനും സാധിക്കുന്നു.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤝</div>
+                <h3>അഡീഷണൽ കളക്ഷൻ (Special Funds)</h3>
+                <p>മദ്റസ നിർമ്മാണം, മെഡിക്കൽ റിലീഫ്, റമദാൻ കിറ്റ് തുടങ്ങി പ്രത്യേക ഫണ്ടുകൾ സബ് അഡ്മിന് ഉണ്ടാക്കാനും വരിസംഖ്യ പിരിക്കാനും സാധിക്കുന്നു.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">👨‍👩‍👧‍👦</div>
+                <h3>കുടുംബ വിവര ശേഖരണം (Family Registry)</h3>
+                <p>സബ് അഡ്മിൻ കുടുംബത്തെ ആഡ് ചെയ്താൽ, കുടുംബങ്ങൾക്ക് OTP വഴി ലോഗിൻ ചെയ്ത് തങ്ങളുടെ പ്രൊഫൈൽ എളുപ്പത്തിൽ പൂർത്തിയാക്കാം. സബ് അഡ്മിൻ വെരിഫിക്കേഷനും ലഭ്യമാണ്.</p>
+            </div>
+        </div>
+
+        <!-- Installation Guide -->
+        <section class="guide-box">
+            <h2>📱 ഫോണിൽ എങ്ങനെ ഇൻസ്റ്റാൾ ചെയ്യാം?</h2>
+            <ol class="steps-list">
+                <li>മുകളിലുള്ള <strong>"Download APK"</strong> ബട്ടൺ ക്ലിക്ക് ചെയ്ത് APK ഫയൽ ഫോണിലേക്ക് ഡൗൺലോഡ് ചെയ്യുക.</li>
+                <li>ഡൗൺലോഡ് ചെയ്ത ഫയൽ ഓപ്പൺ ചെയ്യുമ്പോൾ <em>"Install unknown apps"</em> അല്ലെങ്കിൽ <em>"Allow from this source"</em> എന്ന് ചോദിച്ചാൽ <strong>Allow (സമ്മതം)</strong> നൽകുക.</li>
+                <li>തുടർന്ന് <strong>Install</strong> ബട്ടൺ ക്ലിക്ക് ചെയ്യുക.</li>
+                <li>ആപ്പ് ഓപ്പൺ ചെയ്ത് സബ് അഡ്മിൻ നൽകിയ ഫോൺ നമ്പർ അടിച്ച് ലഭിക്കുന്ന <strong>OTP</strong> വഴി ലോഗിൻ ചെയ്യുക.</li>
+            </ol>
+
+            <div class="info-alert">
+                <strong>ശ്രദ്ധിക്കുക:</strong> ഈ ആപ്ലിക്കേഷൻ ആൻഡ്രോയിഡ് ഫോണുകൾക്ക് വേണ്ടിയുള്ള മൊബൈൽ ആപ്പാണ്. ബ്രൗസറിൽ നേരിട്ട് വെബ്സൈറ്റായി പ്രവർത്തിക്കില്ല. ഫോണിൽ APK ഇൻസ്റ്റാൾ ചെയ്ത് ഉപയോഗിക്കുക.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 മഹല്ല് ലെഡ്ജർ (Mahal Ledger) • KKHM Islamic & Arts College Markaz Valanchery</p>
+    </footer>
+
+</body>
+</html>
