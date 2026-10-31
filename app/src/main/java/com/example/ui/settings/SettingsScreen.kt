@@ -65,8 +65,7 @@ import com.example.ui.UserRole
 import com.example.ui.components.CreateMahalDialog
 import com.example.ui.components.MemberOtpLoginDialog
 import com.example.ui.components.RoleSwitcherDialog
-import com.example.ui.components.SubAdminLoginDialog
-import com.example.ui.components.SuperAdminLoginDialog
+import com.example.ui.components.UnifiedAdminLoginDialog
 import com.example.ui.theme.CashInflowContainer
 import com.example.ui.theme.CashInflowGreen
 import com.example.ui.theme.CashOutflowContainer
@@ -102,8 +101,7 @@ fun SettingsScreen(
     val context = LocalContext.current
 
     var showRoleSwitcherDialog by remember { mutableStateOf(false) }
-    var showSubAdminLoginDialog by remember { mutableStateOf(false) }
-    var showSuperAdminLoginDialog by remember { mutableStateOf(false) }
+    var showAdminLoginDialog by remember { mutableStateOf(false) }
     var showMemberOtpDialog by remember { mutableStateOf(false) }
     var showCreateMahalDialog by remember { mutableStateOf(false) }
     var showCommunityLogoDialog by remember { mutableStateOf(false) }
@@ -382,12 +380,12 @@ fun SettingsScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "കമ്മ്യൂണിറ്റി ലോഗോ & ബ്രാൻഡിംഗ്",
+                                    text = "Community Logo & Branding",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = "ആപ്പ് തുറക്കുമ്പോൾ സൂം ഔട്ട് ആയി കാണിക്കുന്ന ലോഗോ",
+                                    text = "Emblem displayed on app splash screen and headers",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -411,7 +409,7 @@ fun SettingsScreen(
                         ) {
                             Icon(imageVector = Icons.Default.Image, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("കമ്മ്യൂണിറ്റി ലോഗോ അപ്‌ലോഡ് ചെയ്യുക (Upload Logo)")
+                            Text("Upload Community Logo")
                         }
                     }
                 }
@@ -432,12 +430,12 @@ fun SettingsScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "ബാങ്ക് അക്കൗണ്ട് & UPI പേയ്‌മെന്റ്",
+                                    text = "Bank Account & UPI Payments",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = "കുടുംബങ്ങൾക്ക് ഓൺലൈനായി വരിസംഖ്യ അടയ്ക്കാനുള്ള വിവരങ്ങൾ",
+                                    text = "Configure details for families to pay subscriptions online",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -459,7 +457,7 @@ fun SettingsScreen(
                         ) {
                             Icon(imageVector = Icons.Default.AccountBalance, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("ബാങ്ക് & QR സ്കാനർ ക്രമീകരിക്കുക (Edit Bank & UPI)")
+                            Text("Configure Bank & UPI Details")
                         }
                     }
                 }
@@ -479,7 +477,7 @@ fun SettingsScreen(
                         )
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        DetailRow(label = "Mahal Name", value = activeMahal?.name ?: "Al-Noor Mahal")
+                        DetailRow(label = "Mahal Name", value = activeMahal?.name ?: "Mahal Ledger")
                         DetailRow(label = "Unique Mahal Code", value = activeMahal?.mahalCode ?: "ALNOOR")
                         DetailRow(label = "Sub-Admin Username", value = activeMahal?.subAdminUsername ?: "alnoor_admin")
                         DetailRow(label = "Location", value = activeMahal?.location ?: "Kerala")
@@ -574,7 +572,7 @@ fun SettingsScreen(
             }
         }
 
-        // Section C: How to Distribute & Scale (ആളുകളിലേക്ക് എത്തിക്കാനുള്ള വഴി)
+        // Section C: How to Distribute & Scale (Distribution Guide)
         item {
             Card(
                 shape = RoundedCornerShape(16.dp),
@@ -662,7 +660,7 @@ fun SettingsScreen(
 
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = "ഗിറ്റ്ഹബ്ബിൽ നാം അപ്‌ഡേഷനുകൾ നടത്തുമ്പോൾ (version.json & APK), ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകളിൽ തത്സമയം നോട്ടിഫിക്കേഷൻ ലഭിക്കുകയും പുതിയ ഫീച്ചറുകൾ ലഭ്യമാവുകയും ചെയ്യുന്നു.",
+                        text = "When new updates are published to GitHub (version.json & APK), installed apps automatically receive update alerts and can update seamlessly.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         lineHeight = 18.sp
@@ -686,7 +684,7 @@ fun SettingsScreen(
                                     color = MaterialTheme.colorScheme.onPrimary
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text("പരിശോധിക്കുന്നു...", fontSize = 12.sp)
+                                Text("Checking...", fontSize = 12.sp)
                             } else {
                                 Icon(Icons.Default.SystemUpdate, contentDescription = null, modifier = Modifier.size(16.dp))
                                 Spacer(modifier = Modifier.width(6.dp))
@@ -719,29 +717,27 @@ fun SettingsScreen(
         RoleSwitcherDialog(
             currentRole = role,
             onDismiss = { showRoleSwitcherDialog = false },
-            onSelectSubAdminLogin = { showSubAdminLoginDialog = true },
+            onSelectAdminLogin = { showAdminLoginDialog = true },
             onSelectMemberOtpLogin = { showMemberOtpDialog = true },
-            onSelectSuperAdminLogin = { showSuperAdminLoginDialog = true }
+            onLogout = { viewModel.logout() }
         )
     }
 
-    if (showSubAdminLoginDialog) {
-        SubAdminLoginDialog(
-            onDismiss = { showSubAdminLoginDialog = false },
+    if (showAdminLoginDialog) {
+        UnifiedAdminLoginDialog(
+            onDismiss = { showAdminLoginDialog = false },
             onLogin = { username, password ->
-                viewModel.loginSubAdmin(username, password) { success, _ ->
-                    if (success) showSubAdminLoginDialog = false
-                }
-            }
-        )
-    }
-
-    if (showSuperAdminLoginDialog) {
-        SuperAdminLoginDialog(
-            onDismiss = { showSuperAdminLoginDialog = false },
-            onLogin = { username, password ->
-                viewModel.loginSuperAdmin(username, password) { success ->
-                    if (success) showSuperAdminLoginDialog = false
+                val user = username.trim()
+                val pass = password.trim()
+                if ((user.equals("AMINZAD", ignoreCase = true) && pass == "A4aminzad") ||
+                    (user.equals("admin", ignoreCase = true) && pass == "9999")) {
+                    viewModel.loginSuperAdmin(user, pass) { success ->
+                        if (success) showAdminLoginDialog = false
+                    }
+                } else {
+                    viewModel.loginSubAdmin(user, pass) { success, _ ->
+                        if (success) showAdminLoginDialog = false
+                    }
                 }
             }
         )

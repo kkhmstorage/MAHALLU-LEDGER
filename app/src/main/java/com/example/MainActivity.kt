@@ -65,8 +65,7 @@ import com.example.ui.UserRole
 import com.example.ui.components.DigitalReceiptDialog
 import com.example.ui.components.MemberOtpLoginDialog
 import com.example.ui.components.RoleSwitcherDialog
-import com.example.ui.components.SubAdminLoginDialog
-import com.example.ui.components.SuperAdminLoginDialog
+import com.example.ui.components.UnifiedAdminLoginDialog
 import com.example.ui.dashboard.DashboardScreen
 import com.example.ui.ledger.LedgerScreen
 import com.example.ui.settings.SettingsScreen
@@ -87,6 +86,7 @@ import com.example.ui.auth.CommunityLogoEmblem
 import com.example.ui.auth.LoginScreen
 import com.example.ui.components.AppUpdateDialog
 import com.example.ui.subscriptions.FamilyDueAlertPopUp
+import com.example.ui.superadmin.SuperAdminPortalScreen
 import com.example.util.AppUpdateChecker
 import kotlinx.coroutines.flow.collectLatest
 
@@ -97,7 +97,7 @@ enum class MainTab(
     val testTag: String
 ) {
     DASHBOARD("Overview", Icons.Filled.Dashboard, Icons.Outlined.Dashboard, "tab_dashboard"),
-    SUBSCRIPTIONS("Vari (വരി)", Icons.Filled.Payments, Icons.Outlined.Payments, "tab_subscriptions"),
+    SUBSCRIPTIONS("Subscriptions", Icons.Filled.Payments, Icons.Outlined.Payments, "tab_subscriptions"),
     LEDGER("Ledger", Icons.Filled.AccountBalance, Icons.Outlined.AccountBalance, "tab_ledger"),
     TRANSPARENCY("Audit", Icons.Filled.VerifiedUser, Icons.Outlined.VerifiedUser, "tab_transparency"),
     SETTINGS("Settings", Icons.Filled.Settings, Icons.Outlined.Settings, "tab_settings")
@@ -122,8 +122,7 @@ fun MahalLedgerApp(
 ) {
     var selectedTab by remember { mutableStateOf(MainTab.DASHBOARD) }
     var showRoleSwitcherDialog by remember { mutableStateOf(false) }
-    var showSubAdminLoginDialog by remember { mutableStateOf(false) }
-    var showSuperAdminLoginDialog by remember { mutableStateOf(false) }
+    var showAdminLoginDialog by remember { mutableStateOf(false) }
     var showMemberOtpDialog by remember { mutableStateOf(false) }
 
     val role by viewModel.currentRole.collectAsState()
@@ -157,6 +156,12 @@ fun MahalLedgerApp(
             viewModel = viewModel,
             activeMahal = activeMahal
         )
+        return
+    }
+
+    // Super-Admin Portal: Shows dedicated list of Sub-Admins, credentials, and add option
+    if (role == UserRole.SUPER_ADMIN && !isSuperAdminManaging) {
+        SuperAdminPortalScreen(viewModel = viewModel)
         return
     }
 
@@ -365,7 +370,7 @@ fun MahalLedgerApp(
                             )
                         ) {
                             Text(
-                                text = "Exit / തിരികെ",
+                                text = "Exit to Master Portal",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.labelSmall
                             )
@@ -408,29 +413,27 @@ fun MahalLedgerApp(
         RoleSwitcherDialog(
             currentRole = role,
             onDismiss = { showRoleSwitcherDialog = false },
-            onSelectSubAdminLogin = { showSubAdminLoginDialog = true },
+            onSelectAdminLogin = { showAdminLoginDialog = true },
             onSelectMemberOtpLogin = { showMemberOtpDialog = true },
-            onSelectSuperAdminLogin = { showSuperAdminLoginDialog = true }
+            onLogout = { viewModel.logout() }
         )
     }
 
-    if (showSubAdminLoginDialog) {
-        SubAdminLoginDialog(
-            onDismiss = { showSubAdminLoginDialog = false },
+    if (showAdminLoginDialog) {
+        UnifiedAdminLoginDialog(
+            onDismiss = { showAdminLoginDialog = false },
             onLogin = { username, password ->
-                viewModel.loginSubAdmin(username, password) { success, _ ->
-                    if (success) showSubAdminLoginDialog = false
-                }
-            }
-        )
-    }
-
-    if (showSuperAdminLoginDialog) {
-        SuperAdminLoginDialog(
-            onDismiss = { showSuperAdminLoginDialog = false },
-            onLogin = { username, password ->
-                viewModel.loginSuperAdmin(username, password) { success ->
-                    if (success) showSuperAdminLoginDialog = false
+                val user = username.trim()
+                val pass = password.trim()
+                if ((user.equals("AMINZAD", ignoreCase = true) && pass == "A4aminzad") ||
+                    (user.equals("admin", ignoreCase = true) && pass == "9999")) {
+                    viewModel.loginSuperAdmin(user, pass) { success ->
+                        if (success) showAdminLoginDialog = false
+                    }
+                } else {
+                    viewModel.loginSubAdmin(user, pass) { success, _ ->
+                        if (success) showAdminLoginDialog = false
+                    }
                 }
             }
         )

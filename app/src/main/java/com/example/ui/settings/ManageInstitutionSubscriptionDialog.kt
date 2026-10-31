@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Diamond
 import androidx.compose.material.icons.filled.Login
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -87,7 +86,7 @@ fun ManageInstitutionSubscriptionDialog(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "സബ്സ്ക്രിപ്ഷൻ കൺട്രോൾ • Code: ${community.mahalCode}",
+                            text = "Subscription Control • Code: ${community.mahalCode}",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -114,13 +113,13 @@ fun ManageInstitutionSubscriptionDialog(
                 ) {
                     Icon(imageVector = Icons.Default.Login, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("സബ് അഡ്മിനായി പ്രവേശിക്കുക (Open Workspace)", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    Text("Enter as Sub-Admin (Open Workspace)", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 }
 
                 Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
-                    text = "സബ്സ്ക്രിപ്ഷൻ പ്ലാൻ (Plan Type):",
+                    text = "Subscription Plan:",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -143,7 +142,7 @@ fun ManageInstitutionSubscriptionDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "സബ്സ്ക്രിപ്ഷൻ സ്റ്റാറ്റസ് (Status):",
+                    text = "Subscription Status:",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -176,13 +175,13 @@ fun ManageInstitutionSubscriptionDialog(
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
-                            text = "നിലവിലെ വാലിഡിറ്റി: $formattedExpiry",
+                            text = "Current Expiry: $formattedExpiry",
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.SemiBold
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "വാലിഡിറ്റി നീട്ടുക (Extend Validity):",
+                            text = "Extend Validity Period:",
                             style = MaterialTheme.typography.labelSmall
                         )
                         Spacer(modifier = Modifier.height(6.dp))
@@ -211,7 +210,7 @@ fun ManageInstitutionSubscriptionDialog(
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("റദ്ദാക്കുക")
+                        Text("Cancel")
                     }
 
                     Button(
@@ -225,7 +224,7 @@ fun ManageInstitutionSubscriptionDialog(
                             .testTag("save_subscription_button"),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("സേവ് ചെയ്യുക", fontWeight = FontWeight.Bold)
+                        Text("Save Changes", fontWeight = FontWeight.Bold)
                     }
                 }
             }

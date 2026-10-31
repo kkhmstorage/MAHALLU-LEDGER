@@ -83,13 +83,13 @@ fun MemberProfileCompletionDialog(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "കുടുംബ വിവരങ്ങൾ നൽകുക",
+                            text = "Complete Family Profile",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
-                            text = "Family Profile Completion (Optional)",
+                            text = "Profile details for Mahal records (Optional)",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -127,7 +127,7 @@ fun MemberProfileCompletionDialog(
                             modifier = Modifier.padding(top = 2.dp, end = 8.dp)
                         )
                         Text(
-                            text = "ഈ വിവരങ്ങൾ മഹല്ല് രേഖകൾ ക്രമീകരിക്കുന്നതിനായി മാത്രമാണ്. നൽകാൻ താല്പര്യമുള്ള വിവരങ്ങൾ മാത്രം നൽകിയാൽ മതിയാകും (നിർബന്ധമല്ല). വിവരങ്ങൾ സബ് അഡ്മിൻ പരിശോധിച്ച് ഉറപ്പുവരുത്തുന്നതാണ്.",
+                            text = "This information is used strictly for organizing Mahal records. Fill only the details you wish to share (optional). Submitted details will be verified and approved by the Sub-Admin.",
                             style = MaterialTheme.typography.bodySmall,
                             fontSize = 11.sp,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -139,7 +139,7 @@ fun MemberProfileCompletionDialog(
 
                 // Read-only registered head of family
                 Text(
-                    text = "ഗൃഹനാഥൻ: ${household.headOfFamily} (${household.wardNumber})",
+                    text = "Head of Family: ${household.headOfFamily} (${household.wardNumber})",
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -151,8 +151,8 @@ fun MemberProfileCompletionDialog(
                 OutlinedTextField(
                     value = familyName,
                     onValueChange = { familyName = it },
-                    label = { Text("കുടുംബ പേര് / വീട്ടുപേര് (Family Name)") },
-                    placeholder = { Text("ഉദാ: മേലേതിൽ വീട് / Baitul Noor") },
+                    label = { Text("Family Name / House Name") },
+                    placeholder = { Text("e.g. Baitul Noor / Green Villa") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -160,7 +160,7 @@ fun MemberProfileCompletionDialog(
 
                 // Member Counts
                 Text(
-                    text = "കുടുംബാംഗങ്ങളുടെ എണ്ണം (Member Count):",
+                    text = "Family Members Breakdown:",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -173,7 +173,7 @@ fun MemberProfileCompletionDialog(
                     OutlinedTextField(
                         value = memberCount,
                         onValueChange = { memberCount = it },
-                        label = { Text("ആകെ (Total)") },
+                        label = { Text("Total") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -181,7 +181,7 @@ fun MemberProfileCompletionDialog(
                     OutlinedTextField(
                         value = maleCount,
                         onValueChange = { maleCount = it },
-                        label = { Text("പുരുഷന്മാർ") },
+                        label = { Text("Males") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -189,7 +189,7 @@ fun MemberProfileCompletionDialog(
                     OutlinedTextField(
                         value = femaleCount,
                         onValueChange = { femaleCount = it },
-                        label = { Text("സ്ത്രീകൾ") },
+                        label = { Text("Females") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -204,7 +204,7 @@ fun MemberProfileCompletionDialog(
                     OutlinedTextField(
                         value = childrenCount,
                         onValueChange = { childrenCount = it },
-                        label = { Text("കുട്ടികൾ (<15)") },
+                        label = { Text("Children (<15)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -212,7 +212,7 @@ fun MemberProfileCompletionDialog(
                     OutlinedTextField(
                         value = madrasaStudentCount,
                         onValueChange = { madrasaStudentCount = it },
-                        label = { Text("മദ്റസ വിദ്യാർത്ഥികൾ") },
+                        label = { Text("Madrasa Students") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -222,7 +222,7 @@ fun MemberProfileCompletionDialog(
 
                 // Ration Card Category
                 Text(
-                    text = "റേഷൻ കാർഡ് വിഭാഗം (Ration Category):",
+                    text = "Ration Card Category:",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -245,8 +245,8 @@ fun MemberProfileCompletionDialog(
                 OutlinedTextField(
                     value = bloodGroups,
                     onValueChange = { bloodGroups = it },
-                    label = { Text("രക്തഗ്രൂപ്പുകൾ (Blood Groups in Family)") },
-                    placeholder = { Text("ഉദാ: O+ve, B+ve") },
+                    label = { Text("Blood Groups in Family") },
+                    placeholder = { Text("e.g. O+ve, B+ve, AB+ve") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -256,7 +256,7 @@ fun MemberProfileCompletionDialog(
                 OutlinedTextField(
                     value = address,
                     onValueChange = { address = it },
-                    label = { Text("വിലാസം / ലാൻഡ്മാർക്ക് (Address)") },
+                    label = { Text("Address / Landmark") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -266,7 +266,7 @@ fun MemberProfileCompletionDialog(
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("മറ്റ് വിവരങ്ങൾ / ആവശ്യങ്ങൾ (Remarks)") },
+                    label = { Text("Additional Remarks / Requests") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -281,7 +281,7 @@ fun MemberProfileCompletionDialog(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("പിന്നീട് (Skip)")
+                        Text("Later / Skip")
                     }
 
                     Button(
@@ -314,7 +314,7 @@ fun MemberProfileCompletionDialog(
                     ) {
                         Icon(imageVector = Icons.Default.Send, contentDescription = null)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("സമർപ്പിക്കുക")
+                        Text("Submit Profile")
                     }
                 }
             }

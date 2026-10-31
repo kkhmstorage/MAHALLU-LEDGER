@@ -3,7 +3,6 @@ package com.example.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -61,12 +60,12 @@ fun AppUpdateDialog(
             ) {
                 Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("ഡൗൺലോഡ് ചെയ്യുക (Update)", fontWeight = FontWeight.Bold)
+                Text("Download & Update", fontWeight = FontWeight.Bold)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("പിന്നീട് (Later)", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Later", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
         icon = {
@@ -87,7 +86,7 @@ fun AppUpdateDialog(
         title = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "പുതിയ അപ്‌ഡേഷൻ ലഭ്യമാണ്!",
+                    text = "New Update Available!",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -114,7 +113,7 @@ fun AppUpdateDialog(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    text = "ഗിറ്റ്ഹബ്ബിൽ പുതിയ അപ്‌ഡേറ്റുകൾ തയ്യാറാണ്. പുതിയ ഫീച്ചറുകൾ ലഭിക്കുന്നതിന് ആപ്പ് അപ്‌ഡേറ്റ് ചെയ്യുക.",
+                    text = "A new application update is available on GitHub with performance and stability improvements.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -129,7 +128,7 @@ fun AppUpdateDialog(
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
-                            text = "പുതിയ മാറ്റങ്ങൾ (Release Notes):",
+                            text = "Release Notes:",
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
@@ -153,7 +152,7 @@ fun AppUpdateDialog(
                 ) {
                     Icon(Icons.Default.OpenInBrowser, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("GitHub വെബ്സൈറ്റ് സന്ദർശിക്കുക", style = MaterialTheme.typography.labelMedium)
+                    Text("Visit GitHub Web Page", style = MaterialTheme.typography.labelMedium)
                 }
             }
         },

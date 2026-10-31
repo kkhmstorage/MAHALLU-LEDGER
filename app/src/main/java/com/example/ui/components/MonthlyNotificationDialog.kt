@@ -94,12 +94,12 @@ fun MonthlyNotificationDialog(
                         Spacer(modifier = Modifier.width(10.dp))
                         Column {
                             Text(
-                                text = "പ്രതിമാസ വരിസംഖ്യാ നോട്ടിഫിക്കേഷൻ",
+                                text = "Monthly Subscription Due Notifications",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "$currentMonth • Due Reminders",
+                                text = "$currentMonth • Due Reminders & Broadcast",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -128,12 +128,12 @@ fun MonthlyNotificationDialog(
                     ) {
                         Column {
                             Text(
-                                text = "കുടിശ്ശികയുള്ള കുടുംബങ്ങൾ:",
+                                text = "Households with Dues:",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                             Text(
-                                text = "${pendingSummaries.size} കുടുംബങ്ങൾ",
+                                text = "${pendingSummaries.size} Families",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
@@ -142,7 +142,7 @@ fun MonthlyNotificationDialog(
 
                         Column(horizontalAlignment = Alignment.End) {
                             Text(
-                                text = "ആകെ ബാക്കി തുക:",
+                                text = "Total Outstanding:",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
@@ -169,13 +169,13 @@ fun MonthlyNotificationDialog(
                 ) {
                     Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("ഗ്രൂപ്പ് ബ്രോഡ്കാസ്റ്റ് അയക്കുക (WhatsApp)")
+                    Text("Send Group Broadcast (WhatsApp)")
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "വ്യക്തിഗത ഓർമ്മപ്പെടുത്തലുകൾ (Individual Reminders):",
+                    text = "Individual Household Reminders:",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -189,7 +189,7 @@ fun MonthlyNotificationDialog(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "ഈ മാസം എല്ലാ കുടുംബങ്ങളും വരിസംഖ്യ അടച്ചിരിക്കുന്നു! ✓",
+                            text = "All families have paid their subscriptions for this month! ✓",
                             color = CashInflowGreen,
                             fontWeight = FontWeight.Bold
                         )

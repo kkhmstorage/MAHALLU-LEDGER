@@ -8,7 +8,7 @@ data class AdditionalCollection(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val mahalCode: String = "ALNOOR",
-    val title: String, // e.g. "റിലീഫ് ഫണ്ട് (Relief Fund)"
+    val title: String, // e.g. "Relief Fund"
     val description: String = "",
     val targetAmountPerFamily: Double = 0.0, // Suggested per-family target
     val targetTotalFund: Double = 0.0, // Overall target for the fund

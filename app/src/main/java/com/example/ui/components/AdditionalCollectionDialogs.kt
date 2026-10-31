@@ -97,12 +97,12 @@ fun CreateAdditionalCollectionDialog(
                 ) {
                     Column {
                         Text(
-                            text = "പുതിയ അഡീഷണൽ കളക്ഷൻ",
+                            text = "New Special Collection",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "New Special Collection / Fund",
+                            text = "Special Collection / Community Fund Drive",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -129,8 +129,8 @@ fun CreateAdditionalCollectionDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("കളക്ഷൻ പേര് (Title)*") },
-                    placeholder = { Text("e.g. റിലീഫ് ഫണ്ട് / മദ്റസ നവീകരണം") },
+                    label = { Text("Collection Title*") },
+                    placeholder = { Text("e.g. Relief Fund / Mosque Renovation") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("collection_title_input")
@@ -139,7 +139,7 @@ fun CreateAdditionalCollectionDialog(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "വിഭാഗം (Category):",
+                    text = "Category:",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -161,8 +161,8 @@ fun CreateAdditionalCollectionDialog(
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("വിവരണം / ലക്ഷ്യം (Purpose / Description)") },
-                    placeholder = { Text("e.g. ചികിത്സാ സഹായ ശേഖരണം") },
+                    label = { Text("Purpose / Description") },
+                    placeholder = { Text("e.g. Emergency medical aid or educational support") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -175,7 +175,7 @@ fun CreateAdditionalCollectionDialog(
                     OutlinedTextField(
                         value = targetPerFamily,
                         onValueChange = { targetPerFamily = it },
-                        label = { Text("കുടുംബ വിഹിതം (₹)") },
+                        label = { Text("Target / Family (₹)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -183,7 +183,7 @@ fun CreateAdditionalCollectionDialog(
                     OutlinedTextField(
                         value = targetTotalFund,
                         onValueChange = { targetTotalFund = it },
-                        label = { Text("ആകെ ടാർഗറ്റ് (₹)") },
+                        label = { Text("Total Target (₹)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f)
                     )
@@ -250,7 +250,7 @@ fun RecordAdditionalPaymentDialog(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    text = "കളക്ഷൻ അടവ് രേഖപ്പെടുത്തുക",
+                    text = "Record Collection Payment",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -328,7 +328,7 @@ fun RecordAdditionalPaymentDialog(
                 OutlinedTextField(
                     value = amount,
                     onValueChange = { amount = it },
-                    label = { Text("അടയ്ക്കുന്ന തുക (Amount ₹)*") },
+                    label = { Text("Payment Amount (₹)*") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -337,12 +337,12 @@ fun RecordAdditionalPaymentDialog(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Text("പേയ്‌മെന്റ് രീതി (Payment Mode):", style = MaterialTheme.typography.bodySmall)
+                Text("Payment Mode:", style = MaterialTheme.typography.bodySmall)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    listOf("CASH" to "Cash (നേരിട്ട്)", "UPI" to "UPI (GPay/PhonePe)", "BANK" to "Bank").forEach { (mode, label) ->
+                    listOf("CASH" to "Cash", "UPI" to "UPI (GPay/PhonePe)", "BANK" to "Bank Transfer").forEach { (mode, label) ->
                         FilterChip(
                             selected = paymentMode == mode,
                             onClick = { paymentMode = mode },
@@ -356,7 +356,7 @@ fun RecordAdditionalPaymentDialog(
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("കുറിപ്പ് / Receipt Remarks") },
+                    label = { Text("Receipt Remarks / Note") },
                     modifier = Modifier.fillMaxWidth()
                 )
 

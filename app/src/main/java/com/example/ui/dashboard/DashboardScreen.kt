@@ -179,7 +179,7 @@ fun DashboardScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "NET CASH IN HAND (കയ്യിലുള്ള ബാക്കി)",
+                            text = "NET CASH IN HAND",
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
@@ -209,7 +209,7 @@ fun DashboardScreen(
                     ) {
                         Column {
                             Text(
-                                text = "Total Income (സമ്പൂർണ്ണ വരവ്)",
+                                text = "Total Income / Inflow",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
                             )
@@ -222,7 +222,7 @@ fun DashboardScreen(
 
                         Column(horizontalAlignment = Alignment.End) {
                             Text(
-                                text = "Total Expenses (ചെലവ്)",
+                                text = "Total Expenses / Outflow",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
                             )
@@ -288,7 +288,7 @@ fun DashboardScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 FinancialStatCard(
-                    title = "Mahal Vari (വരിസംഖ്യ)",
+                    title = "Annual Subscriptions",
                     amount = subTotal,
                     subtitle = "$fullyPaidFamilies / ${householdSummaries.size} Families Cleared",
                     icon = Icons.Default.Payments,
@@ -298,7 +298,7 @@ fun DashboardScreen(
                 )
 
                 FinancialStatCard(
-                    title = "Pending Dues (കുടിശ്ശിക)",
+                    title = "Pending Dues",
                     amount = totalDues,
                     subtitle = "${householdSummaries.size - fullyPaidFamilies} Families with Dues",
                     icon = Icons.Default.Receipt,
@@ -378,7 +378,7 @@ fun DashboardScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
-                                    text = "Total Special Funds Raised (പ്രത്യേക ഫണ്ട്):",
+                                    text = "Total Special Funds Raised:",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -523,7 +523,7 @@ fun DashboardScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Recent Collections (സമീപകാല വരിസംഖ്യകൾ)",
+                    text = "Recent Collections",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -628,7 +628,7 @@ fun DashboardScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Latest Ledger Activities (വരവ് ചെലവ്)",
+                    text = "Latest Ledger Activities",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )

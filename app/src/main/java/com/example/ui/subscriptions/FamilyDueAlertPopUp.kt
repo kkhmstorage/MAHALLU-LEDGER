@@ -26,13 +26,11 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Payment
-import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,7 +51,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -120,7 +117,7 @@ fun FamilyDueAlertPopUp(
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
                                 Text(
-                                    text = "വരിസംഖ്യാ കുടിശ്ശിക അറിയിപ്പ്",
+                                    text = "Subscription Due Alert",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = Color(0xFF92400E)
@@ -141,7 +138,7 @@ fun FamilyDueAlertPopUp(
 
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "മാന്യ ${household.headOfFamily} (${household.houseNumber}),",
+                        text = "Dear ${household.headOfFamily} (House #${household.houseNumber}),",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold
                     )
@@ -149,7 +146,7 @@ fun FamilyDueAlertPopUp(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = "താങ്കളുടെ കുടുംബത്തിന്റെ മഹല്ല് പ്രതിമാസ വരിസംഖ്യയിൽ താഴെ പറയുന്ന തുക അടയ്ക്കാനുണ്ട്:",
+                        text = "Your household has the following pending subscription (Vari) dues:",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -168,7 +165,7 @@ fun FamilyDueAlertPopUp(
                             modifier = Modifier.padding(16.dp)
                         ) {
                             Text(
-                                text = "ആകെ ബാക്കി തുക (Pending Due)",
+                                text = "Total Pending Due",
                                 style = MaterialTheme.typography.labelMedium,
                                 color = CashOutflowRed,
                                 fontWeight = FontWeight.SemiBold
@@ -182,7 +179,7 @@ fun FamilyDueAlertPopUp(
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "$pendingMonthsCount മാസത്തെ കുടിശ്ശിക (പ്രതിമാസം ₹${household.monthlyFee.toInt()})",
+                                text = "$pendingMonthsCount months overdue (₹${household.monthlyFee.toInt()} / month)",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -224,7 +221,7 @@ fun FamilyDueAlertPopUp(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text(if (showBankDetails) "ബാങ്ക് വിവരങ്ങൾ മറയ്ക്കുക" else "ബാങ്ക് അക്കൗണ്ടും QR കോഡും കാണുക")
+                        Text(if (showBankDetails) "Hide Bank Details" else "View Bank Account & QR Scanner")
                     }
 
                     if (showBankDetails && activeMahal != null) {
@@ -236,7 +233,7 @@ fun FamilyDueAlertPopUp(
                         ) {
                             Column(modifier = Modifier.padding(14.dp)) {
                                 Text(
-                                    text = "മഹല്ല് ബാങ്ക് അക്കൗണ്ട് വിവരങ്ങൾ:",
+                                    text = "Community Bank Account Information:",
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.primary
@@ -252,7 +249,7 @@ fun FamilyDueAlertPopUp(
                                 if (activeMahal.qrCodeUri.isNotBlank()) {
                                     Spacer(modifier = Modifier.height(10.dp))
                                     Text(
-                                        text = "UPI QR Code സ്കാൻ ചെയ്യുക:",
+                                        text = "Scan UPI QR Code to Pay:",
                                         style = MaterialTheme.typography.labelSmall,
                                         fontWeight = FontWeight.Bold
                                     )
@@ -278,7 +275,7 @@ fun FamilyDueAlertPopUp(
                         onClick = onDismiss,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("പിന്നീട് അടയ്ക്കാം (Pay Later)", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Pay Later", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -305,7 +302,7 @@ private fun BankRowWithCopy(context: Context, label: String, value: String) {
                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(label, value)
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(context, "$label Copied!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "$label copied!", Toast.LENGTH_SHORT).show()
             },
             modifier = Modifier.size(28.dp)
         ) {

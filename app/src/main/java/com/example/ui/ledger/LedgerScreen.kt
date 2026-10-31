@@ -103,7 +103,7 @@ fun LedgerScreen(
             item {
                 Column {
                     Text(
-                        text = "General Accounts Ledger (വരവ് ചെലവ് കണക്കുകൾ)",
+                        text = "General Accounts Ledger",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface

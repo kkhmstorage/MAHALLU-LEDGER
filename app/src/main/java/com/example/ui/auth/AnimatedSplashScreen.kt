@@ -101,9 +101,9 @@ fun AnimatedSplashScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     CommunityLogoEmblem(
-                        logoUri = activeMahal?.logoUri,
-                        logoPreset = activeMahal?.logoPreset,
-                        communityName = activeMahal?.name ?: "Mahal Ledger",
+                        logoUri = null,
+                        logoPreset = "MOSQUE",
+                        communityName = "Mahal Ledger",
                         size = 110.dp,
                         containerColor = Color.White,
                         iconTint = Color(0xFF047857)
@@ -113,11 +113,11 @@ fun AnimatedSplashScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Community Name or App Title
+            // App Title - Always Mahal Ledger on launch
             Text(
-                text = activeMahal?.name ?: "മഹല്ല് ലെഡ്ജർ (Mahal Ledger)",
+                text = "Mahal Ledger",
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 24.sp,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White
                 ),
@@ -127,11 +127,7 @@ fun AnimatedSplashScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = if (activeMahal != null) {
-                    "${activeMahal.location} • മഹല്ല് ഫിനാൻസ് മാനേജ്മെന്റ്"
-                } else {
-                    "Islamic Mahal & Madrasa Accounting System"
-                },
+                text = "Community Subscription & Accounts Management System",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color(0xFFD1FAE5),
                     fontWeight = FontWeight.Medium
@@ -149,7 +145,7 @@ fun AnimatedSplashScreen(
                 modifier = Modifier.alpha(contentAlpha.value)
             ) {
                 Text(
-                    text = "സ്വാഗതം • Welcome",
+                    text = "Welcome",
                     color = Color(0xFFFEF08A),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold,

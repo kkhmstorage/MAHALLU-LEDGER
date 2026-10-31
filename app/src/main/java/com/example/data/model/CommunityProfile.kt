@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class CommunityProfile(
     @PrimaryKey
     val id: Int = 1,
-    val name: String = "Al-Noor Madrasa & Mahal Committee",
+    val name: String = "Mahal Ledger",
     val registrationNumber: String = "REG-KL/2014/0821",
     val location: String = "Kerala, India",
     val phone: String = "+91 98460 12345",

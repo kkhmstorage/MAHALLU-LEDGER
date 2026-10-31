@@ -185,7 +185,7 @@ fun DigitalReceiptDialog(
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "OFFICIAL SUBSCRIPTION RECEIPT (വരിസംഖ്യ രസീത്)",
+                            text = "OFFICIAL SUBSCRIPTION RECEIPT",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f),
                             letterSpacing = 1.sp,
@@ -276,7 +276,7 @@ fun DigitalReceiptDialog(
                             onClick = {
                                 val shareText = buildString {
                                     appendLine("📜 *${receipt.communityName}*")
-                                    appendLine("📋 *SUBSCRIPTION RECEIPT (വരിസംഖ്യ)*")
+                                    appendLine("📋 *SUBSCRIPTION RECEIPT*")
                                     appendLine("──────────────────")
                                     appendLine("Receipt No: ${receipt.receiptNumber}")
                                     appendLine("House No: *${receipt.houseNumber}*")
@@ -609,7 +609,7 @@ fun AddTransactionDialog(
                         ),
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Income (വരവ്)")
+                        Text("Income")
                     }
 
                     Button(
@@ -623,7 +623,7 @@ fun AddTransactionDialog(
                         ),
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Expense (ചെലവ്)")
+                        Text("Expense")
                     }
                 }
 
@@ -764,7 +764,7 @@ fun AddHouseholdDialog(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    text = if (initialHousehold == null) "Register New Family (കുടുംബ രജിസ്ട്രേഷൻ)" else "Edit Family Details",
+                    text = if (initialHousehold == null) "Register New Family" else "Edit Family Details",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -774,7 +774,7 @@ fun AddHouseholdDialog(
                 OutlinedTextField(
                     value = houseNumber,
                     onValueChange = { houseNumber = it },
-                    label = { Text("House Number / Reg No (രജിസ്റ്റർ നമ്പർ)*") },
+                    label = { Text("House Number / Reg No*") },
                     placeholder = { Text("e.g. H-12") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -786,7 +786,7 @@ fun AddHouseholdDialog(
                 OutlinedTextField(
                     value = headOfFamily,
                     onValueChange = { headOfFamily = it },
-                    label = { Text("Head of Family Name (ഗൃഹനാഥൻ്റെ പേര്)*") },
+                    label = { Text("Head of Family Name*") },
                     placeholder = { Text("e.g. K. P. Abdul Rahman") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -798,8 +798,8 @@ fun AddHouseholdDialog(
                 OutlinedTextField(
                     value = familyName,
                     onValueChange = { familyName = it },
-                    label = { Text("Family / House Name (കുടുംബ പേര് / വീട്ടുപേര്)") },
-                    placeholder = { Text("e.g. മേലേതിൽ വീട് / Baitul Noor") },
+                    label = { Text("Family / House Name") },
+                    placeholder = { Text("e.g. Baitul Noor / Green Villa") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("family_name_input")
@@ -810,7 +810,7 @@ fun AddHouseholdDialog(
                 OutlinedTextField(
                     value = phoneNumber,
                     onValueChange = { phoneNumber = it },
-                    label = { Text("Phone Number (ഫോൺ നമ്പർ)") },
+                    label = { Text("Phone Number") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -897,27 +897,27 @@ fun AddHouseholdDialog(
 fun RoleSwitcherDialog(
     currentRole: UserRole,
     onDismiss: () -> Unit,
-    onSelectSubAdminLogin: () -> Unit,
+    onSelectAdminLogin: () -> Unit,
     onSelectMemberOtpLogin: () -> Unit,
-    onSelectSuperAdminLogin: () -> Unit
+    onLogout: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text("Switch User Account / Role", fontWeight = FontWeight.Bold)
+            Text("Switch Account / Role", fontWeight = FontWeight.Bold)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
-                    text = "Select how you wish to access the application:",
+                    text = "Select account type to switch into:",
                     style = MaterialTheme.typography.bodyMedium
                 )
 
-                // Sub-Admin Option
+                // Admin Option (Super-Admin or Sub-Admin)
                 OutlinedButton(
                     onClick = {
                         onDismiss()
-                        onSelectSubAdminLogin()
+                        onSelectAdminLogin()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
@@ -925,8 +925,8 @@ fun RoleSwitcherDialog(
                     Icon(imageVector = Icons.Default.Security, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
                     Column(horizontalAlignment = Alignment.Start, modifier = Modifier.weight(1f)) {
-                        Text("Sub-Admin (Mahal Treasurer)", fontWeight = FontWeight.Bold)
-                        Text("Login with Mahal Username & Password", style = MaterialTheme.typography.labelSmall)
+                        Text("Admin (Super-Admin / Sub-Admin)", fontWeight = FontWeight.Bold)
+                        Text("Login with username and password", style = MaterialTheme.typography.labelSmall)
                     }
                 }
 
@@ -942,26 +942,22 @@ fun RoleSwitcherDialog(
                     Icon(imageVector = Icons.Default.Payments, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
                     Column(horizontalAlignment = Alignment.Start, modifier = Modifier.weight(1f)) {
-                        Text("Community Member (Family)", fontWeight = FontWeight.Bold)
-                        Text("Login via Phone Number & OTP", style = MaterialTheme.typography.labelSmall)
+                        Text("Family Member", fontWeight = FontWeight.Bold)
+                        Text("Login with registered phone & OTP", style = MaterialTheme.typography.labelSmall)
                     }
                 }
 
-                // Super-Admin Option
-                OutlinedButton(
+                // Logout to Login Screen
+                Button(
                     onClick = {
                         onDismiss()
-                        onSelectSuperAdminLogin()
+                        onLogout()
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Column(horizontalAlignment = Alignment.Start, modifier = Modifier.weight(1f)) {
-                        Text("Super-Admin (Software Owner)", fontWeight = FontWeight.Bold)
-                        Text("Control all Mahals & Sub-Admin Accounts", style = MaterialTheme.typography.labelSmall)
-                    }
+                    Text("Logout to Login Screen", fontWeight = FontWeight.Bold)
                 }
             }
         },
@@ -975,81 +971,23 @@ fun RoleSwitcherDialog(
 }
 
 @Composable
-fun SubAdminLoginDialog(
+fun UnifiedAdminLoginDialog(
     onDismiss: () -> Unit,
     onLogin: (username: String, password: String) -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text("Sub-Admin Login (Mahal Committee)", fontWeight = FontWeight.Bold)
+            Text("Admin Login", fontWeight = FontWeight.Bold)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
-                    text = "Enter the Sub-Admin credentials provided by the Super-Admin:",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                OutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
-                    label = { Text("Sub-Admin Username / Mahal Code") },
-                    placeholder = { Text("Enter username or code") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("Password") },
-                    placeholder = { Text("Enter password") },
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    if (username.isNotBlank() && password.isNotBlank()) {
-                        onLogin(username, password)
-                    }
-                }
-            ) {
-                Text("Login as Sub-Admin")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        }
-    )
-}
-
-@Composable
-fun SuperAdminLoginDialog(
-    onDismiss: () -> Unit,
-    onLogin: (username: String, password: String) -> Unit
-) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var error by remember { mutableStateOf(false) }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text("Super-Admin Master Access", fontWeight = FontWeight.Bold)
-        },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(
-                    text = "Enter Master Username & Password to control all onboarded Mahals:",
+                    text = "Enter username and password (Super-Admin or Sub-Admin):",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1058,12 +996,11 @@ fun SuperAdminLoginDialog(
                     value = username,
                     onValueChange = {
                         username = it
-                        error = false
+                        errorMessage = ""
                     },
-                    label = { Text("Super-Admin Username") },
-                    placeholder = { Text("Enter username") },
+                    label = { Text("Username") },
+                    placeholder = { Text("Enter admin username") },
                     singleLine = true,
-                    isError = error,
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -1071,29 +1008,35 @@ fun SuperAdminLoginDialog(
                     value = password,
                     onValueChange = {
                         password = it
-                        error = false
+                        errorMessage = ""
                     },
                     label = { Text("Password") },
                     placeholder = { Text("Enter password") },
-                    visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
-                    isError = error,
-                    supportingText = if (error) { { Text("Invalid credentials") } } else null,
+                    visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                if (errorMessage.isNotEmpty()) {
+                    Text(
+                        text = errorMessage,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
             }
         },
         confirmButton = {
             Button(
                 onClick = {
                     if (username.isNotBlank() && password.isNotBlank()) {
-                        onLogin(username, password)
+                        onLogin(username.trim(), password.trim())
                     } else {
-                        error = true
+                        errorMessage = "Please enter both username and password."
                     }
                 }
             ) {
-                Text("Unlock Super Admin")
+                Text("Login")
             }
         },
         dismissButton = {

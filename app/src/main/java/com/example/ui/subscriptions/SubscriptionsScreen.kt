@@ -158,13 +158,13 @@ fun SubscriptionsScreen(
             item {
                 Column {
                     Text(
-                        text = "Mahal Collections & Subscriptions (വരിസംഖ്യ)",
+                        text = "Mahal Collections & Subscriptions",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = "Monthly Vari, special funds, automated reminders & member profiles",
+                        text = "Monthly subscriptions, special funds, automated reminders & member profiles",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -183,7 +183,7 @@ fun SubscriptionsScreen(
                         onClick = { selectedTab = 0 },
                         text = {
                             Text(
-                                text = "പ്രതിമാസ വരിസംഖ്യ (${summaries.size})",
+                                text = "Monthly Subscriptions (${summaries.size})",
                                 fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
                                 fontSize = 12.sp
                             )
@@ -194,7 +194,7 @@ fun SubscriptionsScreen(
                         onClick = { selectedTab = 1 },
                         text = {
                             Text(
-                                text = "അഡീഷണൽ കളക്ഷൻ (${additionalCollections.size})",
+                                text = "Special Collections (${additionalCollections.size})",
                                 fontWeight = if (selectedTab == 1) FontWeight.Bold else FontWeight.Normal,
                                 fontSize = 12.sp
                             )
@@ -244,7 +244,7 @@ fun SubscriptionsScreen(
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Column {
                                     Text(
-                                        text = if (activeMember?.verificationStatus == "VERIFIED") "Verified Family Profile ✓" else "കുടുംബ വിവരങ്ങൾ പൂർത്തിയാക്കുക",
+                                        text = if (activeMember?.verificationStatus == "VERIFIED") "Verified Family Profile ✓" else "Complete Family Profile",
                                         fontWeight = FontWeight.Bold,
                                         style = MaterialTheme.typography.titleSmall,
                                         color = if (activeMember?.verificationStatus == "VERIFIED") CashInflowGreen else Color(0xFF8D6E63)
@@ -295,7 +295,7 @@ fun SubscriptionsScreen(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "നോട്ടിഫിക്കേഷൻ (${pendingDueSummaries.size})",
+                                text = "Send Reminders (${pendingDueSummaries.size})",
                                 fontSize = 12.sp,
                                 maxLines = 1
                             )
@@ -317,7 +317,7 @@ fun SubscriptionsScreen(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "സ്ഥിരീകരണം (${pendingVerifications.size})",
+                                text = "Verifications (${pendingVerifications.size})",
                                 fontSize = 12.sp,
                                 maxLines = 1
                             )
@@ -435,7 +435,7 @@ fun SubscriptionsScreen(
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = "അഡീഷണൽ കളക്ഷനുകൾ നിലവിലില്ല",
+                                    text = "No Special Collections created yet",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -661,7 +661,7 @@ fun HouseholdCard(
 
                         if (household.familyName.isNotBlank()) {
                             Text(
-                                text = "കുടുംബം: ${household.familyName}",
+                                text = "Family: ${household.familyName}",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold
@@ -686,7 +686,7 @@ fun HouseholdCard(
                             onDismissRequest = { menuExpanded = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Edit Family (എഡിറ്റ് ചെയ്യുക)") },
+                                text = { Text("Edit Family Details") },
                                 onClick = {
                                     menuExpanded = false
                                     onEditClick()
@@ -744,7 +744,7 @@ fun HouseholdCard(
                     color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
                 ) {
                     Text(
-                        text = "അംഗങ്ങൾ: ${household.memberCount}" + if (household.rationCategory.isNotBlank()) " • ${household.rationCategory}" else "",
+                        text = "Members: ${household.memberCount}" + if (household.rationCategory.isNotBlank()) " • ${household.rationCategory}" else "",
                         fontSize = 11.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -934,13 +934,13 @@ fun AdditionalCollectionCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "ശേഖരിച്ചത്: ₹${"%,.0f".format(totalCollected)}",
+                    text = "Collected: ₹${"%,.0f".format(totalCollected)}",
                     fontWeight = FontWeight.Bold,
                     color = CashInflowGreen,
                     fontSize = 13.sp
                 )
                 Text(
-                    text = "ടാർഗറ്റ്: ₹${"%,.0f".format(collection.targetTotalFund)} (${payments.size} contributors)",
+                    text = "Target: ₹${"%,.0f".format(collection.targetTotalFund)} (${payments.size} contributors)",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
-import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material3.Button
@@ -39,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -94,7 +92,7 @@ fun BankAndUpiSettingsDialog(
                         Icon(imageVector = Icons.Default.AccountBalance, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "ബാങ്ക് & UPI ക്രമീകരണങ്ങൾ",
+                            text = "Bank & UPI Settings",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -105,7 +103,7 @@ fun BankAndUpiSettingsDialog(
                 }
 
                 Text(
-                    text = "കുടുംബങ്ങൾക്ക് വരിസംഖ്യ UPI / ബാങ്ക് വഴി അടയ്ക്കാനുള്ള വിവരങ്ങൾ നൽകുക:",
+                    text = "Configure details for families to pay subscriptions via UPI / Bank Transfer:",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -128,8 +126,8 @@ fun BankAndUpiSettingsDialog(
                 OutlinedTextField(
                     value = payeeName,
                     onValueChange = { payeeName = it },
-                    label = { Text("Payee Name / കമ്മറ്റി പേര്") },
-                    placeholder = { Text("Al-Noor Mahal Committee") },
+                    label = { Text("Payee Name / Committee Name") },
+                    placeholder = { Text("Mahal Committee") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -139,7 +137,7 @@ fun BankAndUpiSettingsDialog(
                 OutlinedTextField(
                     value = bankName,
                     onValueChange = { bankName = it },
-                    label = { Text("Bank Name (ബാങ്ക് പേര്)") },
+                    label = { Text("Bank Name") },
                     placeholder = { Text("State Bank of India / Kerala Bank") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
@@ -150,7 +148,7 @@ fun BankAndUpiSettingsDialog(
                 OutlinedTextField(
                     value = accountNumber,
                     onValueChange = { accountNumber = it },
-                    label = { Text("Account Number (അക്കൗണ്ട് നമ്പർ)") },
+                    label = { Text("Account Number") },
                     placeholder = { Text("67329104821") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
@@ -170,7 +168,7 @@ fun BankAndUpiSettingsDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "QR Code സ്കാനർ ഇമേജ്:",
+                    text = "QR Code Scanner Image:",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -193,7 +191,7 @@ fun BankAndUpiSettingsDialog(
                         onClick = { qrCodeUri = "" },
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
-                        Text("സ്കാനർ ഒഴിവാക്കുക (Remove QR)", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+                        Text("Remove QR Image", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
                     }
                 }
 
@@ -208,7 +206,7 @@ fun BankAndUpiSettingsDialog(
                 ) {
                     Icon(imageVector = Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(if (qrCodeUri.isNotBlank()) "മറ്റൊരു QR സ്കാനർ തിരഞ്ഞെടുക്കുക" else "QR സ്കാനർ ചിത്രം അപ്‌ലോഡ് ചെയ്യുക")
+                    Text(if (qrCodeUri.isNotBlank()) "Choose Different QR Image" else "Upload UPI QR Code Image")
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -222,7 +220,7 @@ fun BankAndUpiSettingsDialog(
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("റദ്ദാക്കുക")
+                        Text("Cancel")
                     }
 
                     Button(
@@ -235,7 +233,7 @@ fun BankAndUpiSettingsDialog(
                             .testTag("save_bank_upi_button"),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("സേവ് ചെയ്യുക", fontWeight = FontWeight.Bold)
+                        Text("Save Details", fontWeight = FontWeight.Bold)
                     }
                 }
             }

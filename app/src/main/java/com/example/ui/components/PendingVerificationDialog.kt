@@ -95,7 +95,7 @@ fun PendingVerificationDialog(
                         Spacer(modifier = Modifier.width(10.dp))
                         Column {
                             Text(
-                                text = "സ്ഥിരീകരണങ്ങൾ (Verifications)",
+                                text = "Profile Verifications",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -130,7 +130,7 @@ fun PendingVerificationDialog(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "എല്ലാ കുടുംബ വിവരങ്ങളും സ്ഥിരീകരിച്ചിരിക്കുന്നു!",
+                                text = "All family profiles have been verified!",
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = CashInflowGreen
@@ -213,7 +213,7 @@ fun PendingHouseholdReviewCard(
                         )
                         if (household.familyName.isNotBlank()) {
                             Text(
-                                text = "കുടുംബം: ${household.familyName}",
+                                text = "Family: ${household.familyName}",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -244,7 +244,7 @@ fun PendingHouseholdReviewCard(
             ) {
                 Column {
                     Text(
-                        text = "അംഗങ്ങൾ (Members): ${household.memberCount}",
+                        text = "Members: ${household.memberCount}",
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -258,14 +258,14 @@ fun PendingHouseholdReviewCard(
                 Column(horizontalAlignment = Alignment.End) {
                     if (household.rationCategory.isNotBlank()) {
                         Text(
-                            text = "റേഷൻ: ${household.rationCategory}",
+                            text = "Ration: ${household.rationCategory}",
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
                     if (household.madrasaStudentCount > 0) {
                         Text(
-                            text = "മദ്റസ: ${household.madrasaStudentCount} കുട്ടികൾ",
+                            text = "Madrasa: ${household.madrasaStudentCount} Students",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.secondary
                         )
@@ -276,7 +276,7 @@ fun PendingHouseholdReviewCard(
             if (household.bloodGroups.isNotBlank()) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "രക്തഗ്രൂപ്പുകൾ: ${household.bloodGroups}",
+                    text = "Blood Groups: ${household.bloodGroups}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -285,7 +285,7 @@ fun PendingHouseholdReviewCard(
             if (household.address.isNotBlank()) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "വിലാസം: ${household.address}",
+                    text = "Address: ${household.address}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1
@@ -317,7 +317,7 @@ fun PendingHouseholdReviewCard(
                 ) {
                     Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Confirm ഡാറ്റ", fontSize = 12.sp)
+                    Text("Confirm Profile", fontSize = 12.sp)
                 }
             }
         }

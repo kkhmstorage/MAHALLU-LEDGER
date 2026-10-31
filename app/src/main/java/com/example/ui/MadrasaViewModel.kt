@@ -101,11 +101,11 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
                 if (info.isUpdateAvailable) {
                     _availableUpdate.value = info
                 } else if (showToastIfLatest) {
-                    _snackbarEvent.emit("ആപ്പ് ഏറ്റവും പുതിയ പതിപ്പിലാണ് (v${AppUpdateChecker.CURRENT_VERSION_NAME})")
+                    _snackbarEvent.emit("Application is up to date (v${AppUpdateChecker.CURRENT_VERSION_NAME})")
                 }
             }.onFailure {
                 if (showToastIfLatest) {
-                    _snackbarEvent.emit("അപ്‌ഡേറ്റ് പരിശോധിക്കാൻ കഴിഞ്ഞില്ല. ഇന്റർനെറ്റ് കണക്ഷൻ പരിശോധിക്കുക.")
+                    _snackbarEvent.emit("Unable to check for updates. Please check your internet connection.")
                 }
             }
         }
@@ -123,6 +123,7 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
         _isAuthenticated.value = false
         _isSuperAdminManaging.value = false
         _activeMemberHousehold.value = null
+        _activeMahal.value = null
         _dueAlertDismissed.value = false
         viewModelScope.launch {
             _snackbarEvent.emit("Logged out successfully")
@@ -277,11 +278,8 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     init {
-        // Load default Mahal community on startup
+        // Check for GitHub updates silently in background on startup
         viewModelScope.launch {
-            val initial = repository.getCommunityByCode("ALNOOR")
-            _activeMahal.value = initial
-            // Check for GitHub updates silently in background
             checkForAppUpdates(showToastIfLatest = false)
         }
     }
@@ -763,16 +761,16 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
         val mahalName = activeMahal.value?.name ?: "Mahal Madrasa Committee"
         val houseDisplayName = if (household.familyName.isNotBlank()) "${household.headOfFamily} (${household.familyName})" else household.headOfFamily
         return """
-            അസ്സലാമു അലൈകും $houseDisplayName,
+            Assalamu Alaikum $houseDisplayName,
             
-            $mahalName-ൽ നിന്നുള്ള പ്രതിമാസ വരിസംഖ്യാ ഓർമ്മപ്പെടുത്തൽ:
-            • വീട്ടു നമ്പർ: ${household.houseNumber}
-            • വാർഡ്: ${household.wardNumber}
-            • കുടിശ്ശിക തുക: ₹${totalPendingDue.toInt()} ($pendingMonths മാസങ്ങൾ)
+            Monthly Subscription (Vari) reminder from $mahalName:
+            • House Number: ${household.houseNumber}
+            • Ward: ${household.wardNumber}
+            • Pending Due: ₹${totalPendingDue.toInt()} ($pendingMonths months)
             
-            ദയവായി വരിസംഖ്യ മഹല്ല് ഓഫീസിലോ വരിസംഖ്യ കളക്ടർ മുഖേനയോ അടയ്ക്കണമെന്ന് താല്പര്യപ്പെടുന്നു. 
-            (Digital Receipt will be generated upon payment).
-            ജസാക്കല്ലാഹു ഖൈർ!
+            Kindly clear the pending subscription via UPI payment in the app or at the Mahal Office.
+            (A digital receipt will be automatically generated upon payment).
+            Jazakallah Khair!
         """.trimIndent()
     }
 
@@ -809,19 +807,19 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
         val currentMonth = java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.ENGLISH).format(java.util.Date())
 
         return """
-            📢 *${mahalName} - പ്രതിമാസ വരിസംഖ്യാ നോട്ടിഫിക്കേഷൻ ($currentMonth)*
+            📢 *${mahalName} - Monthly Subscription Notification ($currentMonth)*
             
-            മാന്യ മഹല്ല് നിവാസികളുടെ ശ്രദ്ധയ്ക്ക്,
-            ഈ മാസത്തെ മദ്റസ / മഹല്ല് വരിസംഖ്യ ശേഖരണം പുരോഗമിക്കുകയാണ്. 
+            Dear Mahal Residents,
+            Collection for this month's Madrasa & Mahal subscription is currently in progress.
             
-            • ആകെ കുടിശ്ശികയുള്ള കുടുംബങ്ങൾ: ${pendingList.size}
-            • ആകെ ബാക്കി തുക: ₹${totalDue.toInt()}
+            • Households Overdue: ${pendingList.size}
+            • Total Overdue Amount: ₹${totalDue.toInt()}
             
-            വരിസംഖ്യ ഇതുവരെ അടയ്ക്കാത്ത കുടുംബങ്ങൾ എത്രയും വേഗം മഹല്ല് ഓഫീസിലോ ചുമതലപ്പെട്ട കളക്ടർമാർ വഴിയോ അടച്ചു രസീത് കൈപ്പറ്റണമെന്ന് അഭ്യർത്ഥിക്കുന്നു.
+            Residents with pending subscriptions are kindly requested to settle dues through the Mahal App via UPI or at the Mahal Office.
             
-            സുതാര്യമായ വരവു-ചെലവ് വിവരങ്ങൾക്കും രസീതുകൾക്കും മഹല്ല് ആപ്പിൽ മൊബൈൽ നമ്പർ ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യാവുന്നതാണ്.
+            For verified digital receipts and full transparency, please log in with your registered phone number in the Mahal Ledger App.
             
-            - സെക്രട്ടറി / ട്രഷറർ, $mahalName
+            - Secretary / Treasurer, $mahalName
         """.trimIndent()
     }
 

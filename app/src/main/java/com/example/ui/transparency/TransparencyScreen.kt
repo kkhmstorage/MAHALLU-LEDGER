@@ -126,7 +126,7 @@ fun TransparencyScreen(
 
                     Column {
                         Text(
-                            text = "Community Transparency Portal (സുതാര്യത)",
+                            text = "Community Transparency Portal",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
@@ -150,7 +150,7 @@ fun TransparencyScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Verify My Family's Subscription (വരിസംഖ്യ പരിശോധന)",
+                        text = "Verify My Family's Subscription",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -285,7 +285,7 @@ fun TransparencyScreen(
                     Spacer(modifier = Modifier.height(14.dp))
 
                     BalanceSheetRow(
-                        label = "1. Mahal Subscriptions Collected (വരിസംഖ്യ)",
+                        label = "1. Mahal Subscriptions Collected",
                         amount = subTotal,
                         isPositive = true
                     )
@@ -309,7 +309,7 @@ fun TransparencyScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     BalanceSheetRow(
-                        label = "3. Total Operational Expenses (ചെലവുകൾ)",
+                        label = "3. Total Operational Expenses",
                         amount = totalExpenses,
                         isPositive = false
                     )

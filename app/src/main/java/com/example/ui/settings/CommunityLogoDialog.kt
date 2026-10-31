@@ -110,7 +110,7 @@ fun CommunityLogoDialog(
                 ) {
                     Column {
                         Text(
-                            text = "കമ്മ്യൂണിറ്റി ലോഗോ അപ്‌ലോഡ്",
+                            text = "Community Logo & Emblem",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -140,7 +140,7 @@ fun CommunityLogoDialog(
                         modifier = Modifier.padding(20.dp)
                     ) {
                         Text(
-                            text = "ആപ്പ് തുറക്കുമ്പോഴുള്ള സൂം ഔട്ട് പ്രിവ്യൂ",
+                            text = "App Launch Zoom-Out Splash Preview",
                             color = Color(0xFFD1FAE5),
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold
@@ -192,7 +192,7 @@ fun CommunityLogoDialog(
                         ) {
                             Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("സൂം ഔട്ട് ടെസ്റ്റ് ചെയ്യുക (Test Zoom)", color = Color.White, fontSize = 12.sp)
+                            Text("Test Zoom Animation", color = Color.White, fontSize = 12.sp)
                         }
                     }
                 }
@@ -213,19 +213,19 @@ fun CommunityLogoDialog(
                 ) {
                     Icon(imageVector = Icons.Default.AddPhotoAlternate, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(if (selectedUri.isNotBlank()) "മറ്റൊരു ചിത്രം തിരഞ്ഞെടുക്കുക" else "ഗാലറിയിൽ നിന്ന് ലോഗോ തിരഞ്ഞെടുക്കുക (Upload)")
+                    Text(if (selectedUri.isNotBlank()) "Choose Another Image" else "Select Custom Logo from Gallery")
                 }
 
                 if (selectedUri.isNotBlank()) {
                     TextButton(onClick = { selectedUri = "" }) {
-                        Text("അപ്‌ലോഡ് ചെയ്ത ചിത്രം ഒഴിവാക്കുക (Reset)", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+                        Text("Remove Custom Upload (Reset)", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
                     }
                 }
 
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "അല്ലെങ്കിൽ ഒരു മുദ്ര തിരഞ്ഞെടുക്കുക (Presets):",
+                    text = "Or choose a preset emblem:",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.fillMaxWidth()
@@ -295,7 +295,7 @@ fun CommunityLogoDialog(
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("റദ്ദാക്കുക (Cancel)")
+                        Text("Cancel")
                     }
 
                     Button(
@@ -308,7 +308,7 @@ fun CommunityLogoDialog(
                             .testTag("save_community_logo_button"),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text("സേവ് ചെയ്യുക (Save Logo)", fontWeight = FontWeight.Bold)
+                        Text("Save Logo", fontWeight = FontWeight.Bold)
                     }
                 }
             }

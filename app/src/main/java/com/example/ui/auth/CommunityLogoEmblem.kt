@@ -28,11 +28,11 @@ import coil.compose.AsyncImage
 import com.example.ui.theme.CashInflowGreen
 
 enum class LogoPreset(val id: String, val titleMalayalam: String, val icon: ImageVector) {
-    MOSQUE("MOSQUE", "പള്ളി (Mosque)", Icons.Default.Mosque),
-    MINARET("MINARET", "മിനാരം (Minaret)", Icons.Default.Villa),
-    CRESCENT("CRESCENT", "ചന്ദ്രക്കല (Crescent)", Icons.Default.NightsStay),
-    BOOK("BOOK", "ഖുർആൻ / ഗ്രന്ഥം (Book)", Icons.Default.AutoStories),
-    EMBLEM("EMBLEM", "മഹല്ല് മുദ്ര (Emblem)", Icons.Default.Shield)
+    MOSQUE("MOSQUE", "Mosque", Icons.Default.Mosque),
+    MINARET("MINARET", "Minaret", Icons.Default.Villa),
+    CRESCENT("CRESCENT", "Crescent & Star", Icons.Default.NightsStay),
+    BOOK("BOOK", "Quran / Book", Icons.Default.AutoStories),
+    EMBLEM("EMBLEM", "Official Shield", Icons.Default.Shield)
 }
 
 @Composable

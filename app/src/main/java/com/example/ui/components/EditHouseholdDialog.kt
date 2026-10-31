@@ -90,7 +90,7 @@ fun EditHouseholdDialog(
                 ) {
                     Column {
                         Text(
-                            text = "Edit Family Details (കുടുംബ വിവരങ്ങൾ)",
+                            text = "Edit Family Details",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -152,7 +152,7 @@ fun EditHouseholdDialog(
                 OutlinedTextField(
                     value = headOfFamily,
                     onValueChange = { headOfFamily = it },
-                    label = { Text("Head of Family Name (ഗൃഹനാഥൻ)*") },
+                    label = { Text("Head of Family Name*") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -161,8 +161,8 @@ fun EditHouseholdDialog(
                 OutlinedTextField(
                     value = familyName,
                     onValueChange = { familyName = it },
-                    label = { Text("Family / House Name (കുടുംബ പേര് / വീട്ടുപേര്)") },
-                    placeholder = { Text("e.g. മേലേതിൽ വീട് / Baitul Noor") },
+                    label = { Text("Family / House Name") },
+                    placeholder = { Text("e.g. Baitul Aman / Melethil") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -393,7 +393,7 @@ fun EditHouseholdDialog(
                     ) {
                         Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Confirm & Verify (ഡാറ്റ ഉറപ്പുവരുത്തുക)")
+                        Text("Confirm & Verify Family Data")
                     }
                 }
             }
