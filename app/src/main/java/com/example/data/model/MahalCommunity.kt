@@ -15,5 +15,7 @@ data class MahalCommunity(
     val regNumber: String = "",
     val defaultMonthlyFee: Double = 200.0,
     val isActive: Boolean = true,
+    val logoUri: String = "",
+    val logoPreset: String = "MOSQUE",
     val createdAt: Long = System.currentTimeMillis()
 )

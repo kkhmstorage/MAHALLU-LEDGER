@@ -73,6 +73,11 @@ import com.example.ui.theme.CashOutflowContainer
 import com.example.ui.theme.CashOutflowRed
 import com.example.util.DriveBackupState
 
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.Image
+import com.example.ui.auth.CommunityLogoEmblem
+import com.example.ui.settings.CommunityLogoDialog
+
 @Composable
 fun SettingsScreen(
     viewModel: MadrasaViewModel,
@@ -88,6 +93,7 @@ fun SettingsScreen(
     var showSuperAdminLoginDialog by remember { mutableStateOf(false) }
     var showMemberOtpDialog by remember { mutableStateOf(false) }
     var showCreateMahalDialog by remember { mutableStateOf(false) }
+    var showCommunityLogoDialog by remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = modifier
@@ -190,7 +196,18 @@ fun SettingsScreen(
                         ) {
                             Icon(imageVector = Icons.Default.SwapHoriz, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Switch Account / Role")
+                            Text("Switch Account")
+                        }
+
+                        Button(
+                            onClick = { viewModel.logout() },
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                        ) {
+                            Icon(imageVector = Icons.AutoMirrored.Filled.Logout, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Logout")
                         }
                     }
                 }
@@ -287,12 +304,12 @@ fun SettingsScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "Sub-Admin Login:",
+                                    text = "Sub-Admin Account:",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "User: ${community.subAdminUsername} | Pass: ${community.subAdminPassword}",
+                                    text = "User: ${community.subAdminUsername}",
                                     style = MaterialTheme.typography.bodySmall,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -314,8 +331,57 @@ fun SettingsScreen(
             }
         }
 
-        // Section B: Sub-Admin View (Community Profile)
+        // Section B: Sub-Admin View (Community Profile & Logo Upload)
         if (role == UserRole.SUB_ADMIN) {
+            item {
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "കമ്മ്യൂണിറ്റി ലോഗോ & ബ്രാൻഡിംഗ്",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = "ആപ്പ് തുറക്കുമ്പോൾ സൂം ഔട്ട് ആയി കാണിക്കുന്ന ലോഗോ",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            activeMahal?.let { mahal ->
+                                CommunityLogoEmblem(
+                                    logoUri = mahal.logoUri,
+                                    logoPreset = mahal.logoPreset,
+                                    communityName = mahal.name,
+                                    size = 50.dp
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(14.dp))
+
+                        Button(
+                            onClick = { showCommunityLogoDialog = true },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Image, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text("കമ്മ്യൂണിറ്റി ലോഗോ അപ്‌ലോഡ് ചെയ്യുക (Upload Logo)")
+                        }
+                    }
+                }
+            }
+
             item {
                 Card(
                     shape = RoundedCornerShape(16.dp),
@@ -517,6 +583,16 @@ fun SettingsScreen(
                 viewModel.createNewMahal(code, name, location, username, pass, phone, regNo, fee) {
                     showCreateMahalDialog = false
                 }
+            }
+        )
+    }
+
+    if (showCommunityLogoDialog && activeMahal != null) {
+        CommunityLogoDialog(
+            activeMahal = activeMahal!!,
+            onDismiss = { showCommunityLogoDialog = false },
+            onSave = { uri, preset ->
+                viewModel.updateCommunityLogo(uri, preset)
             }
         )
     }

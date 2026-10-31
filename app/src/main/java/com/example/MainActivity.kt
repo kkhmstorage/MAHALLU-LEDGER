@@ -75,6 +75,11 @@ import com.example.ui.theme.CashInflowContainer
 import com.example.ui.theme.CashInflowGreen
 import com.example.ui.theme.MahalLedgerTheme
 import com.example.ui.transparency.TransparencyScreen
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material3.IconButton
+import com.example.ui.auth.AnimatedSplashScreen
+import com.example.ui.auth.CommunityLogoEmblem
+import com.example.ui.auth.LoginScreen
 import kotlinx.coroutines.flow.collectLatest
 
 enum class MainTab(
@@ -117,12 +122,30 @@ fun MahalLedgerApp(
     val activeMahal by viewModel.activeMahal.collectAsState()
     val activeMember by viewModel.activeMemberHousehold.collectAsState()
     val activeReceipt by viewModel.activeReceipt.collectAsState()
+    val isSplashCompleted by viewModel.isSplashCompleted.collectAsState()
+    val isAuthenticated by viewModel.isAuthenticated.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.snackbarEvent.collectLatest { message ->
             snackbarHostState.showSnackbar(message)
         }
+    }
+
+    if (!isSplashCompleted) {
+        AnimatedSplashScreen(
+            activeMahal = activeMahal,
+            onSplashComplete = { viewModel.completeSplash() }
+        )
+        return
+    }
+
+    if (!isAuthenticated) {
+        LoginScreen(
+            viewModel = viewModel,
+            activeMahal = activeMahal
+        )
+        return
     }
 
     BackHandler(enabled = selectedTab != MainTab.DASHBOARD) {
@@ -134,22 +157,31 @@ fun MahalLedgerApp(
         topBar = {
             TopAppBar(
                 title = {
-                    Column {
-                        Text(
-                            text = activeMahal?.name ?: "Mahal Ledger",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        CommunityLogoEmblem(
+                            logoUri = activeMahal?.logoUri,
+                            logoPreset = activeMahal?.logoPreset,
+                            communityName = activeMahal?.name ?: "Mahal Ledger",
+                            size = 36.dp
                         )
-                        Text(
-                            text = when (role) {
-                                UserRole.SUPER_ADMIN -> "Super-Admin Control • Master Access"
-                                UserRole.SUB_ADMIN -> "Sub-Admin: ${activeMahal?.subAdminUsername ?: "Treasurer"}"
-                                UserRole.MEMBER -> "Member: ${activeMember?.headOfFamily ?: "Family"} (${activeMember?.houseNumber ?: ""})"
-                            },
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Column {
+                            Text(
+                                text = activeMahal?.name ?: "Mahal Ledger",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1
+                            )
+                            Text(
+                                text = when (role) {
+                                    UserRole.SUPER_ADMIN -> "Super-Admin Control • Master Access"
+                                    UserRole.SUB_ADMIN -> "Sub-Admin: ${activeMahal?.subAdminUsername ?: "Treasurer"}"
+                                    UserRole.MEMBER -> "Member: ${activeMember?.headOfFamily ?: "Family"} (${activeMember?.houseNumber ?: ""})"
+                                },
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 },
                 actions = {
@@ -231,6 +263,18 @@ fun MahalLedgerApp(
                                 }
                             )
                         }
+                    }
+
+                    // Logout Action Button
+                    IconButton(
+                        onClick = { viewModel.logout() },
+                        modifier = Modifier.testTag("app_bar_logout_button")
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Logout,
+                            contentDescription = "Logout",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

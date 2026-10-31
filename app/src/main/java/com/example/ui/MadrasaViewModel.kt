@@ -64,6 +64,25 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
     private val _currentRole = MutableStateFlow(UserRole.SUB_ADMIN)
     val currentRole: StateFlow<UserRole> = _currentRole.asStateFlow()
 
+    // Authentication session: starts false on app launch so Login Window is shown
+    private val _isAuthenticated = MutableStateFlow(false)
+    val isAuthenticated: StateFlow<Boolean> = _isAuthenticated.asStateFlow()
+
+    private val _isSplashCompleted = MutableStateFlow(false)
+    val isSplashCompleted: StateFlow<Boolean> = _isSplashCompleted.asStateFlow()
+
+    fun completeSplash() {
+        _isSplashCompleted.value = true
+    }
+
+    fun logout() {
+        _isAuthenticated.value = false
+        _activeMemberHousehold.value = null
+        viewModelScope.launch {
+            _snackbarEvent.emit("Logged out successfully")
+        }
+    }
+
     // Active Tenant Community
     private val _activeMahal = MutableStateFlow<MahalCommunity?>(null)
     val activeMahal: StateFlow<MahalCommunity?> = _activeMahal.asStateFlow()
@@ -244,6 +263,7 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
                 repository.setActiveMahal(community.mahalCode)
                 _currentRole.value = UserRole.SUB_ADMIN
                 _activeMemberHousehold.value = null
+                _isAuthenticated.value = true
                 _snackbarEvent.emit("Welcome, Sub-Admin of ${community.name}")
                 onResult(true, "Success")
             } else {
@@ -257,6 +277,7 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
         if (masterPin == "9999" || masterPin == "admin123") {
             _currentRole.value = UserRole.SUPER_ADMIN
             _activeMemberHousehold.value = null
+            _isAuthenticated.value = true
             viewModelScope.launch {
                 _snackbarEvent.emit("Logged into Super-Admin Control Panel")
             }
@@ -292,9 +313,21 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
                 }
                 _activeMemberHousehold.value = household
                 _currentRole.value = UserRole.MEMBER
+                _isAuthenticated.value = true
                 _snackbarEvent.emit("Welcome, ${household.headOfFamily} (${household.houseNumber})")
                 onComplete()
             }
+        }
+    }
+
+    // Sub-Admin Community Logo & Profile Update
+    fun updateCommunityLogo(logoUri: String, logoPreset: String) {
+        viewModelScope.launch {
+            val current = activeMahal.value ?: return@launch
+            val updated = current.copy(logoUri = logoUri, logoPreset = logoPreset)
+            repository.updateMahalCommunity(updated)
+            _activeMahal.value = updated
+            _snackbarEvent.emit("Community logo updated successfully")
         }
     }
 

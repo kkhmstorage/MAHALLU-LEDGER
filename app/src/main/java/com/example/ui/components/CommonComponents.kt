@@ -979,8 +979,8 @@ fun SubAdminLoginDialog(
     onDismiss: () -> Unit,
     onLogin: (username: String, password: String) -> Unit
 ) {
-    var username by remember { mutableStateOf("alnoor_admin") }
-    var password by remember { mutableStateOf("password123") }
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -999,6 +999,7 @@ fun SubAdminLoginDialog(
                     value = username,
                     onValueChange = { username = it },
                     label = { Text("Sub-Admin Username / Mahal Code") },
+                    placeholder = { Text("Enter username or code") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -1006,14 +1007,9 @@ fun SubAdminLoginDialog(
                     value = password,
                     onValueChange = { password = it },
                     label = { Text("Password") },
+                    placeholder = { Text("Enter password") },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth()
-                )
-
-                Text(
-                    text = "Demo Credentials: alnoor_admin / password123 (or darussalam_admin / password123)",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -1063,7 +1059,8 @@ fun SuperAdminLoginDialog(
                         pin = it
                         error = false
                     },
-                    label = { Text("Master PIN (Default: 9999)") },
+                    label = { Text("Master PIN") },
+                    placeholder = { Text("Enter Master PIN") },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     isError = error,
@@ -1100,7 +1097,7 @@ fun MemberOtpLoginDialog(
     onDismiss: () -> Unit
 ) {
     var step by remember { mutableStateOf(1) } // 1 = Phone, 2 = OTP
-    var phone by remember { mutableStateOf("9846011223") }
+    var phone by remember { mutableStateOf("") }
     var enteredOtp by remember { mutableStateOf("") }
     var expectedOtp by remember { mutableStateOf("") }
     var familyName by remember { mutableStateOf("") }
@@ -1126,38 +1123,17 @@ fun MemberOtpLoginDialog(
                             errorMessage = ""
                         },
                         label = { Text("Mobile Phone Number") },
-                        placeholder = { Text("e.g. 9846011223") },
+                        placeholder = { Text("10-digit mobile number") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                         isError = errorMessage.isNotEmpty(),
                         supportingText = if (errorMessage.isNotEmpty()) { { Text(errorMessage) } } else null,
                         modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Text(
-                        text = "Demo Registered Numbers: 9846011223, 9847122334, 9846233445",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary
                     )
                 } else {
                     Text(
                         text = "A one-time passcode (OTP) has been sent to $phone for $familyName:",
                         style = MaterialTheme.typography.bodyMedium
                     )
-
-                    // Simulated SMS OTP Banner
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "📨 SMS Code: $expectedOtp (Demo Simulation)",
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier.padding(12.dp)
-                        )
-                    }
 
                     OutlinedTextField(
                         value = enteredOtp,
@@ -1166,6 +1142,7 @@ fun MemberOtpLoginDialog(
                             errorMessage = ""
                         },
                         label = { Text("4-Digit OTP") },
+                        placeholder = { Text("Enter OTP received") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                         isError = errorMessage.isNotEmpty(),
                         supportingText = if (errorMessage.isNotEmpty()) { { Text(errorMessage) } } else null,
@@ -1181,7 +1158,6 @@ fun MemberOtpLoginDialog(
                         onRequestOtp(phone) { success, otp, name ->
                             if (success) {
                                 expectedOtp = otp
-                                enteredOtp = otp // prefill for easy testing
                                 familyName = name
                                 step = 2
                             } else {
@@ -1199,7 +1175,7 @@ fun MemberOtpLoginDialog(
                             onVerifyOtp(phone)
                             onDismiss()
                         } else {
-                            errorMessage = "Incorrect OTP. Please enter $expectedOtp"
+                            errorMessage = "Incorrect OTP. Please enter the valid code."
                         }
                     }
                 ) {
@@ -1224,7 +1200,7 @@ fun CreateMahalDialog(
     var name by remember { mutableStateOf("") }
     var location by remember { mutableStateOf("Kerala, India") }
     var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("pass123") }
+    var password by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var regNo by remember { mutableStateOf("") }
     var fee by remember { mutableStateOf("250") }

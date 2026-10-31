@@ -163,4 +163,20 @@ class ExampleUnitTest {
         assertTrue(totalDue == 500.0)
         assertEquals(2, pendingMonths)
     }
+
+    @Test
+    fun testCommunityLogoDefaults() {
+        val community = MahalCommunity(
+            mahalCode = "ALNOOR",
+            name = "Al-Noor Madrasa & Mahal",
+            location = "Malappuram",
+            subAdminUsername = "alnoor_admin",
+            subAdminPassword = "password123",
+            contactPhone = "9847123456",
+            logoPreset = "MOSQUE",
+            logoUri = "content://media/external/images/media/42"
+        )
+        assertEquals("MOSQUE", community.logoPreset)
+        assertEquals("content://media/external/images/media/42", community.logoUri)
+    }
 }
