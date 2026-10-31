@@ -8,12 +8,736 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Noto+Sans+Malayalam:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- All Styles Inlined directly so that it NEVER fails to render or load -->
+    <style>
+        :root {
+            --primary: #15803d;
+            --primary-dark: #166534;
+            --primary-light: #dcfce7;
+            --primary-hover: #14532d;
+            --accent: #ca8a04;
+            --accent-light: #fef08a;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --card: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border: #e2e8f0;
+            --border-dark: #cbd5e1;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --danger: #dc2626;
+            --danger-bg: #fef2f2;
+            --warning: #d97706;
+            --warning-bg: #fffbeb;
+            --info: #0284c7;
+            --info-bg: #f0f9ff;
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow: 0 4px 14px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+            --font: 'Manrope', 'Noto Sans Malayalam', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Topbar */
+        .topbar {
+            background: linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%);
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(20, 83, 45, 0.25);
+        }
+
+        .topbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+        }
+
+        .brand-info h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        .brand-info .sub-title {
+            font-size: 0.78rem;
+            color: #bbf7d0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge-role {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fef08a;
+        }
+
+        .btn-apk {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            background: #ffffff;
+            color: var(--primary-dark);
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            transition: all 0.2s ease;
+        }
+
+        .btn-apk:hover {
+            background: #f0fdf4;
+            transform: translateY(-1px);
+        }
+
+        .btn-apk svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .btn-logout {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Nav Tabs */
+        .nav-tabs-bar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 68px;
+            z-index: 90;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-tabs-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+
+        .nav-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-tab-btn:hover {
+            color: var(--primary);
+            background: #f0fdf4;
+        }
+
+        .nav-tab-btn.active {
+            color: var(--primary-dark);
+            font-weight: 700;
+            border-bottom-color: var(--primary);
+            background: rgba(21, 128, 61, 0.05);
+        }
+
+        /* App Container */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            min-height: calc(100vh - 140px);
+        }
+
+        .tab-view {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .tab-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card.hero-balance {
+            background: linear-gradient(135deg, #14532d 0%, #166534 100%);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 8px 24px rgba(20, 83, 45, 0.25);
+        }
+        .stat-card.hero-balance .stat-label { color: #bbf7d0; }
+        .stat-card.hero-balance .stat-value { color: #ffffff; }
+        .stat-card.hero-balance .stat-icon { background: rgba(255,255,255,0.2); color: #fff; }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: var(--bg);
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .stat-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* Buttons & Actions */
+        .actions-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: #ffffff; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { background: var(--primary-light); color: var(--primary-dark); }
+        .btn-secondary:hover { background: #bbf7d0; }
+        .btn-outline { background: transparent; border: 1px solid var(--border-dark); color: var(--text); }
+        .btn-outline:hover { background: #f1f5f9; }
+        .btn-danger { background: var(--danger); color: #ffffff; }
+        .btn-whatsapp { background: #25d366; color: #ffffff; }
+        .btn-whatsapp:hover { background: #1eb857; }
+        .btn-sm { padding: 6px 12px; font-size: 0.78rem; border-radius: var(--radius-sm); }
+
+        /* Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            padding: 14px 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .data-table tr:hover { background-color: #f8fafc; }
+
+        /* 12 Months Matrix */
+        .months-matrix {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 3px;
+            min-width: 260px;
+        }
+
+        .month-badge {
+            padding: 4px 2px;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+        .month-badge.paid {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+        .month-badge.overdue {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+        .month-badge.pending {
+            background: #f1f5f9;
+            color: #94a3b8;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Filter Toolbar */
+        .filter-toolbar {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .search-box-wrapper input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-dark);
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: #f8fafc;
+        }
+        .search-box-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+        }
+        .search-box-wrapper svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            fill: var(--text-muted);
+        }
+
+        .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+        .chip-btn {
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .chip-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* Forms */
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .form-label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: #ffffff;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        /* Modals: Hidden by default! */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+        .modal-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            max-width: 650px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fafafa;
+        }
+        .modal-close-btn {
+            background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);
+        }
+        .modal-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            background: #fafafa;
+        }
+
+        /* Month check selection grid */
+        .month-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .month-check-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            background: #ffffff;
+        }
+        .month-check-card:hover { border-color: var(--primary); background: #f0fdf4; }
+        .month-check-card.checked {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        .month-check-card.disabled {
+            background: #f1f5f9;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        /* Digital Receipt */
+        .receipt-wrapper {
+            background: #ffffff;
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 14px;
+            margin-bottom: 16px;
+        }
+        .receipt-header h2 { font-size: 1.25rem; color: var(--primary-dark); font-weight: 800; }
+        .receipt-tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 3px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+        .receipt-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .receipt-item .label { font-size: 0.78rem; color: var(--text-muted); }
+        .receipt-item .val { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+        .receipt-total-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: var(--radius);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .receipt-total-box .total-label { font-size: 1rem; font-weight: 700; color: #166534; }
+        .receipt-total-box .total-amount { font-size: 1.6rem; font-weight: 900; color: #15803d; }
+
+        /* Login Screen Card */
+        .login-wrapper {
+            max-width: 500px;
+            margin: 40px auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        .login-header {
+            background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
+            color: #ffffff;
+            padding: 36px 24px;
+            text-align: center;
+        }
+        .login-header-logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 14px;
+        }
+        .login-tabs { display: flex; border-bottom: 1px solid var(--border); background: #f8fafc; }
+        .login-tab-btn {
+            flex: 1; padding: 14px 16px; border: none; background: none; font-family: inherit;
+            font-size: 0.92rem; font-weight: 600; color: var(--text-muted); cursor: pointer;
+            border-bottom: 3px solid transparent; transition: all 0.2s;
+        }
+        .login-tab-btn.active {
+            color: var(--primary-dark); font-weight: 700; border-bottom-color: var(--primary); background: #fff;
+        }
+        .login-body { padding: 28px 24px; display: flex; flex-direction: column; gap: 16px; }
+        .quick-login-chips { margin-top: 10px; padding-top: 14px; border-top: 1px dashed var(--border); }
+        .chips-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .quick-chip {
+            padding: 6px 12px; background: #f1f5f9; border: 1px solid var(--border);
+            border-radius: 999px; font-size: 0.75rem; font-weight: 600; cursor: pointer; color: var(--text);
+        }
+        .quick-chip:hover { background: var(--primary-light); color: var(--primary-dark); border-color: #86efac; }
+
+        /* Feed list */
+        .feed-list { list-style: none; display: flex; flex-direction: column; }
+        .feed-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0; border-bottom: 1px solid var(--border); gap: 12px;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-item-left { display: flex; align-items: center; gap: 14px; }
+        .feed-avatar {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: var(--primary-light); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1rem; flex-shrink: 0;
+        }
+        .feed-avatar.expense { background: var(--danger-bg); color: var(--danger); }
+        .feed-info .title { font-weight: 700; font-size: 0.92rem; color: var(--text); }
+        .feed-info .sub { font-size: 0.78rem; color: var(--text-muted); }
+        .feed-amount { text-align: right; }
+        .feed-amount .amount { font-weight: 800; font-size: 1rem; }
+        .feed-amount .amount.income { color: var(--success); }
+        .feed-amount .amount.expense { color: var(--danger); }
+        .feed-amount .date { font-size: 0.72rem; color: var(--text-light); }
+
+        .dashboard-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 24px; }
+        .section-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;
+        }
+        .section-card-header {
+            padding: 18px 24px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between; background: #fafafa;
+        }
+        .section-card-header h2 { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+        .section-card-body { padding: 20px 24px; }
+
+        /* Toast */
+        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            background: #0f172a; color: #fff; padding: 12px 20px; border-radius: var(--radius);
+            box-shadow: var(--shadow-lg); font-size: 0.88rem; font-weight: 600; display: flex;
+            align-items: center; gap: 10px; max-width: 380px;
+        }
+        .toast.success { background: #14532d; border-left: 4px solid #4ade80; }
+        .toast.error { background: #7f1d1d; border-left: 4px solid #f87171; }
+
+        /* Print */
+        @media print {
+            .topbar, .nav-tabs-bar, .actions-card, .filter-toolbar, .btn, .modal-footer, .no-print { display: none !important; }
+            body, .app-container { background: #ffffff !important; padding: 0 !important; }
+            .modal-overlay { position: static !important; background: none !important; display: block !important; padding: 0 !important; }
+            .modal-card { box-shadow: none !important; max-width: 100% !important; border: none !important; }
+            .receipt-wrapper { border: 1px solid #000 !important; }
+        }
+    </style>
 </head>
 <body>
 
     <!-- ========================================== -->
-    <!-- 1. LOGIN VIEW (Initial screen when not logged in) -->
+    <!-- 1. LOGIN VIEW (Initial screen)             -->
     <!-- ========================================== -->
     <div id="loginView">
         <div class="login-wrapper">
@@ -25,11 +749,11 @@
 
             <!-- Login Tabs -->
             <div class="login-tabs">
-                <button class="login-tab-btn active" id="loginTabAdmin">അഡ്മിൻ ലോഗിൻ</button>
-                <button class="login-tab-btn" id="loginTabFamily">കുടുംബാംഗങ്ങൾ (OTP)</button>
+                <button class="login-tab-btn active" id="loginTabAdmin" onclick="switchLoginTab('admin')">അഡ്മിൻ ലോഗിൻ</button>
+                <button class="login-tab-btn" id="loginTabFamily" onclick="switchLoginTab('family')">കുടുംബാംഗങ്ങൾ (OTP)</button>
             </div>
 
-            <!-- Admin Login Form -->
+            <!-- A. Admin Login Form -->
             <form id="adminLoginForm" class="login-body" onsubmit="handleAdminLogin(event)">
                 <div class="form-group">
                     <label class="form-label">യൂസർനെയിം (Username)</label>
@@ -45,9 +769,8 @@
                     പ്രവേശിക്കുക (Sign In)
                 </button>
 
-                <!-- Quick Testing Chips -->
                 <div class="quick-login-chips">
-                    <span class="caption">ടെസ്റ്റിംഗിനായി ഒറ്റ ക്ലിക്കിൽ ലോഗിൻ ചെയ്യാം:</span>
+                    <span style="font-size:0.78rem; color:var(--text-muted);">ടെസ്റ്റിംഗിനായി ഒറ്റ ക്ലിക്കിൽ ലോഗിൻ ചെയ്യാം:</span>
                     <div class="chips-row">
                         <button type="button" class="quick-chip" onclick="quickFillLogin('alnoor_admin', 'password123')">🟢 Al-Noor Admin</button>
                         <button type="button" class="quick-chip" onclick="quickFillLogin('darussalam_admin', 'password123')">🔵 Darussalam Admin</button>
@@ -56,43 +779,55 @@
                 </div>
             </form>
 
-            <!-- Family OTP Login Form -->
+            <!-- B. Family OTP Login Form -->
             <div id="familyLoginForm" class="login-body" style="display: none;">
+                
                 <div class="form-group">
-                    <label class="form-label">രജിസ്റ്റർ ചെയ്ത ഫോൺ നമ്പർ (Phone Number)</label>
-                    <input type="tel" class="form-input" id="loginMemberPhone" placeholder="10 അക്ക ഫോൺ നമ്പർ">
+                    <label class="form-label">കുടുംബത്തെ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ഫോൺ നമ്പർ നൽകുക:</label>
+                    <select class="form-select" id="familySelectDropdown" onchange="onFamilySelectChange(this.value)">
+                        <option value="">-- രജിസ്റ്റർ ചെയ്ത കുടുംബം തിരഞ്ഞെടുക്കുക --</option>
+                        <option value="9846011223">H-01 : K. P. Abdul Rahman (Baitul Noor) - 9846011223</option>
+                        <option value="9847122334">H-02 : M. C. Moideen Kutty (Al-Falah) - 9847122334</option>
+                        <option value="9846233445">H-03 : V. K. Hamza Haji (Darussalam) - 9846233445</option>
+                        <option value="9847344556">H-04 : P. K. Usman (Madeena Manzil) - 9847344556</option>
+                        <option value="9846455667">H-05 : T. Sayed Mohammed - 9846455667</option>
+                    </select>
                 </div>
 
-                <button type="button" class="btn btn-secondary" onclick="handleMemberOtpRequest()" style="width:100%; justify-content:center;">
+                <div class="form-group">
+                    <label class="form-label">ഫോൺ നമ്പർ (Phone Number)</label>
+                    <input type="tel" class="form-input" id="loginMemberPhone" placeholder="10 അക്ക ഫോൺ നമ്പർ" value="9846011223">
+                </div>
+
+                <button type="button" class="btn btn-secondary" onclick="handleMemberOtpRequest()" style="width:100%; justify-content:center; padding:10px;">
                     📩 OTP അയക്കുക (Send OTP)
                 </button>
 
-                <div id="otpSentMessage" style="display:none; color:var(--success); font-size:0.85rem; font-weight:700;"></div>
-
-                <div id="memberOtpStep" style="display:none; margin-top:10px;">
-                    <div class="form-group">
-                        <label class="form-label">ലഭിച്ച 4 അക്ക OTP നൽകുക</label>
-                        <input type="text" class="form-input" id="loginMemberOtp" placeholder="4 അക്ക OTP" maxlength="4">
+                <!-- OTP Alert Box -->
+                <div id="otpSentAlertBox" style="display:none; background:#f0fdf4; border:1px solid #86efac; border-radius:10px; padding:12px; margin-top:8px;">
+                    <div style="font-size:0.85rem; color:#166534; font-weight:700;" id="otpAlertText">
+                        ✓ നിങ്ങളുടെ OTP: <span style="font-size:1.2rem; color:#15803d; font-weight:900;" id="generatedOtpDisplay">1234</span>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="handleMemberLogin()" style="width:100%; justify-content:center; margin-top:10px;">
+                    <div style="font-size:0.75rem; color:#14532d; margin-top:4px;">
+                        ഈ 4 അക്ക OTP താഴെ നൽകി പ്രവേശിക്കുക.
+                    </div>
+                </div>
+
+                <div id="memberOtpStep" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label class="form-label">ലഭിച്ച 4 അക്ക OTP നൽകുക:</label>
+                        <input type="text" class="form-input" id="loginMemberOtp" placeholder="4 അക്ക OTP (ഉദാ: 1234)" value="1234" maxlength="4" style="font-size:1.1rem; font-weight:800; letter-spacing:4px; text-align:center;">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="handleMemberLogin()" style="width:100%; justify-content:center; padding:12px; font-size:1rem; margin-top:6px;">
                         സ്ഥിരീകരിച്ച് പ്രവേശിക്കുക (Verify & Enter)
                     </button>
                 </div>
-
-                <!-- Demo family phone numbers -->
-                <div class="quick-login-chips">
-                    <span class="caption">ഡെമോ കുടുംബ നമ്പറുകൾ:</span>
-                    <div class="chips-row">
-                        <button type="button" class="quick-chip" onclick="quickFillMemberPhone('9846011223')">H-01 (K.P. Abdul Rahman)</button>
-                        <button type="button" class="quick-chip" onclick="quickFillMemberPhone('9847122334')">H-02 (M.C. Moideen Kutty)</button>
-                    </div>
-                </div>
             </div>
 
-            <!-- Download APK Callout -->
+            <!-- Download APK Banner -->
             <div style="background:#f1f5f9; padding:18px 24px; border-top:1px solid var(--border); text-align:center;">
                 <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;">
-                    💻 <strong>കംപ്യൂട്ടറിലും ലാപ്‌ടോപ്പിലും</strong> ബ്രൗസറിൽ നേരിട്ട് ഉപയോഗിക്കാം. ഫോണിൽ ആപ്പ് ആവശ്യമുള്ളവർക്ക് താഴെയുള്ള APK ഡൗൺലോഡ് ചെയ്യാം.
+                    💻 <strong>കംപ്യൂട്ടറിലും ലാപ്‌ടോപ്പിലും</strong> ബ്രൗസറിൽ നേരിട്ട് ഉപയോഗിക്കാം. മൊബൈൽ ആപ്പ് ആവശ്യമുള്ളവർക്ക് താഴെയുള്ള APK ഡൗൺലോഡ് ചെയ്യാം:
                 </p>
                 <button type="button" class="btn-apk" onclick="openApkDownloadModal()" style="margin:0 auto;">
                     <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
@@ -102,12 +837,115 @@
         </div>
     </div>
 
+
     <!-- ========================================== -->
-    <!-- 2. MAIN APPLICATION VIEW (When logged in) -->
+    <!-- 2. FAMILY MEMBER PORTAL VIEW               -->
     <!-- ========================================== -->
-    <div id="appMainView" style="display: none;">
+    <div id="familyPortalView" style="display: none;">
+        <header class="topbar">
+            <div class="topbar-container">
+                <div class="brand-section">
+                    <div class="brand-logo">🕌</div>
+                    <div class="brand-info">
+                        <h1 id="famPortalCommunityName">Al-Noor Madrasa & Mahal Committee</h1>
+                        <div class="sub-title">കുടുംബ പോർട്ടൽ (Family Portal) • 2026</div>
+                    </div>
+                </div>
+                <div class="topbar-actions">
+                    <span class="badge-role" id="famPortalMemberName">👨‍👩‍👧‍👦 കുടുംബാംഗം</span>
+                    <button class="btn-apk" onclick="openApkDownloadModal()">📱 APK ആപ്പ്</button>
+                    <button class="btn-logout" onclick="logout()">🚪 ലോഗൗട്ട്</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-container" style="max-width:960px;">
+            
+            <!-- Family Profile Card -->
+            <div class="stat-card" style="margin-bottom:20px; border-left:5px solid var(--primary);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <span class="badge-role" style="background:var(--primary-light); color:var(--primary-dark);" id="famProfileHouseNo">H-01</span>
+                        <h2 style="font-size:1.35rem; font-weight:800; margin-top:6px;" id="famProfileHeadName">K. P. Abdul Rahman</h2>
+                        <p style="font-size:0.85rem; color:var(--text-muted);" id="famProfileSubDetails">Baitul Noor • Ward 1 (East) • 9846011223</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:0.8rem; color:var(--text-muted);">പ്രതിമാസ വരിസംഖ്യ:</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--primary);" id="famProfileMonthlyFee">₹300</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Due Alert & Online Payment Card -->
+            <div id="famDueAlertSection" class="section-card" style="margin-bottom:24px; border:2px solid #f59e0b; background:#fffbeb;">
+                <div class="section-card-body">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                        <span style="font-size:1.6rem;">⚠️</span>
+                        <div>
+                            <h3 style="font-size:1.15rem; font-weight:800; color:#b45309;" id="famDueAlertTitle">വരിസംഖ്യാ കുടിശ്ശിക നിലനിൽക്കുന്നു</h3>
+                            <p style="font-size:0.85rem; color:#92400e;" id="famDueAlertSubtitle">നിങ്ങൾക്ക് 2 മാസത്തെ വരിസംഖ്യ കുടിശ്ശികയുണ്ട്.</p>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; align-items:center; background:#ffffff; padding:18px; border-radius:12px; border:1px solid #fde68a;">
+                        <div>
+                            <div style="font-size:0.85rem; color:var(--text-muted);">അടയ്ക്കാനുള്ള ആകെ തുക:</div>
+                            <div style="font-size:2rem; font-weight:900; color:#b45309; margin-bottom:10px;" id="famDueTotalAmount">₹600</div>
+                            
+                            <a id="famUpiPayBtn" href="#" class="btn btn-primary" style="width:100%; justify-content:center; text-decoration:none; padding:12px; font-size:1rem; margin-bottom:10px;">
+                                📲 Pay via UPI (GPay / PhonePe / Paytm)
+                            </a>
+
+                            <div style="font-size:0.8rem; color:var(--text-muted);">
+                                🔹 <strong>UPI ID:</strong> <code id="famUpiIdText">alnoormahal@sbi</code><br>
+                                🔹 <strong>Bank:</strong> SBI Valanchery (A/c: 67324419082)
+                            </div>
+                        </div>
+
+                        <!-- Live UPI QR Code -->
+                        <div style="text-align:center;">
+                            <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:6px;">GPay/PhonePe വഴി QR കോഡ് സ്കാൻ ചെയ്യാം:</div>
+                            <div style="display:inline-block; padding:10px; background:#fff; border:1px solid var(--border); border-radius:12px;">
+                                <img id="famUpiQrCode" src="" alt="UPI QR" style="width:150px; height:150px; display:block;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12 Months Payment Status Matrix -->
+            <div class="section-card" style="margin-bottom:24px;">
+                <div class="section-card-header">
+                    <h2>📅 2026 വർഷത്തെ വരിസംഖ്യാ അടവ് നില (12 Months)</h2>
+                </div>
+                <div class="section-card-body">
+                    <div class="months-matrix" id="fam12MonthsMatrix" style="grid-template-columns: repeat(6, 1fr); gap:8px;">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Payment Receipts -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <h2>📜 എന്റെ വരിസംഖ്യാ രസീതുകൾ (Receipts)</h2>
+                </div>
+                <div class="section-card-body">
+                    <ul class="feed-list" id="famReceiptsList">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 3. ADMIN APPLICATION VIEW (Sub/Super Admin)-->
+    <!-- ========================================== -->
+    <div id="adminMainView" style="display: none;">
         
-        <!-- Sticky Top Navigation Bar -->
         <header class="topbar">
             <div class="topbar-container">
                 <div class="brand-section" onclick="switchMainTab('view-dashboard')">
@@ -124,16 +962,8 @@
 
                 <div class="topbar-actions">
                     <span class="badge-role" id="headerUserRole">🕌 സബ് അഡ്മിൻ</span>
-                    <span class="badge-role" id="syncBadge" style="background:rgba(255,255,255,0.12); color:#bbf7d0;">☁️ Data Synced</span>
-                    
-                    <button class="btn-apk" onclick="openApkDownloadModal()">
-                        <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
-                        APK ആപ്പ്
-                    </button>
-
-                    <button class="btn-logout" onclick="logout()">
-                        🚪 ലോഗൗട്ട്
-                    </button>
+                    <button class="btn-apk" onclick="openApkDownloadModal()">📱 APK ആപ്പ്</button>
+                    <button class="btn-logout" onclick="logout()">🚪 ലോഗൗട്ട്</button>
                 </div>
             </div>
         </header>
@@ -141,36 +971,19 @@
         <!-- Navigation Tabs Bar -->
         <nav class="nav-tabs-bar">
             <div class="nav-tabs-container">
-                <button class="nav-tab-btn active" data-tab="view-dashboard">
-                    📊 ഡാഷ്‌ബോർഡ് (Overview)
-                </button>
-                <button class="nav-tab-btn" data-tab="view-subscriptions">
-                    💳 വരിസംഖ്യ (Subscriptions)
-                </button>
-                <button class="nav-tab-btn" data-tab="view-ledger">
-                    📖 ലെഡ്ജർ (Cash Ledger)
-                </button>
-                <button class="nav-tab-btn" data-tab="view-transparency">
-                    🛡️ സുതാര്യത & ഓഡിറ്റ്
-                </button>
-                <button class="nav-tab-btn" data-tab="view-settings">
-                    ⚙️ സെറ്റിങ്സ്
-                </button>
-                <button class="nav-tab-btn" data-tab="view-superadmin" style="display:none; color:#ca8a04;">
-                    👑 സൂപ്പർ അഡ്മിൻ
-                </button>
+                <button class="nav-tab-btn active" data-tab="view-dashboard">📊 ഡാഷ്‌ബോർഡ്</button>
+                <button class="nav-tab-btn" data-tab="view-subscriptions">💳 വരിസംഖ്യ & കുടുംബങ്ങൾ</button>
+                <button class="nav-tab-btn" data-tab="view-ledger">📖 വരവ് - ചിലവ് ലെഡ്ജർ</button>
+                <button class="nav-tab-btn" data-tab="view-transparency">🛡️ സുതാര്യത & ഓഡിറ്റ്</button>
+                <button class="nav-tab-btn" data-tab="view-settings">⚙️ സെറ്റിങ്സ്</button>
+                <button class="nav-tab-btn" data-tab="view-superadmin" style="display:none; color:#ca8a04;">👑 സൂപ്പർ അഡ്മിൻ</button>
             </div>
         </nav>
 
-        <!-- Main App Container -->
         <main class="app-container">
 
-            <!-- ========================= -->
-            <!-- TAB 1: DASHBOARD VIEW     -->
-            <!-- ========================= -->
+            <!-- TAB 1: DASHBOARD -->
             <section id="view-dashboard" class="tab-view active">
-                
-                <!-- Financial Summary Cards -->
                 <div class="stats-grid">
                     <div class="stat-card hero-balance">
                         <div class="stat-header">
@@ -208,7 +1021,7 @@
                         <div class="stat-sub">ശമ്പളം, കറന്റ്, അറ്റകുറ്റപ്പണി</div>
                     </div>
 
-                    <div class="stat-card due-alert">
+                    <div class="stat-card" style="border-left:5px solid var(--warning); background:#fffbeb;">
                         <div class="stat-header">
                             <span class="stat-label" style="color:#b45309;">കുടിശ്ശിക തുക (Pending Dues)</span>
                             <div class="stat-icon" style="background:#fef3c7; color:#d97706;">⚠️</div>
@@ -218,150 +1031,80 @@
                     </div>
                 </div>
 
-                <!-- Quick Action Buttons -->
                 <div class="actions-card">
-                    <div class="actions-title">
-                        <span>⚡ ദ്രുത കർമ്മങ്ങൾ (Quick Actions):</span>
-                    </div>
-                    <div class="actions-buttons">
-                        <button class="btn btn-primary" onclick="switchMainTab('view-subscriptions')">
-                            💵 വരിസംഖ്യ വാങ്ങുക
-                        </button>
-                        <button class="btn btn-secondary" onclick="openAddTransactionModal('INCOME')">
-                            ➕ വരവ് ചേർക്കുക
-                        </button>
-                        <button class="btn btn-outline" onclick="openAddTransactionModal('EXPENSE')">
-                            ➖ ചിലവ് ചേർക്കുക
-                        </button>
-                        <button class="btn btn-outline" onclick="openAddHouseholdModal()">
-                            👨‍👩‍👧‍👦 കുടുംബത്തെ ചേർക്കുക
-                        </button>
-                        <button class="btn btn-outline" onclick="switchMainTab('view-transparency')">
-                            🖨️ ഓഡിറ്റ് റിപ്പോർട്ട്
-                        </button>
+                    <div style="font-weight:700;">⚡ ദ്രുത കർമ്മങ്ങൾ (Quick Actions):</div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="switchMainTab('view-subscriptions')">💵 വരിസംഖ്യ വാങ്ങുക</button>
+                        <button class="btn btn-secondary" onclick="openAddTransactionModal('INCOME')">➕ വരവ് ചേർക്കുക</button>
+                        <button class="btn btn-outline" onclick="openAddTransactionModal('EXPENSE')">➖ ചിലവ് ചേർക്കുക</button>
+                        <button class="btn btn-outline" onclick="openAddHouseholdModal()">👨‍👩‍👧‍👦 കുടുംബത്തെ ചേർക്കുക</button>
+                        <button class="btn btn-outline" onclick="switchMainTab('view-transparency')">🖨️ ഓഡിറ്റ് റിപ്പോർട്ട്</button>
                     </div>
                 </div>
 
-                <!-- Recent Activity Two Columns -->
                 <div class="dashboard-columns">
-                    <!-- Left: Recent Subscription Payments -->
                     <div class="section-card">
                         <div class="section-card-header">
                             <h2>🕌 സമീപകാല വരിസംഖ്യാ രസീതുകൾ</h2>
                             <button class="btn btn-sm btn-outline" onclick="switchMainTab('view-subscriptions')">എല്ലാം കാണുക</button>
                         </div>
                         <div class="section-card-body">
-                            <ul class="feed-list" id="dashboardRecentPayments">
-                                <!-- Populated dynamically -->
-                            </ul>
+                            <ul class="feed-list" id="dashboardRecentPayments"></ul>
                         </div>
                     </div>
 
-                    <!-- Right: Recent Cash Transactions -->
                     <div class="section-card">
                         <div class="section-card-header">
                             <h2>📖 സമീപകാല വരവ് - ചിലവ് ഇടപാടുകൾ</h2>
                             <button class="btn btn-sm btn-outline" onclick="switchMainTab('view-ledger')">ലെഡ്ജർ കാണുക</button>
                         </div>
                         <div class="section-card-body">
-                            <ul class="feed-list" id="dashboardRecentTransactions">
-                                <!-- Populated dynamically -->
-                            </ul>
+                            <ul class="feed-list" id="dashboardRecentTransactions"></ul>
                         </div>
                     </div>
                 </div>
-
             </section>
 
-
-            <!-- ============================== -->
-            <!-- TAB 2: SUBSCRIPTIONS & HOUSES  -->
-            <!-- ============================== -->
+            <!-- TAB 2: SUBSCRIPTIONS & HOUSES -->
             <section id="view-subscriptions" class="tab-view">
-                
-                <!-- Sub-tab Bar -->
-                <div style="display:flex; gap:10px; margin-bottom:16px;">
-                    <button class="btn btn-primary active" id="tabSubMonthly">
-                        🕌 പ്രതിമാസ വരിസംഖ്യ (Monthly Vari)
-                    </button>
-                    <button class="btn btn-outline" id="tabSubSpecial">
-                        🤝 പ്രത്യേക ഫണ്ടുകൾ (Special Funds)
-                    </button>
-                </div>
-
-                <!-- Section A: Monthly Vari -->
-                <div id="monthlyVariSection">
-                    <!-- Filter Toolbar -->
-                    <div class="filter-toolbar">
-                        <div class="search-box-wrapper">
-                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                            <input type="text" id="subSearchInput" placeholder="കുടുംബനാഥൻ, വീട്ടുനമ്പർ, ഫോൺ, വാർഡ് എന്നിവ തിരയുക...">
-                        </div>
-
-                        <div class="filter-chips">
-                            <button class="chip-btn sub-filter-chip active" data-filter="ALL">എല്ലാം</button>
-                            <button class="chip-btn sub-filter-chip" data-filter="WITH_DUES">⚠️ കുടിശ്ശികയുള്ളവ</button>
-                            <button class="chip-btn sub-filter-chip" data-filter="FULLY_PAID">✓ അടച്ചുതീർത്തവ</button>
-                            <button class="chip-btn sub-filter-chip" data-filter="PENDING_VERIFICATION">വെരിഫിക്കേഷൻ</button>
-                        </div>
-
-                        <div style="display:flex; gap:8px;">
-                            <button class="btn btn-primary" onclick="openAddHouseholdModal()">
-                                ➕ കുടുംബത്തെ ചേർക്കുക
-                            </button>
-                            <button class="btn btn-outline" onclick="exportHouseholdsCSV()">
-                                📊 CSV റിപ്പോർട്ട്
-                            </button>
-                        </div>
+                <div class="filter-toolbar">
+                    <div class="search-box-wrapper">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        <input type="text" id="subSearchInput" placeholder="കുടുംബനാഥൻ, വീട്ടുനമ്പർ, ഫോൺ എന്നിവ തിരയുക...">
                     </div>
 
-                    <!-- Subscriptions Table -->
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>വീട്ടുനമ്പർ</th>
-                                    <th>കുടുംബനാഥൻ / മേൽവിലാസം</th>
-                                    <th>ഫോൺ / വാർഡ്</th>
-                                    <th>പ്രതിമാസം</th>
-                                    <th>2026 മാസ വരിസംഖ്യാ നില (12 Months)</th>
-                                    <th>കുടിശ്ശിക</th>
-                                    <th>പ്രവർത്തനങ്ങൾ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="subscriptionsTableBody">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
+                    <div class="filter-chips">
+                        <button class="chip-btn sub-filter-chip active" data-filter="ALL">എല്ലാം</button>
+                        <button class="chip-btn sub-filter-chip" data-filter="WITH_DUES">⚠️ കുടിശ്ശികയുള്ളവ</button>
+                        <button class="chip-btn sub-filter-chip" data-filter="FULLY_PAID">✓ അടച്ചുതീർത്തവ</button>
+                    </div>
+
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-primary" onclick="openAddHouseholdModal()">➕ കുടുംബത്തെ ചേർക്കുക</button>
+                        <button class="btn btn-outline" onclick="exportHouseholdsCSV()">📊 CSV ഡൗൺലോഡ്</button>
                     </div>
                 </div>
 
-                <!-- Section B: Special Funds / Additional Collections -->
-                <div id="specialFundsSection" style="display: none;">
-                    <div class="actions-card" style="margin-bottom:20px;">
-                        <div>
-                            <h3 style="font-size:1.1rem; font-weight:800;">മദ്റസാ നിർമ്മാണം, റിലീഫ് & പ്രത്യേക ഫണ്ടുകൾ</h3>
-                            <p style="font-size:0.85rem; color:var(--text-muted);">മഹല്ലിൽ നടക്കുന്ന പ്രത്യേക ജീവകാരുണ്യ, നിർമ്മാണ പദ്ധതികൾ ഇവിടെ രേഖപ്പെടുത്താം.</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="openCreateSpecialFundModal()">
-                            ➕ പുതിയ പ്രത്യേക ഫണ്ട് തുടങ്ങുക
-                        </button>
-                    </div>
-
-                    <div id="specialFundsList">
-                        <!-- Populated dynamically -->
-                    </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>വീട്ടുനമ്പർ</th>
+                                <th>കുടുംബനാഥൻ</th>
+                                <th>ഫോൺ / വാർഡ്</th>
+                                <th>പ്രതിമാസം</th>
+                                <th>2026 മാസ വരിസംഖ്യാ നില (12 Months)</th>
+                                <th>കുടിശ്ശിക</th>
+                                <th>പ്രവർത്തനങ്ങൾ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscriptionsTableBody"></tbody>
+                    </table>
                 </div>
-
             </section>
 
-
-            <!-- ========================= -->
-            <!-- TAB 3: CASH LEDGER        -->
-            <!-- ========================= -->
+            <!-- TAB 3: CASH LEDGER -->
             <section id="view-ledger" class="tab-view">
-                
-                <!-- Ledger Header Stats -->
                 <div class="stats-grid" style="margin-bottom:16px;">
                     <div class="stat-card" style="border-top:4px solid var(--success);">
                         <span class="stat-label">ആകെ വരവ് (Income)</span>
@@ -377,62 +1120,45 @@
                     </div>
                 </div>
 
-                <!-- Ledger Toolbar -->
                 <div class="filter-toolbar">
                     <div class="search-box-wrapper">
                         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                        <input type="text" id="ledgerSearchInput" placeholder="വിവരണം, കാറ്റഗറി, വൗച്ചർ നമ്പർ എന്നിവ തിരയുക...">
+                        <input type="text" id="ledgerSearchInput" placeholder="വിവരണം, കാറ്റഗറി, വൗച്ചർ നമ്പർ...">
                     </div>
-
                     <div class="filter-chips">
-                        <button class="chip-btn ledger-filter-chip active" data-filter="ALL">എല്ലാ ഇടപാടുകളും</button>
+                        <button class="chip-btn ledger-filter-chip active" data-filter="ALL">എല്ലാം</button>
                         <button class="chip-btn ledger-filter-chip" data-filter="INCOME">📥 വരവ് മാത്രം</button>
                         <button class="chip-btn ledger-filter-chip" data-filter="EXPENSE">📤 ചിലവ് മാത്രം</button>
                     </div>
-
-                    <button class="btn btn-primary" onclick="openAddTransactionModal('INCOME')">
-                        ➕ പുതിയ ഇടപാട് ചേർക്കുക
-                    </button>
+                    <button class="btn btn-primary" onclick="openAddTransactionModal('INCOME')">➕ പുതിയ ഇടപാട്</button>
                 </div>
 
-                <!-- Ledger Table -->
                 <div class="table-responsive">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>തീയതി</th>
                                 <th>വൗച്ചർ നമ്പർ</th>
-                                <th>വിവരണം / ഹെഡിംഗ്</th>
+                                <th>വിവരണം</th>
                                 <th>കാറ്റഗറി</th>
                                 <th>രീതി</th>
                                 <th>തുക (₹)</th>
                                 <th>മാറ്റം</th>
                             </tr>
                         </thead>
-                        <tbody id="ledgerTableBody">
-                            <!-- Populated dynamically -->
-                        </tbody>
+                        <tbody id="ledgerTableBody"></tbody>
                     </table>
                 </div>
-
             </section>
 
-
-            <!-- ========================= -->
-            <!-- TAB 4: TRANSPARENCY & AUDIT -->
-            <!-- ========================= -->
+            <!-- TAB 4: TRANSPARENCY -->
             <section id="view-transparency" class="tab-view">
-                
                 <div class="section-card" style="margin-bottom:24px;">
                     <div class="section-card-header">
                         <h2>🛡️ സുതാര്യമായ പൊതു ഓഡിറ്റ് റിപ്പോർട്ട് (2026)</h2>
-                        <button class="btn btn-sm btn-primary" onclick="window.print()">🖨️ റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക</button>
+                        <button class="btn btn-sm btn-primary" onclick="window.print()">🖨️ പ്രിന്റ് ചെയ്യുക</button>
                     </div>
                     <div class="section-card-body">
-                        <p style="color:var(--text-muted); margin-bottom:16px;">
-                            <strong id="transCommunityHeader">Al-Noor Madrasa & Mahal Committee</strong> യുടെ വരവ്-ചിലവ് കണക്കുകൾ മഹല്ല് നിവാസികൾക്ക് സുതാര്യമായി പരിശോധിക്കാൻ ലഭ്യമാക്കിയിരിക്കുന്നു.
-                        </p>
-
                         <div class="stats-grid">
                             <div class="stat-card" style="background:#f0fdf4;">
                                 <span class="stat-label">വരിസംഖ്യ പിരിവ്</span>
@@ -451,45 +1177,13 @@
                                 <div class="stat-value" id="transNetBalance" style="color:var(--primary);">₹0</div>
                             </div>
                         </div>
-
-                        <!-- Expense Category Breakdown -->
-                        <h3 style="font-size:1.05rem; font-weight:800; margin:24px 0 14px;">ചിലവുകളുടെ കാറ്റഗറി തിരിച്ചുള്ള വിശകലനം:</h3>
-                        <div id="transExpenseCategories">
-                            <!-- Populated dynamically -->
-                        </div>
                     </div>
                 </div>
-
-                <!-- Public Family Dues Verification Search -->
-                <div class="section-card">
-                    <div class="section-card-header">
-                        <h2>🔍 കുടുംബങ്ങളുടെ വരിസംഖ്യാ നില നേരിട്ട് പരിശോധിക്കുക</h2>
-                    </div>
-                    <div class="section-card-body">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">
-                            നിങ്ങളുടെ വീട്ടുനമ്പറോ (ഉദാ: <code>H-01</code>) രജിസ്റ്റർ ചെയ്ത ഫോൺ നമ്പറോ നൽകി വരിസംഖ്യാ കുടിശ്ശിക പരിശോധിക്കാം.
-                        </p>
-                        <div style="display:flex; gap:10px; max-width:550px;">
-                            <input type="text" class="form-input" id="auditSearchInput" placeholder="വീട്ടുനമ്പർ അല്ലെങ്കിൽ ഫോൺ നമ്പർ നൽകുക...">
-                            <button class="btn btn-primary" onclick="searchHouseholdAudit()">പരിശോധിക്കുക</button>
-                        </div>
-
-                        <div id="auditSearchResult">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-
             </section>
 
-
-            <!-- ========================= -->
-            <!-- TAB 5: SETTINGS           -->
-            <!-- ========================= -->
+            <!-- TAB 5: SETTINGS -->
             <section id="view-settings" class="tab-view">
-                
                 <div class="dashboard-columns">
-                    <!-- Left: Community Profile & Settings Form -->
                     <div class="section-card">
                         <div class="section-card-header">
                             <h2>⚙️ മഹല്ല് വിവരങ്ങൾ & അക്കൗണ്ട് സെറ്റിങ്സ്</h2>
@@ -500,7 +1194,6 @@
                                     <label class="form-label">മഹല്ലിന്റെ പേര്</label>
                                     <input type="text" class="form-input" id="settingMahalName" required>
                                 </div>
-
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label class="form-label">സ്ഥലം (Location)</label>
@@ -511,134 +1204,47 @@
                                         <input type="text" class="form-input" id="settingPhone" required>
                                     </div>
                                 </div>
-
                                 <div class="form-row">
-                                    <div class="form-group">
-                                        <label class="form-label">രജിസ്ട്രേഷൻ നമ്പർ</label>
-                                        <input type="text" class="form-input" id="settingRegNo">
-                                    </div>
                                     <div class="form-group">
                                         <label class="form-label">പ്രതിമാസ വരിസംഖ്യ (Default ₹)</label>
                                         <input type="number" class="form-input" id="settingFee" required>
                                     </div>
-                                </div>
-
-                                <h4 style="font-weight:800; font-size:0.95rem; margin-top:14px; border-top:1px solid var(--border); padding-top:14px;">ബാങ്ക് & UPI വിവരങ്ങൾ:</h4>
-
-                                <div class="form-row">
                                     <div class="form-group">
-                                        <label class="form-label">ബാങ്ക് പേര് (Bank Name)</label>
-                                        <input type="text" class="form-input" id="settingBank">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">അക്കൗണ്ട് നമ്പർ (Account Number)</label>
-                                        <input type="text" class="form-input" id="settingAccNo">
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label class="form-label">IFSC Code</label>
-                                        <input type="text" class="form-input" id="settingIfsc">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">UPI ID (GPay / PhonePe)</label>
+                                        <label class="form-label">UPI ID</label>
                                         <input type="text" class="form-input" id="settingUpi" placeholder="example@sbi">
                                     </div>
                                 </div>
-
-                                <button type="submit" class="btn btn-primary" style="margin-top:14px;">
-                                    💾 വിവരങ്ങൾ സേവ് ചെയ്യുക
-                                </button>
+                                <button type="submit" class="btn btn-primary" style="margin-top:14px;">💾 വിവരങ്ങൾ സേവ് ചെയ്യുക</button>
                             </form>
                         </div>
                     </div>
 
-                    <!-- Right: Switch Mahal & Data Management -->
-                    <div style="display:flex; flex-direction:column; gap:20px;">
-                        
-                        <!-- Switch Active Mahal -->
-                        <div class="section-card">
-                            <div class="section-card-header">
-                                <h2>🔄 വർക്ക്‌സ്പേസ് മാറ്റുക (Switch Mahal)</h2>
-                            </div>
-                            <div class="section-card-body">
-                                <div class="form-group">
-                                    <label class="form-label">മഹല്ല് തിരഞ്ഞെടുക്കുക:</label>
-                                    <select class="form-select" id="settingSwitchMahal" onchange="switchActiveMahalFromSettings(this.value)">
-                                        <!-- Populated dynamically -->
-                                    </select>
-                                </div>
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2>💾 ഡാറ്റ ബാക്കപ്പും സുരക്ഷയും</h2>
+                        </div>
+                        <div class="section-card-body" style="display:flex; flex-direction:column; gap:12px;">
+                            <p style="font-size:0.85rem; color:var(--text-muted);">
+                                കമ്പ്യൂട്ടറിലേക്ക് പൂർണ്ണ ഡാറ്റ ബാക്കപ്പ് ഡൗൺലോഡ് ചെയ്യാനും സേവ് ചെയ്യാനും താഴെയുള്ള ഓപ്ഷനുകൾ ഉപയോഗിക്കുക.
+                            </p>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="btn btn-secondary" onclick="exportBackupJSON()">📥 ഡാറ്റ ബാക്കപ്പ് (JSON)</button>
+                                <button class="btn btn-outline" onclick="exportHouseholdsCSV()">📊 CSV ഡൗൺലോഡ്</button>
                             </div>
                         </div>
-
-                        <!-- Data Backup & CSV Export -->
-                        <div class="section-card">
-                            <div class="section-card-header">
-                                <h2>💾 ഡാറ്റ ബാക്കപ്പും സുരക്ഷയും</h2>
-                            </div>
-                            <div class="section-card-body" style="display:flex; flex-direction:column; gap:12px;">
-                                <p style="font-size:0.85rem; color:var(--text-muted);">
-                                    നിങ്ങളുടെ ലെഡ്ജർ ഡാറ്റ കമ്പ്യൂട്ടറിലേക്ക് പൂർണ്ണമായി ബാക്കപ്പ് ചെയ്യാനും ആവശ്യമുള്ളപ്പോൾ തിരികെ കൊണ്ടുവരാനും താഴെയുള്ള ഓപ്ഷനുകൾ ഉപയോഗിക്കുക.
-                                </p>
-
-                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                    <button class="btn btn-secondary" onclick="exportBackupJSON()">
-                                        📥 ഡാറ്റ ബാക്കപ്പ് ഡൗൺലോഡ് (JSON)
-                                    </button>
-
-                                    <label class="btn btn-outline" style="cursor:pointer; margin:0;">
-                                        📤 ബാക്കപ്പ് റീസ്റ്റോർ
-                                        <input type="file" accept=".json" onchange="importBackupJSON(event)" style="display:none;">
-                                    </label>
-
-                                    <button class="btn btn-outline" onclick="exportHouseholdsCSV()">
-                                        📊 Excel / CSV ഡൗൺലോഡ്
-                                    </button>
-                                </div>
-
-                                <div style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
-                                    <button class="btn btn-sm btn-outline" style="color:var(--danger);" onclick="if(confirm('ഡെമോ ഡാറ്റ റീസെറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) AppState.resetData(); renderDashboard(); showToast('ഡെമോ ഡാറ്റ റീസെറ്റ് ചെയ്തു');">
-                                        🔄 റീസെറ്റ് ടു ഒറിജിനൽ ഡെമോ ഡാറ്റ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Android App Card -->
-                        <div class="section-card" style="background:#f0fdf4; border:1px solid #86efac;">
-                            <div class="section-card-body" style="text-align:center;">
-                                <h3 style="color:#166534; font-size:1.15rem; font-weight:800; margin-bottom:6px;">📱 ആൻഡ്രോയിഡ് ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യാം</h3>
-                                <p style="font-size:0.85rem; color:#14532d; margin-bottom:14px;">
-                                    മൊബൈൽ ഫോണിൽ ഉപയോഗിക്കാൻ ഒഫീഷ്യൽ APK ഫയൽ ലഭ്യമാണ്.
-                                </p>
-                                <button class="btn-apk" onclick="openApkDownloadModal()" style="margin:0 auto;">
-                                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
-                                    Download APK (Direct 28 MB)
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-
             </section>
 
-
-            <!-- ========================= -->
-            <!-- TAB 6: SUPER ADMIN PORTAL -->
-            <!-- ========================= -->
+            <!-- TAB 6: SUPER ADMIN -->
             <section id="view-superadmin" class="tab-view">
-                <div class="actions-card" style="border-left: 5px solid #ca8a04;">
+                <div class="actions-card" style="border-left:5px solid #ca8a04;">
                     <div>
-                        <h2 style="font-size:1.2rem; font-weight:800; color:#ca8a04;">👑 സൂപ്പർ അഡ്മിൻ മാസ്റ്റർ കൺട്രോൾ പാനൽ (Master Control)</h2>
-                        <p style="font-size:0.85rem; color:var(--text-muted);">രജിസ്റ്റർ ചെയ്ത എല്ലാ മഹല്ല് സ്ഥാപനങ്ങളും സബ്‌സ്‌ക്രിപ്ഷനുകളും നിയന്ത്രിക്കുക.</p>
+                        <h2 style="font-size:1.2rem; font-weight:800; color:#ca8a04;">👑 സൂപ്പർ അഡ്മിൻ മാസ്റ്റർ കൺട്രോൾ പാനൽ</h2>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">രജിസ്റ്റർ ചെയ്ത എല്ലാ മഹല്ല് സ്ഥാപനങ്ങളും നിയന്ത്രിക്കുക.</p>
                     </div>
                 </div>
-
-                <div id="superAdminCommunitiesList">
-                    <!-- Populated dynamically -->
-                </div>
+                <div id="superAdminCommunitiesList"></div>
             </section>
 
         </main>
@@ -646,7 +1252,7 @@
 
 
     <!-- ========================================== -->
-    <!-- 3. MODAL DIALOGS                          -->
+    <!-- 4. MODALS (Popups)                         -->
     <!-- ========================================== -->
 
     <!-- Collect Subscription Modal -->
@@ -671,10 +1277,7 @@
                     </div>
                 </div>
 
-                <!-- 12 Months Selection Grid -->
-                <div class="month-selector-grid" id="collectMonthGrid">
-                    <!-- Populated dynamically -->
-                </div>
+                <div class="month-selector-grid" id="collectMonthGrid"></div>
 
                 <div style="background:#f0fdf4; border:1px solid #86efac; padding:12px 16px; border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
                     <span style="font-weight:700; color:#166534;">ആകെ അടയ്ക്കേണ്ട തുക:</span>
@@ -683,22 +1286,17 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label">പണമിടപാട് രീതി (Payment Method)</label>
+                        <label class="form-label">രീതി (Payment Method)</label>
                         <select class="form-select" id="collectPaymentMode">
                             <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
                             <option value="CASH">CASH (നേരിട്ട് കയ്യിൽ)</option>
-                            <option value="BANK_TRANSFER">Bank Transfer (ബാങ്ക് ട്രാൻസ്ഫർ)</option>
+                            <option value="BANK_TRANSFER">Bank Transfer</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label">സ്വീകരിച്ച ആൾ (Collected By)</label>
                         <input type="text" class="form-input" id="collectCollectorName" value="Treasurer - M. K. Basheer">
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">കുറിപ്പ് (Notes)</label>
-                    <input type="text" class="form-input" id="collectNotes" placeholder="ഓപ്ഷണൽ കുറിപ്പ്">
                 </div>
             </div>
             <div class="modal-footer">
@@ -709,7 +1307,7 @@
     </div>
 
 
-    <!-- Add / Edit Household Modal -->
+    <!-- Add Household Modal -->
     <div id="householdModalOverlay" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
@@ -729,51 +1327,15 @@
                             <input type="number" class="form-input" id="householdFeeInput" required>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">കുടുംബനാഥൻ (Head of Family)*</label>
                             <input type="text" class="form-input" id="householdHeadInput" placeholder="പേര്" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">കുടുംബപ്പേര് / വീട്ടുപേര്</label>
-                            <input type="text" class="form-input" id="householdFamilyInput" placeholder="ഉദാ: ബൈത്തുൽ നൂറ്">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
                             <label class="form-label">ഫോൺ നമ്പർ (Phone)*</label>
                             <input type="tel" class="form-input" id="householdPhoneInput" placeholder="10 അക്ക നമ്പർ" required>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">വാർഡ് (Ward)</label>
-                            <input type="text" class="form-input" id="householdWardInput" placeholder="ഉദാ: Ward 1 (East)">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">ആകെ അംഗങ്ങൾ</label>
-                            <input type="number" class="form-input" id="householdMembersInput" value="4">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">റേഷൻ കാറ്റഗറി</label>
-                            <select class="form-select" id="householdRationInput">
-                                <option value="APL">APL</option>
-                                <option value="BPL">BPL</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">മേൽവിലാസം (Address)</label>
-                        <input type="text" class="form-input" id="householdAddressInput" placeholder="വീട്, റോഡ്, സ്ഥലം">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">കുറിപ്പുകൾ</label>
-                        <input type="text" class="form-input" id="householdNotesInput" placeholder="ഓപ്ഷണൽ">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -785,7 +1347,7 @@
     </div>
 
 
-    <!-- Add Cash Transaction Modal -->
+    <!-- Add Transaction Modal -->
     <div id="transactionModalOverlay" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
@@ -796,7 +1358,7 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">ഇടപാട് തരം (Type)*</label>
+                            <label class="form-label">ഇടപാട് തരം*</label>
                             <select class="form-select" id="txTypeInput" required>
                                 <option value="INCOME">വരവ് (Income)</option>
                                 <option value="EXPENSE">ചിലവ് (Expense)</option>
@@ -807,41 +1369,23 @@
                             <input type="number" class="form-input" id="txAmountInput" placeholder="0.00" required>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label">ഇടപാടിന്റെ തലക്കെട്ട് (Title)*</label>
-                        <input type="text" class="form-input" id="txTitleInput" placeholder="ഉദാ: ജുമുഅ ബോക്സ് കളക്ഷൻ" required>
+                        <label class="form-label">തലക്കെട്ട് (Title)*</label>
+                        <input type="text" class="form-input" id="txTitleInput" placeholder="ഉദാ: ജുമുഅ കളക്ഷൻ" required>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">കാറ്റഗറി (Category)*</label>
-                            <input type="text" class="form-input" id="txCategoryInput" placeholder="ഉദാ: Friday Juma Collection / Salary / Maintenance" required>
+                            <label class="form-label">കാറ്റഗറി*</label>
+                            <input type="text" class="form-input" id="txCategoryInput" placeholder="Salary / Maintenance" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">വൗച്ചർ നമ്പർ (Voucher No)</label>
-                            <input type="text" class="form-input" id="txVoucherInput" placeholder="V-INC-105">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">രീതി (Payment Mode)</label>
+                            <label class="form-label">രീതി</label>
                             <select class="form-select" id="txModeInput">
                                 <option value="CASH">CASH</option>
                                 <option value="UPI">UPI</option>
                                 <option value="BANK_TRANSFER">Bank Transfer</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">തീയതി (Date)</label>
-                            <input type="date" class="form-input" id="txDateInput">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">വിവരണം (Description)</label>
-                        <textarea class="form-textarea" id="txDescInput" rows="2" placeholder="കൂടുതൽ വിവരങ്ങൾ"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -853,93 +1397,9 @@
     </div>
 
 
-    <!-- Create Special Fund Modal -->
-    <div id="specialFundModalOverlay" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3>🤝 പുതിയ പ്രത്യേക ഫണ്ട് ആരംഭിക്കുക</h3>
-                <button class="modal-close-btn" onclick="closeModal('specialFundModalOverlay')">&times;</button>
-            </div>
-            <form id="specialFundForm" onsubmit="saveSpecialFund(event)">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">ഫണ്ടിന്റെ പേര് (Title)*</label>
-                        <input type="text" class="form-input" id="fundTitleInput" placeholder="ഉദാ: റമദാൻ കിറ്റ് വിതരണം" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">വിവരണം (Description)</label>
-                        <textarea class="form-textarea" id="fundDescInput" rows="2" placeholder="പദ്ധതിയുടെ ലക്‌ഷ്യം"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">കുടുംബത്തിന് നിശ്ചയിച്ച തുക (₹)</label>
-                            <input type="number" class="form-input" id="fundTargetFamilyInput" value="500">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">ആകെ ലക്ഷ്യമിട്ട തുക (₹)</label>
-                            <input type="number" class="form-input" id="fundTargetTotalInput" value="100000">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">കാറ്റഗറി</label>
-                        <input type="text" class="form-input" id="fundCategoryInput" placeholder="Relief / Construction / Education">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline" onclick="closeModal('specialFundModalOverlay')">റദ്ദാക്കുക</button>
-                    <button type="submit" class="btn btn-primary">ഫണ്ട് തുടങ്ങുക</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- Record Special Fund Payment Modal -->
-    <div id="specialPaymentModalOverlay" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3>💵 പ്രത്യേക ഫണ്ട് തുക വാങ്ങുക</h3>
-                <button class="modal-close-btn" onclick="closeModal('specialPaymentModalOverlay')">&times;</button>
-            </div>
-            <form id="specialPaymentForm" onsubmit="saveSpecialFundPayment(event)">
-                <input type="hidden" id="specialPaymentFundId">
-                <div class="modal-body">
-                    <div style="font-size:0.85rem; color:var(--text-muted);">ഫണ്ട്: <strong id="specialPaymentFundTitle" style="color:var(--primary);">-</strong></div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">കുടുംബത്തെ തിരഞ്ഞെടുക്കുക*</label>
-                        <select class="form-select" id="specialPaymentHouseholdSelect" required>
-                            <!-- Populated dynamically -->
-                        </select>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">തുക (Amount ₹)*</label>
-                            <input type="number" class="form-input" id="specialPaymentAmount" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">രീതി (Payment Mode)</label>
-                            <select class="form-select" id="specialPaymentMode">
-                                <option value="UPI">UPI (GPay / PhonePe)</option>
-                                <option value="CASH">CASH</option>
-                                <option value="BANK_TRANSFER">Bank Transfer</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline" onclick="closeModal('specialPaymentModalOverlay')">റദ്ദാക്കുക</button>
-                    <button type="submit" class="btn btn-primary">രേഖപ്പെടുത്തുക</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
     <!-- Digital Receipt Modal -->
     <div id="receiptModalOverlay" class="modal-overlay">
-        <div class="modal-card" style="max-width:520px;">
+        <div class="modal-card" style="max-width:500px;">
             <div class="modal-header">
                 <h3>📜 ഡിജിറ്റൽ വരിസംഖ്യാ രസീത്</h3>
                 <button class="modal-close-btn" onclick="closeModal('receiptModalOverlay')">&times;</button>
@@ -952,14 +1412,13 @@
                         <span class="receipt-tag">ഔദ്യോഗിക ഡിജിറ്റൽ രസീത്</span>
                         <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px;">രസീത് നമ്പർ: <strong id="receiptNo">-</strong></div>
                     </div>
-
                     <div class="receipt-grid">
                         <div class="receipt-item">
                             <div class="label">തീയതി:</div>
                             <div class="val" id="receiptDate">-</div>
                         </div>
                         <div class="receipt-item">
-                            <div class="label">പണമടച്ച രീതി:</div>
+                            <div class="label">രീതി:</div>
                             <div class="val" id="receiptMode">-</div>
                         </div>
                         <div class="receipt-item" style="grid-column: span 2;">
@@ -971,77 +1430,26 @@
                             <div class="val" id="receiptMonths" style="color:var(--primary); font-weight:800;">-</div>
                         </div>
                     </div>
-
                     <div class="receipt-total-box">
-                        <span class="total-label">സ്വീകരിച്ച ആകെ തുക:</span>
+                        <span class="total-label">സ്വീകരിച്ച തുക:</span>
                         <span class="total-amount" id="receiptAmount">₹0</span>
-                    </div>
-
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">
-                        <span>സ്വീകരിച്ചത്: <strong id="receiptCollector">Treasurer</strong></span>
-                        <span>സീൽ & ഒപ്പ് ആവശ്യമില്ല</span>
-                    </div>
-
-                    <div class="receipt-footer-notes">
-                        മഹല്ല് ലെഡ്ജർ സിസ്റ്റം മുഖേന സുതാര്യമായി ക്ലൗഡിൽ രേഖപ്പെടുത്തിയത്.
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('receiptModalOverlay')">അടയ്ക്കുക</button>
-                <button class="btn btn-secondary" onclick="printReceipt()">🖨️ പ്രിന്റ് ചെയ്യുക</button>
-                <button class="btn btn-whatsapp" onclick="shareReceiptWhatsApp()">💬 WhatsApp വഴി അയക്കുക</button>
+                <button class="btn btn-secondary" onclick="window.print()">🖨️ പ്രിന്റ് ചെയ്യുക</button>
+                <button class="btn btn-whatsapp" onclick="shareReceiptWhatsApp()">💬 വാട്സാപ്പിൽ അയക്കുക</button>
             </div>
         </div>
     </div>
 
 
-    <!-- Family Due Alert & UPI Payment Modal -->
-    <div id="familyDueAlertModalOverlay" class="modal-overlay">
-        <div class="modal-card" style="max-width:480px;">
-            <div class="modal-header" style="background:#fffbeb; border-color:#fde68a;">
-                <h3 style="color:#b45309;">⚠️ വരിസംഖ്യാ കുടിശ്ശിക അറിയിപ്പ്</h3>
-                <button class="modal-close-btn" onclick="closeModal('familyDueAlertModalOverlay')">&times;</button>
-            </div>
-            <div class="modal-body" style="text-align:center;">
-                <div style="font-size:1.15rem; font-weight:800; color:var(--text);" id="dueAlertFamilyHead">-</div>
-                <div style="font-size:0.9rem; color:var(--danger); font-weight:700; margin-top:4px;" id="dueAlertMonthsCount">-</div>
-                
-                <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:14px; margin:16px 0;">
-                    <div style="font-size:0.85rem; color:#92400e;">അടയ്ക്കാനുള്ള തുക:</div>
-                    <div style="font-size:2rem; font-weight:900; color:#b45309;" id="dueAlertAmount">₹0</div>
-                </div>
-
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
-                    താഴെയുള്ള QR കോഡ് ഫോണിലെ <strong>Google Pay, PhonePe, Paytm</strong> വഴി സ്കാൻ ചെയ്ത് ഉടൻ തുക അടയ്ക്കാം:
-                </p>
-
-                <div style="display:inline-block; padding:10px; background:#fff; border:1px solid var(--border); border-radius:12px; margin-bottom:10px;">
-                    <img id="dueAlertQrCode" src="" alt="UPI QR Code" style="width:180px; height:180px; display:block;">
-                </div>
-
-                <div style="font-size:0.8rem; color:var(--text-muted);">
-                    UPI ID: <strong id="dueAlertUpiId" style="color:var(--primary);">alnoormahal@sbi</strong>
-                </div>
-
-                <div style="margin-top:16px;">
-                    <a id="dueAlertPayUpiBtn" href="#" class="btn btn-primary" style="width:100%; justify-content:center; text-decoration:none;">
-                        📲 UPI വഴി അടയ്ക്കുക (Pay via UPI)
-                    </a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('familyDueAlertModalOverlay')">പിന്നീടാവാം</button>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Android APK Download Modal -->
+    <!-- APK Download Modal -->
     <div id="apkModalOverlay" class="modal-overlay">
         <div class="modal-card" style="max-width:480px;">
             <div class="modal-header">
-                <h3>📱 Android APK ഡൗൺലോഡ് ചെയ്യുക</h3>
+                <h3>📱 Android APK ഡൗൺലോഡ്</h3>
                 <button class="modal-close-btn" onclick="closeModal('apkModalOverlay')">&times;</button>
             </div>
             <div class="modal-body" style="text-align:center;">
@@ -1050,24 +1458,12 @@
                 <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">
                     ആൻഡ്രോയിഡ് ഫോണുകളിൽ ഓഫ്‌ലൈൻ & ലൈവ് നോട്ടിഫിക്കേഷനുകളോടെ പ്രവർത്തിക്കുന്ന ഒഫീഷ്യൽ ആപ്പ്.
                 </p>
-
-                <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:12px; padding:16px; margin:20px 0; text-align:left;">
-                    <div style="font-size:0.85rem; font-weight:700; color:#166534; margin-bottom:8px;">💡 ഫോണിൽ എങ്ങനെ ഇൻസ്റ്റാൾ ചെയ്യാം?</div>
-                    <ol style="font-size:0.8rem; color:#14532d; padding-left:18px; line-height:1.6;">
-                        <li>താഴെയുള്ള ഡൗൺലോഡ് ബട്ടൺ അമർത്തുക (28 MB).</li>
-                        <li>ഡൗൺലോഡ് പൂർത്തിയായാൽ ഫയൽ തുറക്കുക.</li>
-                        <li><em>"Install Unknown Apps"</em> ചോദിച്ചാൽ Allow നൽകുക.</li>
-                    </ol>
-                </div>
-
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <a href="./MahalLedger.apk" download="MahalLedger.apk" class="btn btn-primary" style="justify-content:center; padding:14px; font-size:1rem; text-decoration:none;">
-                        <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor;"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+                    <a href="./MahalLedger.apk" download="MahalLedger.apk" class="btn btn-primary" style="justify-content:center; padding:14px; text-decoration:none;">
                         Direct APK Download (28 MB)
                     </a>
-
                     <a href="https://raw.githubusercontent.com/kkhmstorage/MAHALLU-LEDGER/main/MahalLedger.apk" class="btn btn-outline" style="justify-content:center; text-decoration:none;">
-                        🌐 GitHub Mirror Link
+                        GitHub Mirror Link
                     </a>
                 </div>
             </div>
@@ -1077,10 +1473,1042 @@
         </div>
     </div>
 
-
-    <!-- Toast Notification Container -->
+    <!-- Toast Notifications -->
     <div id="toastContainer" class="toast-container"></div>
 
-    <script src="app.js"></script>
+
+    <!-- ========================================== -->
+    <!-- 5. ALL CORE JAVASCRIPT ENGINE (Inlined)    -->
+    <!-- ========================================== -->
+    <script>
+        const DEFAULT_DATA = {
+            activeMahalCode: "ALNOOR",
+            currentYear: 2026,
+            communities: [
+                {
+                    mahalCode: "ALNOOR",
+                    name: "Al-Noor Madrasa & Mahal Committee",
+                    location: "Malappuram, Kerala",
+                    subAdminUsername: "alnoor_admin",
+                    subAdminPassword: "password123",
+                    contactPhone: "+91 98471 23456",
+                    regNumber: "REG-KL/2016/0942",
+                    defaultMonthlyFee: 250,
+                    bankName: "State Bank of India (Valanchery)",
+                    accountNumber: "67324419082",
+                    ifscCode: "SBIN0070188",
+                    upiId: "alnoormahal@sbi",
+                    isActive: true,
+                    expiryDate: "2027-12-31"
+                },
+                {
+                    mahalCode: "DARUSALAM",
+                    name: "Darussalam Juma Masjid & Madrasa Mahal",
+                    location: "Kozhikode, Kerala",
+                    subAdminUsername: "darussalam_admin",
+                    subAdminPassword: "password123",
+                    contactPhone: "+91 98460 55443",
+                    regNumber: "REG-KL/2018/1120",
+                    defaultMonthlyFee: 300,
+                    bankName: "Federal Bank",
+                    accountNumber: "1482010023419",
+                    ifscCode: "FDRL0001482",
+                    upiId: "darussalammahal@fbl",
+                    isActive: true,
+                    expiryDate: "2027-10-31"
+                }
+            ],
+            households: [
+                {
+                    id: 1,
+                    mahalCode: "ALNOOR",
+                    houseNumber: "H-01",
+                    headOfFamily: "K. P. Abdul Rahman",
+                    familyName: "Baitul Noor",
+                    phoneNumber: "9846011223",
+                    monthlyFee: 300,
+                    wardNumber: "Ward 1 (East)",
+                    memberCount: 5,
+                    address: "Baitul Noor, Near Juma Masjid",
+                    verificationStatus: "VERIFIED"
+                },
+                {
+                    id: 2,
+                    mahalCode: "ALNOOR",
+                    houseNumber: "H-02",
+                    headOfFamily: "M. C. Moideen Kutty",
+                    familyName: "Al-Falah Villa",
+                    phoneNumber: "9847122334",
+                    monthlyFee: 250,
+                    wardNumber: "Ward 1 (East)",
+                    memberCount: 4,
+                    address: "Al-Falah Villa, Hospital Road",
+                    verificationStatus: "VERIFIED"
+                },
+                {
+                    id: 3,
+                    mahalCode: "ALNOOR",
+                    houseNumber: "H-03",
+                    headOfFamily: "V. K. Hamza Haji",
+                    familyName: "Darussalam",
+                    phoneNumber: "9846233445",
+                    monthlyFee: 500,
+                    wardNumber: "Ward 1 (East)",
+                    memberCount: 6,
+                    address: "Darussalam, Post Office Junction",
+                    verificationStatus: "VERIFIED"
+                },
+                {
+                    id: 4,
+                    mahalCode: "ALNOOR",
+                    houseNumber: "H-04",
+                    headOfFamily: "P. K. Usman",
+                    familyName: "Madeena Manzil",
+                    phoneNumber: "9847344556",
+                    monthlyFee: 200,
+                    wardNumber: "Ward 1 (East)",
+                    memberCount: 4,
+                    address: "Madeena Manzil, School Lane",
+                    verificationStatus: "VERIFIED"
+                },
+                {
+                    id: 5,
+                    mahalCode: "ALNOOR",
+                    houseNumber: "H-05",
+                    headOfFamily: "T. Sayed Mohammed",
+                    familyName: "Rahmat Manzil",
+                    phoneNumber: "9846455667",
+                    monthlyFee: 250,
+                    wardNumber: "Ward 1 (East)",
+                    memberCount: 4,
+                    address: "Rahmat Manzil, Bypass",
+                    verificationStatus: "VERIFIED"
+                }
+            ],
+            subscriptionPayments: [
+                // Household 1 (Jan-Oct paid)
+                ...Array.from({ length: 10 }, (_, i) => ({
+                    id: 101 + i,
+                    householdId: 1,
+                    month: i + 1,
+                    year: 2026,
+                    amountPaid: 300,
+                    paymentDate: Date.now() - (10 - i) * 28 * 86400000,
+                    paymentMethod: i % 2 === 0 ? "UPI" : "CASH",
+                    receiptNumber: `REC-2026-0${i + 1}`,
+                    collectedBy: "Treasurer - M. K. Basheer"
+                })),
+                // Household 2 (Jan-Jul paid)
+                ...Array.from({ length: 7 }, (_, i) => ({
+                    id: 121 + i,
+                    householdId: 2,
+                    month: i + 1,
+                    year: 2026,
+                    amountPaid: 250,
+                    paymentDate: Date.now() - (8 - i) * 28 * 86400000,
+                    paymentMethod: "CASH",
+                    receiptNumber: `REC-2026-0${40 + i}`,
+                    collectedBy: "Collector - Salam"
+                })),
+                // Household 3 (Jan-Sep paid)
+                ...Array.from({ length: 9 }, (_, i) => ({
+                    id: 141 + i,
+                    householdId: 3,
+                    month: i + 1,
+                    year: 2026,
+                    amountPaid: 500,
+                    paymentDate: Date.now() - (9 - i) * 28 * 86400000,
+                    paymentMethod: "BANK_TRANSFER",
+                    receiptNumber: `REC-2026-0${20 + i}`,
+                    collectedBy: "Treasurer - M. K. Basheer"
+                }))
+            ],
+            cashTransactions: [
+                {
+                    id: 1,
+                    mahalCode: "ALNOOR",
+                    type: "INCOME",
+                    category: "Friday Juma Collection",
+                    amount: 14250,
+                    transactionDate: Date.now() - 3 * 86400000,
+                    title: "Juma Box Collection (Week 43)",
+                    voucherNumber: "V-INC-104",
+                    paymentMode: "CASH"
+                },
+                {
+                    id: 2,
+                    mahalCode: "ALNOOR",
+                    type: "INCOME",
+                    category: "Special Donation",
+                    amount: 25000,
+                    transactionDate: Date.now() - 10 * 86400000,
+                    title: "Madrasa Renovation Sponsorship",
+                    voucherNumber: "V-INC-103",
+                    paymentMode: "BANK_TRANSFER"
+                },
+                {
+                    id: 3,
+                    mahalCode: "ALNOOR",
+                    type: "EXPENSE",
+                    category: "Staff Honorarium (Salary)",
+                    amount: 22000,
+                    transactionDate: Date.now() - 5 * 86400000,
+                    title: "Sadr Ustad & Teachers Monthly Allowance",
+                    voucherNumber: "V-EXP-088",
+                    paymentMode: "BANK_TRANSFER"
+                },
+                {
+                    id: 4,
+                    mahalCode: "ALNOOR",
+                    type: "EXPENSE",
+                    category: "Electricity & Water",
+                    amount: 3450,
+                    transactionDate: Date.now() - 8 * 86400000,
+                    title: "KSEB Electricity Bill - Oct 2026",
+                    voucherNumber: "V-EXP-087",
+                    paymentMode: "UPI"
+                }
+            ]
+        };
+
+        const STORAGE_KEY = "MAHAL_LEDGER_DATA_V2_STORAGE";
+
+        // Global State
+        let AppData = DEFAULT_DATA;
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) AppData = JSON.parse(saved);
+        } catch (e) {
+            console.error("Local storage read error", e);
+        }
+
+        function saveAppData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(AppData));
+            } catch (e) {}
+        }
+
+        let CurrentUser = {
+            isAuthenticated: false,
+            role: "SUB_ADMIN", // 'SUB_ADMIN' | 'SUPER_ADMIN' | 'MEMBER'
+            memberHouseholdId: null
+        };
+
+        let selectedMonthIndices = [];
+        let activeHouseholdForCollection = null;
+        let currentSubFilter = "ALL";
+        let currentSubSearch = "";
+        let currentLedgerFilter = "ALL";
+        let currentLedgerSearch = "";
+        let activeReceiptData = null;
+
+        const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const MONTH_NAMES_ML = ["ജനുവരി", "ഫെബ്രുവരി", "മാർച്ച്", "ഏപ്രിൽ", "മെയ്", "ജൂൺ", "ജൂലൈ", "ഓഗസ്റ്റ്", "സെപ്റ്റംബർ", "ഒക്ടോബർ", "നവംബർ", "ഡിസംബർ"];
+
+        function formatCurrency(amt) {
+            return '₹' + Number(amt || 0).toLocaleString('en-IN');
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return "-";
+            const d = new Date(timestamp);
+            return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toastContainer");
+            if (!container) return;
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✓' : '⚠️'}</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        function getActiveCommunity() {
+            return AppData.communities.find(c => c.mahalCode === AppData.activeMahalCode) || AppData.communities[0];
+        }
+
+        function getHouseholds() {
+            return AppData.households.filter(h => h.mahalCode === AppData.activeMahalCode);
+        }
+
+        function getPaymentsForHousehold(hId) {
+            return AppData.subscriptionPayments.filter(p => p.householdId === hId && p.year === AppData.currentYear);
+        }
+
+        function getTransactions() {
+            return AppData.cashTransactions.filter(t => t.mahalCode === AppData.activeMahalCode);
+        }
+
+        // Switch Login Tabs (Admin vs Family)
+        function switchLoginTab(type) {
+            const adminBtn = document.getElementById("loginTabAdmin");
+            const famBtn = document.getElementById("loginTabFamily");
+            const adminForm = document.getElementById("adminLoginForm");
+            const famForm = document.getElementById("familyLoginForm");
+
+            if (type === 'admin') {
+                adminBtn.classList.add("active");
+                famBtn.classList.remove("active");
+                adminForm.style.display = "flex";
+                famForm.style.display = "none";
+            } else {
+                famBtn.classList.add("active");
+                adminBtn.classList.remove("active");
+                adminForm.style.display = "none";
+                famForm.style.display = "flex";
+            }
+        }
+
+        function onFamilySelectChange(phone) {
+            if (phone) {
+                document.getElementById("loginMemberPhone").value = phone;
+                handleMemberOtpRequest();
+            }
+        }
+
+        // Admin Login
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById("loginUsername").value.trim();
+            const pass = document.getElementById("loginPassword").value.trim();
+
+            if ((user.toUpperCase() === "AMINZAD" && pass === "A4aminzad") || (user === "admin" && pass === "9999") || (pass === "9999" && !user)) {
+                CurrentUser = { isAuthenticated: true, role: "SUPER_ADMIN", memberHouseholdId: null };
+                enterAdminApp("👑 സൂപ്പർ അഡ്മിൻ ലോഗിൻ വിജയം!");
+                return;
+            }
+
+            const match = AppData.communities.find(c => c.subAdminUsername.toLowerCase() === user.toLowerCase() && c.subAdminPassword === pass);
+            if (match) {
+                AppData.activeMahalCode = match.mahalCode;
+                saveAppData();
+                CurrentUser = { isAuthenticated: true, role: "SUB_ADMIN", memberHouseholdId: null };
+                enterAdminApp(`സ്വാഗതം, ${match.name}`);
+                return;
+            }
+
+            showToast("യൂസർനെയിം അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റാണ്!", "error");
+        }
+
+        function quickFillLogin(u, p) {
+            document.getElementById("loginUsername").value = u;
+            document.getElementById("loginPassword").value = p;
+            document.getElementById("adminLoginForm").requestSubmit();
+        }
+
+        // Family Member OTP Request
+        function handleMemberOtpRequest() {
+            const phone = document.getElementById("loginMemberPhone").value.trim().replace(/\D/g, '');
+            const match = AppData.households.find(h => h.phoneNumber.replace(/\D/g, '') === phone);
+
+            if (!match) {
+                showToast("ഈ ഫോൺ നമ്പറിൽ കുടുംബം കണ്ടെത്തിയില്ല. ഡെമോ ലിസ്റ്റിൽ നിന്ന് തിരഞ്ഞെടുക്കുക.", "error");
+                return;
+            }
+
+            const alertBox = document.getElementById("otpSentAlertBox");
+            alertBox.style.display = "block";
+            document.getElementById("generatedOtpDisplay").textContent = "1234";
+            document.getElementById("loginMemberOtp").value = "1234";
+            showToast(`OTP ${match.phoneNumber} ലേക്ക് അയച്ചു!`);
+        }
+
+        // Family Member Login
+        function handleMemberLogin() {
+            const phone = document.getElementById("loginMemberPhone").value.trim().replace(/\D/g, '');
+            const otp = document.getElementById("loginMemberOtp").value.trim();
+
+            const match = AppData.households.find(h => h.phoneNumber.replace(/\D/g, '') === phone);
+            if (!match) {
+                showToast("കുടുംബം കണ്ടെത്താനായില്ല", "error");
+                return;
+            }
+
+            if (otp !== "1234" && otp.length < 4) {
+                showToast("സാധുവായ 4 അക്ക OTP നൽകുക (ടെസ്റ്റിംഗ് OTP: 1234)", "error");
+                return;
+            }
+
+            CurrentUser = {
+                isAuthenticated: true,
+                role: "MEMBER",
+                memberHouseholdId: match.id
+            };
+            AppData.activeMahalCode = match.mahalCode;
+            saveAppData();
+
+            enterFamilyPortal(match);
+        }
+
+        function enterFamilyPortal(h) {
+            document.getElementById("loginView").style.display = "none";
+            document.getElementById("adminMainView").style.display = "none";
+            document.getElementById("familyPortalView").style.display = "block";
+
+            const comm = getActiveCommunity();
+            document.getElementById("famPortalCommunityName").textContent = comm.name;
+            document.getElementById("famPortalMemberName").textContent = `👨‍👩‍👧‍👦 ${h.headOfFamily}`;
+            document.getElementById("famProfileHouseNo").textContent = h.houseNumber;
+            document.getElementById("famProfileHeadName").textContent = h.headOfFamily;
+            document.getElementById("famProfileSubDetails").textContent = `${h.familyName || ''} • ${h.wardNumber || ''} • ${h.phoneNumber}`;
+            document.getElementById("famProfileMonthlyFee").textContent = formatCurrency(h.monthlyFee);
+
+            // Payments & Dues
+            const payments = getPaymentsForHousehold(h.id);
+            const paidMonthSet = new Set(payments.map(p => p.month));
+            const pendingMonthsCount = Math.max(0, 12 - paidMonthSet.size);
+            const dueAmount = pendingMonthsCount * h.monthlyFee;
+
+            const dueSection = document.getElementById("famDueAlertSection");
+            if (dueAmount > 0) {
+                dueSection.style.display = "block";
+                document.getElementById("famDueAlertSubtitle").textContent = `നിങ്ങൾക്ക് 2026-ൽ ${pendingMonthsCount} മാസത്തെ വരിസംഖ്യാ കുടിശ്ശികയുണ്ട്.`;
+                document.getElementById("famDueTotalAmount").textContent = formatCurrency(dueAmount);
+
+                const upiId = comm.upiId || 'alnoormahal@sbi';
+                document.getElementById("famUpiIdText").textContent = upiId;
+                const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(comm.name)}&am=${dueAmount}&cu=INR&tn=${encodeURIComponent(`Mahal Fee ${h.houseNumber}`)}`;
+                document.getElementById("famUpiPayBtn").href = upiLink;
+
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiLink)}`;
+                document.getElementById("famUpiQrCode").src = qrUrl;
+            } else {
+                dueSection.style.display = "none";
+            }
+
+            // 12 Months Grid
+            const grid = document.getElementById("fam12MonthsMatrix");
+            grid.innerHTML = Array.from({ length: 12 }, (_, i) => {
+                const isPaid = paidMonthSet.has(i + 1);
+                return `
+                    <div style="padding:10px 8px; border-radius:8px; text-align:center; border:1px solid ${isPaid ? '#86efac' : '#fca5a5'}; background:${isPaid ? '#dcfce7' : '#fee2e2'};">
+                        <div style="font-weight:700; font-size:0.85rem; color:${isPaid ? '#166534' : '#991b1b'};">${MONTH_NAMES_ML[i]}</div>
+                        <div style="font-size:0.75rem; margin-top:2px; font-weight:800; color:${isPaid ? '#15803d' : '#dc2626'};">${isPaid ? '✓ അടച്ചു' : 'കുടിശ്ശിക'}</div>
+                    </div>
+                `;
+            }).join("");
+
+            // Receipts List
+            const receiptsList = document.getElementById("famReceiptsList");
+            if (payments.length === 0) {
+                receiptsList.innerHTML = `<li style="padding:20px; text-align:center; color:#94a3b8;">രസീതുകൾ ലഭ്യമല്ല</li>`;
+            } else {
+                receiptsList.innerHTML = payments.sort((a,b) => b.paymentDate - a.paymentDate).map(p => `
+                    <li class="feed-item">
+                        <div class="feed-item-left">
+                            <div class="feed-avatar">📜</div>
+                            <div class="feed-info">
+                                <div class="title">${MONTH_NAMES_ML[p.month - 1]} 2026 വരിസംഖ്യ</div>
+                                <div class="sub">${p.receiptNumber} • ${p.paymentMethod} • ${formatDate(p.paymentDate)}</div>
+                            </div>
+                        </div>
+                        <div class="feed-amount">
+                            <div class="amount income">${formatCurrency(p.amountPaid)}</div>
+                            <button class="btn btn-sm btn-outline" style="margin-top:4px;" onclick="viewReceiptByPaymentId(${p.id})">രസീത് കാണുക</button>
+                        </div>
+                    </li>
+                `).join("");
+            }
+
+            showToast(`സ്വാഗതം, ${h.headOfFamily}`);
+        }
+
+        function enterAdminApp(msg) {
+            document.getElementById("loginView").style.display = "none";
+            document.getElementById("familyPortalView").style.display = "none";
+            document.getElementById("adminMainView").style.display = "block";
+
+            const comm = getActiveCommunity();
+            document.getElementById("headerCommunityName").textContent = comm.name;
+            document.getElementById("headerLocation").textContent = `${comm.location} • Reg: ${comm.regNumber}`;
+            document.getElementById("headerUserRole").textContent = CurrentUser.role === 'SUPER_ADMIN' ? "👑 സൂപ്പർ അഡ്മിൻ" : "🕌 സബ് അഡ്മിൻ";
+
+            const superTab = document.querySelector('[data-tab="view-superadmin"]');
+            if (superTab) superTab.style.display = CurrentUser.role === 'SUPER_ADMIN' ? 'inline-flex' : 'none';
+
+            renderDashboard();
+            showToast(msg);
+        }
+
+        function logout() {
+            CurrentUser.isAuthenticated = false;
+            CurrentUser.memberHouseholdId = null;
+            document.getElementById("loginView").style.display = "block";
+            document.getElementById("familyPortalView").style.display = "none";
+            document.getElementById("adminMainView").style.display = "none";
+            showToast("ലോഗൗട്ട് ചെയ്തു");
+        }
+
+        function switchMainTab(tabId) {
+            document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabId));
+            document.querySelectorAll(".tab-view").forEach(v => v.classList.toggle("active", v.id === tabId));
+
+            if (tabId === "view-dashboard") renderDashboard();
+            if (tabId === "view-subscriptions") renderSubscriptions();
+            if (tabId === "view-ledger") renderLedger();
+            if (tabId === "view-transparency") renderTransparency();
+            if (tabId === "view-settings") renderSettings();
+            if (tabId === "view-superadmin") renderSuperAdmin();
+        }
+
+        function renderDashboard() {
+            const households = getHouseholds();
+            const householdIds = new Set(households.map(h => h.id));
+            const payments = AppData.subscriptionPayments.filter(p => householdIds.has(p.householdId) && p.year === AppData.currentYear);
+            const subTotal = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+
+            const txs = getTransactions();
+            const genIncome = txs.filter(t => t.type === 'INCOME').reduce((sum, t) => sum + t.amount, 0);
+            const expenses = txs.filter(t => t.type === 'EXPENSE').reduce((sum, t) => sum + t.amount, 0);
+            const netBalance = (subTotal + genIncome) - expenses;
+
+            let totalDue = 0;
+            let pendingCount = 0;
+            households.forEach(h => {
+                const hPays = payments.filter(p => p.householdId === h.id);
+                const dueM = Math.max(0, 12 - hPays.length);
+                const due = dueM * h.monthlyFee;
+                totalDue += due;
+                if (due > 0) pendingCount++;
+            });
+
+            document.getElementById("statNetBalance").textContent = formatCurrency(netBalance);
+            document.getElementById("statSubscriptionTotal").textContent = formatCurrency(subTotal);
+            document.getElementById("statGeneralIncome").textContent = formatCurrency(genIncome);
+            document.getElementById("statTotalExpenses").textContent = formatCurrency(expenses);
+            document.getElementById("statPendingDues").textContent = formatCurrency(totalDue);
+            document.getElementById("statPendingSub").textContent = `${pendingCount} കുടുംബങ്ങൾക്ക് കുടിശ്ശികയുണ്ട്`;
+
+            // Recent Subscriptions
+            const recentSub = payments.sort((a,b) => b.paymentDate - a.paymentDate).slice(0, 5);
+            document.getElementById("dashboardRecentPayments").innerHTML = recentSub.map(p => {
+                const h = AppData.households.find(x => x.id === p.householdId);
+                return `
+                    <li class="feed-item">
+                        <div class="feed-item-left">
+                            <div class="feed-avatar">🕌</div>
+                            <div class="feed-info">
+                                <div class="title">${h ? h.headOfFamily : 'Unknown'} (${h ? h.houseNumber : '-'})</div>
+                                <div class="sub">${MONTH_NAMES[p.month - 1]} 2026 • ${p.paymentMethod}</div>
+                            </div>
+                        </div>
+                        <div class="feed-amount">
+                            <div class="amount income">+${formatCurrency(p.amountPaid)}</div>
+                            <button class="btn btn-sm btn-outline" style="margin-top:2px;" onclick="viewReceiptByPaymentId(${p.id})">രസീത്</button>
+                        </div>
+                    </li>
+                `;
+            }).join("");
+
+            // Recent Transactions
+            const recentTx = txs.sort((a,b) => b.transactionDate - a.transactionDate).slice(0, 5);
+            document.getElementById("dashboardRecentTransactions").innerHTML = recentTx.map(t => `
+                <li class="feed-item">
+                    <div class="feed-item-left">
+                        <div class="feed-avatar ${t.type === 'INCOME' ? '' : 'expense'}">${t.type === 'INCOME' ? '📥' : '📤'}</div>
+                        <div class="feed-info">
+                            <div class="title">${t.title}</div>
+                            <div class="sub">${t.category} • ${t.voucherNumber || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="feed-amount">
+                        <div class="amount ${t.type === 'INCOME' ? 'income' : 'expense'}">${t.type === 'INCOME' ? '+' : '-'}${formatCurrency(t.amount)}</div>
+                        <div class="date">${formatDate(t.transactionDate)}</div>
+                    </div>
+                </li>
+            `).join("");
+        }
+
+        function renderSubscriptions() {
+            const households = getHouseholds();
+            const payments = AppData.subscriptionPayments.filter(p => p.year === AppData.currentYear);
+
+            const filtered = households.filter(h => {
+                const hPays = payments.filter(p => p.householdId === h.id);
+                const dueM = Math.max(0, 12 - hPays.length);
+                const due = dueM * h.monthlyFee;
+
+                if (currentSubFilter === "WITH_DUES" && due <= 0) return false;
+                if (currentSubFilter === "FULLY_PAID" && due > 0) return false;
+
+                if (currentSubSearch.trim()) {
+                    const q = currentSubSearch.toLowerCase();
+                    const matchName = (h.headOfFamily || '').toLowerCase().includes(q);
+                    const matchHouse = (h.houseNumber || '').toLowerCase().includes(q);
+                    const matchPhone = (h.phoneNumber || '').includes(q);
+                    return matchName || matchHouse || matchPhone;
+                }
+                return true;
+            });
+
+            document.getElementById("subscriptionsTableBody").innerHTML = filtered.map(h => {
+                const hPays = payments.filter(p => p.householdId === h.id);
+                const paidSet = new Set(hPays.map(p => p.month));
+                const dueM = Math.max(0, 12 - paidSet.size);
+                const due = dueM * h.monthlyFee;
+
+                const mHtml = Array.from({ length: 12 }, (_, i) => {
+                    const isPaid = paidSet.has(i + 1);
+                    return `<span class="month-badge ${isPaid ? 'paid' : (dueM > 0 ? 'overdue' : 'pending')}">${MONTH_NAMES[i]}</span>`;
+                }).join("");
+
+                return `
+                    <tr>
+                        <td><strong>${h.houseNumber}</strong></td>
+                        <td>
+                            <div style="font-weight:700;">${h.headOfFamily}</div>
+                            <div style="font-size:0.75rem; color:var(--text-muted);">${h.familyName || ''} • ${h.address || ''}</div>
+                        </td>
+                        <td>
+                            <div>${h.phoneNumber}</div>
+                            <div style="font-size:0.75rem; color:var(--text-muted);">${h.wardNumber || ''}</div>
+                        </td>
+                        <td><strong>${formatCurrency(h.monthlyFee)}</strong></td>
+                        <td><div class="months-matrix">${mHtml}</div></td>
+                        <td>
+                            <div style="font-weight:700; color:${due > 0 ? 'var(--danger)' : 'var(--success)'};">
+                                ${due > 0 ? formatCurrency(due) : '✓ ക്ലിയർ'}
+                            </div>
+                            <div style="font-size:0.72rem; color:var(--text-muted);">${paidSet.size}/12 മാസം അടച്ചു</div>
+                        </td>
+                        <td>
+                            <div style="display:flex; gap:6px;">
+                                <button class="btn btn-sm btn-primary" onclick="openCollectSubscriptionModal(${h.id})">💵 വാങ്ങുക</button>
+                                <button class="btn btn-sm btn-whatsapp" onclick="sendWhatsAppReminder(${h.id})">💬</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function renderLedger() {
+            const txs = getTransactions();
+            const income = txs.filter(t => t.type === 'INCOME').reduce((s,t) => s + t.amount, 0);
+            const expense = txs.filter(t => t.type === 'EXPENSE').reduce((s,t) => s + t.amount, 0);
+
+            document.getElementById("ledgerTotalIncome").textContent = formatCurrency(income);
+            document.getElementById("ledgerTotalExpense").textContent = formatCurrency(expense);
+            document.getElementById("ledgerNetBalance").textContent = formatCurrency(income - expense);
+
+            const filtered = txs.filter(t => {
+                if (currentLedgerFilter === "INCOME" && t.type !== "INCOME") return false;
+                if (currentLedgerFilter === "EXPENSE" && t.type !== "EXPENSE") return false;
+                if (currentLedgerSearch.trim()) {
+                    const q = currentLedgerSearch.toLowerCase();
+                    return (t.title || '').toLowerCase().includes(q) || (t.category || '').toLowerCase().includes(q);
+                }
+                return true;
+            }).sort((a,b) => b.transactionDate - a.transactionDate);
+
+            document.getElementById("ledgerTableBody").innerHTML = filtered.map(t => `
+                <tr>
+                    <td>${formatDate(t.transactionDate)}</td>
+                    <td><strong>${t.voucherNumber || '-'}</strong></td>
+                    <td><div style="font-weight:700;">${t.title}</div></td>
+                    <td><span class="badge-role" style="background:#f1f5f9; color:var(--text);">${t.category}</span></td>
+                    <td>${t.paymentMode || 'CASH'}</td>
+                    <td style="font-weight:800; color:${t.type === 'INCOME' ? 'var(--success)' : 'var(--danger)'};">
+                        ${t.type === 'INCOME' ? '+' : '-'}${formatCurrency(t.amount)}
+                    </td>
+                    <td><button class="btn btn-sm btn-outline" style="color:var(--danger);" onclick="deleteTx(${t.id})">🗑️</button></td>
+                </tr>
+            `).join("");
+        }
+
+        function renderTransparency() {
+            const households = getHouseholds();
+            const householdIds = new Set(households.map(h => h.id));
+            const payments = AppData.subscriptionPayments.filter(p => householdIds.has(p.householdId) && p.year === AppData.currentYear);
+            const subTotal = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+
+            const txs = getTransactions();
+            const genIncome = txs.filter(t => t.type === 'INCOME').reduce((sum, t) => sum + t.amount, 0);
+            const expenses = txs.filter(t => t.type === 'EXPENSE').reduce((sum, t) => sum + t.amount, 0);
+
+            document.getElementById("transSubscriptionTotal").textContent = formatCurrency(subTotal);
+            document.getElementById("transGeneralIncome").textContent = formatCurrency(genIncome);
+            document.getElementById("transTotalExpenses").textContent = formatCurrency(expenses);
+            document.getElementById("transNetBalance").textContent = formatCurrency((subTotal + genIncome) - expenses);
+        }
+
+        function renderSettings() {
+            const comm = getActiveCommunity();
+            document.getElementById("settingMahalName").value = comm.name;
+            document.getElementById("settingLocation").value = comm.location;
+            document.getElementById("settingPhone").value = comm.contactPhone;
+            document.getElementById("settingFee").value = comm.defaultMonthlyFee;
+            document.getElementById("settingUpi").value = comm.upiId || '';
+        }
+
+        function saveMahalSettings(e) {
+            e.preventDefault();
+            const comm = getActiveCommunity();
+            comm.name = document.getElementById("settingMahalName").value.trim();
+            comm.location = document.getElementById("settingLocation").value.trim();
+            comm.contactPhone = document.getElementById("settingPhone").value.trim();
+            comm.defaultMonthlyFee = Number(document.getElementById("settingFee").value) || 250;
+            comm.upiId = document.getElementById("settingUpi").value.trim();
+
+            saveAppData();
+            showToast("മഹല്ല് വിവരങ്ങൾ സേവ് ചെയ്തു!");
+        }
+
+        function renderSuperAdmin() {
+            document.getElementById("superAdminCommunitiesList").innerHTML = AppData.communities.map(c => `
+                <div class="stat-card" style="margin-bottom:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span class="badge-role" style="background:var(--primary-light); color:var(--primary-dark);">${c.mahalCode}</span>
+                            <h3 style="font-size:1.15rem; font-weight:800; margin-top:4px;">${c.name}</h3>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">${c.location} • ലോഗിൻ: ${c.subAdminUsername}</p>
+                        </div>
+                        <button class="btn btn-sm btn-primary" onclick="enterCommunityAsSuperAdmin('${c.mahalCode}')">പ്രവേശിക്കുക</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function enterCommunityAsSuperAdmin(code) {
+            AppData.activeMahalCode = code;
+            saveAppData();
+            switchMainTab("view-dashboard");
+            showToast(`വർക്ക്‌സ്പേസ് മാറി: ${getActiveCommunity().name}`);
+        }
+
+        // Collect Vari Modal Logic
+        function openCollectSubscriptionModal(id) {
+            const h = AppData.households.find(x => x.id === id);
+            if (!h) return;
+            activeHouseholdForCollection = h;
+            selectedMonthIndices = [];
+
+            const pays = getPaymentsForHousehold(h.id);
+            const paidSet = new Set(pays.map(p => p.month));
+
+            document.getElementById("collectFamilyName").textContent = `${h.headOfFamily} (${h.houseNumber})`;
+            document.getElementById("collectMonthlyFee").textContent = formatCurrency(h.monthlyFee);
+
+            document.getElementById("collectMonthGrid").innerHTML = Array.from({ length: 12 }, (_, i) => {
+                const m = i + 1;
+                const isPaid = paidSet.has(m);
+                return `
+                    <div class="month-check-card ${isPaid ? 'disabled' : ''}" id="mCard_${m}" onclick="toggleMonth(${m}, ${isPaid})">
+                        <div style="font-weight:700;">${MONTH_NAMES[i]}</div>
+                        <div style="font-size:0.75rem;">${isPaid ? '✓ അടച്ചു' : formatCurrency(h.monthlyFee)}</div>
+                    </div>
+                `;
+            }).join("");
+
+            updateCollectCalc();
+            document.getElementById("collectModalOverlay").classList.add("active");
+        }
+
+        function toggleMonth(m, isPaid) {
+            if (isPaid) return;
+            const idx = selectedMonthIndices.indexOf(m);
+            if (idx > -1) {
+                selectedMonthIndices.splice(idx, 1);
+                document.getElementById(`mCard_${m}`).classList.remove("checked");
+            } else {
+                selectedMonthIndices.push(m);
+                document.getElementById(`mCard_${m}`).classList.add("checked");
+            }
+            updateCollectCalc();
+        }
+
+        function selectAllUnpaidMonths() {
+            if (!activeHouseholdForCollection) return;
+            const pays = getPaymentsForHousehold(activeHouseholdForCollection.id);
+            const paidSet = new Set(pays.map(p => p.month));
+            selectedMonthIndices = [];
+            for (let m = 1; m <= 12; m++) {
+                if (!paidSet.has(m)) {
+                    selectedMonthIndices.push(m);
+                    const c = document.getElementById(`mCard_${m}`);
+                    if (c) c.classList.add("checked");
+                }
+            }
+            updateCollectCalc();
+        }
+
+        function clearMonthSelection() {
+            selectedMonthIndices = [];
+            document.querySelectorAll(".month-check-card").forEach(c => {
+                if (!c.classList.contains("disabled")) c.classList.remove("checked");
+            });
+            updateCollectCalc();
+        }
+
+        function updateCollectCalc() {
+            const h = activeHouseholdForCollection;
+            const total = selectedMonthIndices.length * (h ? h.monthlyFee : 0);
+            document.getElementById("collectCalculatedAmount").textContent = formatCurrency(total);
+        }
+
+        function saveSubscriptionPayment() {
+            const h = activeHouseholdForCollection;
+            if (!h || selectedMonthIndices.length === 0) {
+                showToast("കുറഞ്ഞത് ഒരു മാസമെങ്കിലും തിരഞ്ഞെടുക്കുക", "error");
+                return;
+            }
+
+            const mode = document.getElementById("collectPaymentMode").value;
+            const collector = document.getElementById("collectCollectorName").value || "Treasurer";
+            const now = Date.now();
+
+            selectedMonthIndices.sort((a,b) => a-b).forEach((m, idx) => {
+                AppData.subscriptionPayments.push({
+                    id: now + idx,
+                    householdId: h.id,
+                    month: m,
+                    year: AppData.currentYear,
+                    amountPaid: h.monthlyFee,
+                    paymentDate: now,
+                    paymentMethod: mode,
+                    receiptNumber: `REC-2026-0${AppData.subscriptionPayments.length + 1}`,
+                    collectedBy: collector
+                });
+            });
+
+            saveAppData();
+            closeModal("collectModalOverlay");
+            renderSubscriptions();
+            renderDashboard();
+
+            showDigitalReceipt({
+                receiptNumber: `REC-2026-0${AppData.subscriptionPayments.length}`,
+                communityName: getActiveCommunity().name,
+                householdName: h.headOfFamily,
+                houseNumber: h.houseNumber,
+                monthsPaid: selectedMonthIndices.map(m => MONTH_NAMES[m-1]),
+                year: AppData.currentYear,
+                totalAmount: selectedMonthIndices.length * h.monthlyFee,
+                paymentMethod: mode,
+                dateFormatted: formatDate(now)
+            });
+
+            showToast("വരിസംഖ്യ വിജയകരമായി രേഖപ്പെടുത്തി!");
+        }
+
+        function showDigitalReceipt(data) {
+            activeReceiptData = data;
+            document.getElementById("receiptCommunity").textContent = data.communityName;
+            document.getElementById("receiptNo").textContent = data.receiptNumber;
+            document.getElementById("receiptDate").textContent = data.dateFormatted;
+            document.getElementById("receiptHousehold").textContent = `${data.householdName} (${data.houseNumber})`;
+            document.getElementById("receiptMonths").textContent = data.monthsPaid.join(", ") + ` ${data.year}`;
+            document.getElementById("receiptMode").textContent = data.paymentMethod;
+            document.getElementById("receiptAmount").textContent = formatCurrency(data.totalAmount);
+
+            document.getElementById("receiptModalOverlay").classList.add("active");
+        }
+
+        function viewReceiptByPaymentId(id) {
+            const p = AppData.subscriptionPayments.find(x => x.id === id);
+            if (!p) return;
+            const h = AppData.households.find(x => x.id === p.householdId);
+            showDigitalReceipt({
+                receiptNumber: p.receiptNumber,
+                communityName: getActiveCommunity().name,
+                householdName: h ? h.headOfFamily : "Unknown",
+                houseNumber: h ? h.houseNumber : "-",
+                monthsPaid: [MONTH_NAMES[p.month - 1]],
+                year: p.year,
+                totalAmount: p.amountPaid,
+                paymentMethod: p.paymentMethod,
+                dateFormatted: formatDate(p.paymentDate)
+            });
+        }
+
+        function shareReceiptWhatsApp() {
+            if (!activeReceiptData) return;
+            const text = encodeURIComponent(
+                `*${activeReceiptData.communityName}*\n` +
+                `ഡിജിറ്റൽ വരിസംഖ്യാ രസീത്\n` +
+                `രസീത് നമ്പർ: ${activeReceiptData.receiptNumber}\n` +
+                `കുടുംബനാഥൻ: ${activeReceiptData.householdName} (${activeReceiptData.houseNumber})\n` +
+                `മാസങ്ങൾ: ${activeReceiptData.monthsPaid.join(", ")} ${activeReceiptData.year}\n` +
+                `അടച്ച തുക: ₹${activeReceiptData.totalAmount}\n` +
+                `രീതി: ${activeReceiptData.paymentMethod}\n` +
+                `തീയതി: ${activeReceiptData.dateFormatted}`
+            );
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        function sendWhatsAppReminder(id) {
+            const h = AppData.households.find(x => x.id === id);
+            if (!h) return;
+            const pays = getPaymentsForHousehold(h.id);
+            const paidSet = new Set(pays.map(p => p.month));
+            const dueCount = Math.max(0, 12 - paidSet.size);
+            const due = dueCount * h.monthlyFee;
+            const comm = getActiveCommunity();
+
+            const text = encodeURIComponent(
+                `അസ്സലാമു അലൈക്കും,\n*${comm.name}*\n` +
+                `ബഹുമാനപ്പെട്ട ${h.headOfFamily} (${h.houseNumber}),\n` +
+                `നിങ്ങളുടെ കുടുംബത്തിന് 2026-ലെ മഹല്ല് വരിസംഖ്യയിൽ ${dueCount} മാസത്തെ കുടിശ്ശിക (${formatCurrency(due)}) നിലനിൽക്കുന്നുണ്ട്.\n` +
+                `UPI വഴി അടയ്ക്കാം: ${comm.upiId || 'alnoormahal@sbi'}\nനന്ദി.`
+            );
+            const cleanPhone = (h.phoneNumber || '').replace(/\D/g, '');
+            window.open(`https://api.whatsapp.com/send?phone=91${cleanPhone}&text=${text}`, '_blank');
+        }
+
+        // Add Household
+        function openAddHouseholdModal() {
+            document.getElementById("householdForm").reset();
+            document.getElementById("householdFeeInput").value = getActiveCommunity().defaultMonthlyFee || 250;
+            document.getElementById("householdModalOverlay").classList.add("active");
+        }
+
+        function saveHousehold(e) {
+            e.preventDefault();
+            const houseNo = document.getElementById("householdNumberInput").value.trim();
+            const head = document.getElementById("householdHeadInput").value.trim();
+            const phone = document.getElementById("householdPhoneInput").value.trim();
+            const fee = Number(document.getElementById("householdFeeInput").value) || 250;
+
+            AppData.households.push({
+                id: Date.now(),
+                mahalCode: AppData.activeMahalCode,
+                houseNumber: houseNo,
+                headOfFamily: head,
+                phoneNumber: phone,
+                monthlyFee: fee,
+                verificationStatus: "VERIFIED"
+            });
+
+            saveAppData();
+            closeModal("householdModalOverlay");
+            renderSubscriptions();
+            renderDashboard();
+            showToast("കുടുംബത്തെ വിജയകരമായി ചേർത്തു!");
+        }
+
+        // Add Transaction
+        function openAddTransactionModal(defType = 'INCOME') {
+            document.getElementById("transactionForm").reset();
+            document.getElementById("txTypeInput").value = defType;
+            document.getElementById("transactionModalOverlay").classList.add("active");
+        }
+
+        function saveTransaction(e) {
+            e.preventDefault();
+            const type = document.getElementById("txTypeInput").value;
+            const amt = Number(document.getElementById("txAmountInput").value);
+            const title = document.getElementById("txTitleInput").value.trim();
+            const cat = document.getElementById("txCategoryInput").value.trim();
+            const mode = document.getElementById("txModeInput").value;
+
+            AppData.cashTransactions.push({
+                id: Date.now(),
+                mahalCode: AppData.activeMahalCode,
+                type: type,
+                amount: amt,
+                title: title,
+                category: cat,
+                paymentMode: mode,
+                voucherNumber: `V-${type.slice(0,3)}-${Math.floor(100 + Math.random()*900)}`,
+                transactionDate: Date.now()
+            });
+
+            saveAppData();
+            closeModal("transactionModalOverlay");
+            renderLedger();
+            renderDashboard();
+            showToast("ഇടപാട് രേഖപ്പെടുത്തി!");
+        }
+
+        function deleteTx(id) {
+            if (!confirm("ഈ ഇടപാട് നീക്കം ചെയ്യണോ?")) return;
+            AppData.cashTransactions = AppData.cashTransactions.filter(t => t.id !== id);
+            saveAppData();
+            renderLedger();
+            renderDashboard();
+            showToast("നീക്കം ചെയ്തു");
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove("active");
+        }
+
+        function openApkDownloadModal() {
+            document.getElementById("apkModalOverlay").classList.add("active");
+        }
+
+        function exportBackupJSON() {
+            const str = JSON.stringify(AppData, null, 2);
+            const blob = new Blob([str], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `MahalLedger_Backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            showToast("ബാക്കപ്പ് ഫയൽ ഡൗൺലോഡ് ആയി!");
+        }
+
+        function exportHouseholdsCSV() {
+            let csv = "House Number,Head of Family,Phone,Monthly Fee\n";
+            getHouseholds().forEach(h => {
+                csv += `"${h.houseNumber}","${h.headOfFamily}","${h.phoneNumber}",${h.monthlyFee}\n`;
+            });
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `Mahal_Members_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            showToast("CSV ഡൗൺലോഡ് ആയി!");
+        }
+
+        // Init listeners
+        window.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".nav-tab-btn").forEach(b => {
+                b.addEventListener("click", () => switchMainTab(b.dataset.tab));
+            });
+
+            const subSearch = document.getElementById("subSearchInput");
+            if (subSearch) {
+                subSearch.addEventListener("input", (e) => {
+                    currentSubSearch = e.target.value;
+                    renderSubscriptions();
+                });
+            }
+
+            document.querySelectorAll(".sub-filter-chip").forEach(c => {
+                c.addEventListener("click", () => {
+                    document.querySelectorAll(".sub-filter-chip").forEach(x => x.classList.remove("active"));
+                    c.classList.add("active");
+                    currentSubFilter = c.dataset.filter;
+                    renderSubscriptions();
+                });
+            });
+
+            const ledgerSearch = document.getElementById("ledgerSearchInput");
+            if (ledgerSearch) {
+                ledgerSearch.addEventListener("input", (e) => {
+                    currentLedgerSearch = e.target.value;
+                    renderLedger();
+                });
+            }
+
+            document.querySelectorAll(".ledger-filter-chip").forEach(c => {
+                c.addEventListener("click", () => {
+                    document.querySelectorAll(".ledger-filter-chip").forEach(x => x.classList.remove("active"));
+                    c.classList.add("active");
+                    currentLedgerFilter = c.dataset.filter;
+                    renderLedger();
+                });
+            });
+
+            document.querySelectorAll(".modal-overlay").forEach(overlay => {
+                overlay.addEventListener("click", (e) => {
+                    if (e.target === overlay) overlay.classList.remove("active");
+                });
+            });
+        });
+    </script>
 </body>
 </html>
