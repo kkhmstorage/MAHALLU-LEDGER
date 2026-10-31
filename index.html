@@ -3,241 +3,1084 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>മഹല്ല് ലെഡ്ജർ | Mahal Ledger Android App</title>
-    <meta name="description" content="മഹല്ല് പ്രതിമാസ വരിസംഖ്യ, അഡീഷണൽ ഫണ്ടുകൾ, കുടുബങ്ങളുടെ വിവരങ്ങൾ സുതാര്യമായി കൈകാര്യം ചെയ്യാനുള്ള ആൻഡ്രോയിഡ് ആപ്ലിക്കേഷൻ.">
+    <title>മഹല്ല് ലെഡ്ജർ | Mahal Ledger Web & Cloud Portal</title>
+    <meta name="description" content="മഹല്ല് പ്രതിമാസ വരിസംഖ്യ, പ്രത്യേക ഫണ്ടുകൾ, വരവ്-ചിലവ് ലെഡ്ജർ എന്നിവ സുതാര്യമായി കൈകാര്യം ചെയ്യാനുള്ള സമ്പൂർണ്ണ വെബ് ആപ്ലിക്കേഷൻ. കംപ്യൂട്ടറിലും മൊബൈലിലും ഉപയോഗിക്കാം.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #15803d;
-            --primary-dark: #166534;
-            --primary-light: #dcfce7;
-            --accent: #ca8a04;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --border: #e2e8f0;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Manrope', 'Noto Sans Malayalam', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-        .header {
-            background: linear-gradient(135deg, #14532d 0%, #166534 50%, #15803d 100%);
-            color: white;
-            padding: 60px 20px 80px;
-            text-align: center;
-            position: relative;
-        }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fef08a;
-            font-weight: 700;
-            padding: 6px 16px;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            line-height: 1.25;
-        }
-        .subtitle {
-            font-size: 1.15rem;
-            opacity: 0.92;
-            max-width: 650px;
-            margin: 0 auto 30px;
-        }
-        .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #ffffff;
-            color: #166534;
-            font-size: 1.1rem;
-            font-weight: 700;
-            padding: 16px 36px;
-            border-radius: 14px;
-            text-decoration: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
-            transition: all 0.2s ease;
-        }
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(0,0,0,0.22);
-            background: #f0fdf4;
-        }
-        .cta-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-        .version-tag {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: -40px;
-            position: relative;
-            z-index: 10;
-            margin-bottom: 50px;
-        }
-        .card {
-            background: var(--card-bg);
-            padding: 28px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            border: 1px solid var(--border);
-        }
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-light);
-            color: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 16px;
-        }
-        .card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-        .guide-box {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 32px;
-            border: 1px solid var(--border);
-            margin-bottom: 50px;
-        }
-        .guide-box h2 {
-            font-size: 1.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .steps-list {
-            padding-left: 20px;
-        }
-        .steps-list li {
-            margin-bottom: 14px;
-            color: var(--text-muted);
-        }
-        .steps-list li strong {
-            color: var(--text-main);
-        }
-        .info-alert {
-            background: #fefce8;
-            border-left: 4px solid var(--accent);
-            padding: 16px 20px;
-            border-radius: 0 10px 10px 0;
-            margin-top: 20px;
-            font-size: 0.95rem;
-            color: #854d0e;
-        }
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Noto+Sans+Malayalam:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <header class="header">
-        <div class="container">
-            <span class="badge">Official Android Application</span>
-            <h1>മഹല്ല് ലെഡ്ജർ (Mahal Ledger)</h1>
-            <p class="subtitle">
-                മഹല്ല് പ്രതിമാസ വരിസംഖ്യ, പ്രത്യേക ഫണ്ടുകൾ, കുടുംബങ്ങളുടെ ഡാറ്റാബേസ്, സുതാര്യമായ ഓഡിറ്റ് എന്നിവ ഒരു കുടക്കീഴിൽ.
-            </p>
-            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                <a href="./MahalLedger.apk" download="MahalLedger.apk" class="cta-btn" id="downloadBtn">
+    <!-- ========================================== -->
+    <!-- 1. LOGIN VIEW (Initial screen when not logged in) -->
+    <!-- ========================================== -->
+    <div id="loginView">
+        <div class="login-wrapper">
+            <div class="login-header">
+                <div class="login-header-logo">🕌</div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 4px;">മഹല്ല് ലെഡ്ജർ</h2>
+                <p style="font-size: 0.85rem; opacity: 0.9;">Mahal Ledger • Web & Computer Edition</p>
+            </div>
+
+            <!-- Login Tabs -->
+            <div class="login-tabs">
+                <button class="login-tab-btn active" id="loginTabAdmin">അഡ്മിൻ ലോഗിൻ</button>
+                <button class="login-tab-btn" id="loginTabFamily">കുടുംബാംഗങ്ങൾ (OTP)</button>
+            </div>
+
+            <!-- Admin Login Form -->
+            <form id="adminLoginForm" class="login-body" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">യൂസർനെയിം (Username)</label>
+                    <input type="text" class="form-input" id="loginUsername" placeholder="ഉദാ: alnoor_admin" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">പാസ്‌വേഡ് (Password)</label>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="പാസ്‌വേഡ് നൽകുക" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px; font-size:1rem; margin-top:6px;">
+                    പ്രവേശിക്കുക (Sign In)
+                </button>
+
+                <!-- Quick Testing Chips -->
+                <div class="quick-login-chips">
+                    <span class="caption">ടെസ്റ്റിംഗിനായി ഒറ്റ ക്ലിക്കിൽ ലോഗിൻ ചെയ്യാം:</span>
+                    <div class="chips-row">
+                        <button type="button" class="quick-chip" onclick="quickFillLogin('alnoor_admin', 'password123')">🟢 Al-Noor Admin</button>
+                        <button type="button" class="quick-chip" onclick="quickFillLogin('darussalam_admin', 'password123')">🔵 Darussalam Admin</button>
+                        <button type="button" class="quick-chip" onclick="quickFillLogin('AMINZAD', 'A4aminzad')">👑 Super-Admin AMINZAD</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Family OTP Login Form -->
+            <div id="familyLoginForm" class="login-body" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">രജിസ്റ്റർ ചെയ്ത ഫോൺ നമ്പർ (Phone Number)</label>
+                    <input type="tel" class="form-input" id="loginMemberPhone" placeholder="10 അക്ക ഫോൺ നമ്പർ">
+                </div>
+
+                <button type="button" class="btn btn-secondary" onclick="handleMemberOtpRequest()" style="width:100%; justify-content:center;">
+                    📩 OTP അയക്കുക (Send OTP)
+                </button>
+
+                <div id="otpSentMessage" style="display:none; color:var(--success); font-size:0.85rem; font-weight:700;"></div>
+
+                <div id="memberOtpStep" style="display:none; margin-top:10px;">
+                    <div class="form-group">
+                        <label class="form-label">ലഭിച്ച 4 അക്ക OTP നൽകുക</label>
+                        <input type="text" class="form-input" id="loginMemberOtp" placeholder="4 അക്ക OTP" maxlength="4">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="handleMemberLogin()" style="width:100%; justify-content:center; margin-top:10px;">
+                        സ്ഥിരീകരിച്ച് പ്രവേശിക്കുക (Verify & Enter)
+                    </button>
+                </div>
+
+                <!-- Demo family phone numbers -->
+                <div class="quick-login-chips">
+                    <span class="caption">ഡെമോ കുടുംബ നമ്പറുകൾ:</span>
+                    <div class="chips-row">
+                        <button type="button" class="quick-chip" onclick="quickFillMemberPhone('9846011223')">H-01 (K.P. Abdul Rahman)</button>
+                        <button type="button" class="quick-chip" onclick="quickFillMemberPhone('9847122334')">H-02 (M.C. Moideen Kutty)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download APK Callout -->
+            <div style="background:#f1f5f9; padding:18px 24px; border-top:1px solid var(--border); text-align:center;">
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;">
+                    💻 <strong>കംപ്യൂട്ടറിലും ലാപ്‌ടോപ്പിലും</strong> ബ്രൗസറിൽ നേരിട്ട് ഉപയോഗിക്കാം. ഫോണിൽ ആപ്പ് ആവശ്യമുള്ളവർക്ക് താഴെയുള്ള APK ഡൗൺലോഡ് ചെയ്യാം.
+                </p>
+                <button type="button" class="btn-apk" onclick="openApkDownloadModal()" style="margin:0 auto;">
                     <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
-                    Download APK (Direct - 23 MB)
-                </a>
-                <a href="https://raw.githubusercontent.com/kkhmstorage/MAHALLU-LEDGER/main/MahalLedger.apk" class="cta-btn" style="background: rgba(255,255,255,0.15); color: #ffffff; border: 1px solid rgba(255,255,255,0.4);">
-                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
-                    GitHub Mirror Link
-                </a>
-            </div>
-            <div class="version-tag">Version 2.0.0 • Android 8.0 & Above • Direct APK & Live In-App Updates</div>
-        </div>
-    </header>
-
-    <main class="container">
-        <!-- Feature Cards -->
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-icon">🕌</div>
-                <h3>പ്രതിമാസ വരിസംഖ്യ (Monthly Vari)</h3>
-                <p>ഓരോ കുടുംബത്തിന്റെയും പ്രതിമാസ കുടിശ്ശിക കൃത്യമായി രേഖപ്പെടുത്താനും രസീത് നൽകാനും വാട്സാപ്പ് വഴി ഓർമ്മപ്പെടുത്തൽ അയക്കാനും സാധിക്കുന്നു.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🤝</div>
-                <h3>അഡീഷണൽ കളക്ഷൻ (Special Funds)</h3>
-                <p>മദ്റസ നിർമ്മാണം, മെഡിക്കൽ റിലീഫ്, റമദാൻ കിറ്റ് തുടങ്ങി പ്രത്യേക ഫണ്ടുകൾ സബ് അഡ്മിന് ഉണ്ടാക്കാനും വരിസംഖ്യ പിരിക്കാനും സാധിക്കുന്നു.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">👨‍👩‍👧‍👦</div>
-                <h3>കുടുംബ വിവര ശേഖരണം (Family Registry)</h3>
-                <p>സബ് അഡ്മിൻ കുടുംബത്തെ ആഡ് ചെയ്താൽ, കുടുംബങ്ങൾക്ക് OTP വഴി ലോഗിൻ ചെയ്ത് തങ്ങളുടെ പ്രൊഫൈൽ എളുപ്പത്തിൽ പൂർത്തിയാക്കാം. സബ് അഡ്മിൻ വെരിഫിക്കേഷനും ലഭ്യമാണ്.</p>
+                    Download Android APK (Direct 28 MB)
+                </button>
             </div>
         </div>
+    </div>
 
-        <!-- Installation Guide -->
-        <section class="guide-box">
-            <h2>📱 ഫോണിൽ എങ്ങനെ ഇൻസ്റ്റാൾ ചെയ്യാം?</h2>
-            <ol class="steps-list">
-                <li>മുകളിലുള്ള <strong>"Download APK"</strong> ബട്ടൺ ക്ലിക്ക് ചെയ്ത് APK ഫയൽ ഫോണിലേക്ക് ഡൗൺലോഡ് ചെയ്യുക.</li>
-                <li>ഡൗൺലോഡ് ചെയ്ത ഫയൽ ഓപ്പൺ ചെയ്യുമ്പോൾ <em>"Install unknown apps"</em> അല്ലെങ്കിൽ <em>"Allow from this source"</em> എന്ന് ചോദിച്ചാൽ <strong>Allow (സമ്മതം)</strong> നൽകുക.</li>
-                <li>തുടർന്ന് <strong>Install</strong> ബട്ടൺ ക്ലിക്ക് ചെയ്യുക.</li>
-                <li>ആപ്പ് ഓപ്പൺ ചെയ്ത് സബ് അഡ്മിൻ നൽകിയ ഫോൺ നമ്പർ അടിച്ച് ലഭിക്കുന്ന <strong>OTP</strong> വഴി ലോഗിൻ ചെയ്യുക.</li>
-            </ol>
+    <!-- ========================================== -->
+    <!-- 2. MAIN APPLICATION VIEW (When logged in) -->
+    <!-- ========================================== -->
+    <div id="appMainView" style="display: none;">
+        
+        <!-- Sticky Top Navigation Bar -->
+        <header class="topbar">
+            <div class="topbar-container">
+                <div class="brand-section" onclick="switchMainTab('view-dashboard')">
+                    <div class="brand-logo">🕌</div>
+                    <div class="brand-info">
+                        <h1 id="headerCommunityName">Al-Noor Madrasa & Mahal Committee</h1>
+                        <div class="sub-title">
+                            <span id="headerLocation">Malappuram, Kerala</span>
+                            <span>•</span>
+                            <span>വർഷം 2026</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="info-alert">
-                <strong>ശ്രദ്ധിക്കുക:</strong> ഈ ആപ്ലിക്കേഷൻ ആൻഡ്രോയിഡ് ഫോണുകൾക്ക് വേണ്ടിയുള്ള മൊബൈൽ ആപ്പാണ്. ബ്രൗസറിൽ നേരിട്ട് വെബ്സൈറ്റായി പ്രവർത്തിക്കില്ല. ഫോണിൽ APK ഇൻസ്റ്റാൾ ചെയ്ത് ഉപയോഗിക്കുക.
+                <div class="topbar-actions">
+                    <span class="badge-role" id="headerUserRole">🕌 സബ് അഡ്മിൻ</span>
+                    <span class="badge-role" id="syncBadge" style="background:rgba(255,255,255,0.12); color:#bbf7d0;">☁️ Data Synced</span>
+                    
+                    <button class="btn-apk" onclick="openApkDownloadModal()">
+                        <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
+                        APK ആപ്പ്
+                    </button>
+
+                    <button class="btn-logout" onclick="logout()">
+                        🚪 ലോഗൗട്ട്
+                    </button>
+                </div>
             </div>
-        </section>
-    </main>
+        </header>
 
-    <footer>
-        <p>© 2026 മഹല്ല് ലെഡ്ജർ (Mahal Ledger) • KKHM Islamic & Arts College Markaz Valanchery</p>
-    </footer>
+        <!-- Navigation Tabs Bar -->
+        <nav class="nav-tabs-bar">
+            <div class="nav-tabs-container">
+                <button class="nav-tab-btn active" data-tab="view-dashboard">
+                    📊 ഡാഷ്‌ബോർഡ് (Overview)
+                </button>
+                <button class="nav-tab-btn" data-tab="view-subscriptions">
+                    💳 വരിസംഖ്യ (Subscriptions)
+                </button>
+                <button class="nav-tab-btn" data-tab="view-ledger">
+                    📖 ലെഡ്ജർ (Cash Ledger)
+                </button>
+                <button class="nav-tab-btn" data-tab="view-transparency">
+                    🛡️ സുതാര്യത & ഓഡിറ്റ്
+                </button>
+                <button class="nav-tab-btn" data-tab="view-settings">
+                    ⚙️ സെറ്റിങ്സ്
+                </button>
+                <button class="nav-tab-btn" data-tab="view-superadmin" style="display:none; color:#ca8a04;">
+                    👑 സൂപ്പർ അഡ്മിൻ
+                </button>
+            </div>
+        </nav>
 
+        <!-- Main App Container -->
+        <main class="app-container">
+
+            <!-- ========================= -->
+            <!-- TAB 1: DASHBOARD VIEW     -->
+            <!-- ========================= -->
+            <section id="view-dashboard" class="tab-view active">
+                
+                <!-- Financial Summary Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card hero-balance">
+                        <div class="stat-header">
+                            <span class="stat-label">കൈവശമുള്ള ബാക്കി (Net Balance)</span>
+                            <div class="stat-icon">💰</div>
+                        </div>
+                        <div class="stat-value" id="statNetBalance">₹0</div>
+                        <div class="stat-sub" style="color:#bbf7d0;">ആകെ വരവ് - ആകെ ചിലവ്</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">വരിസംഖ്യ വരുമാനം (2026)</span>
+                            <div class="stat-icon" style="background:#dcfce7; color:#15803d;">📥</div>
+                        </div>
+                        <div class="stat-value" id="statSubscriptionTotal" style="color:#15803d;">₹0</div>
+                        <div class="stat-sub">പ്രതിമാസ വരിസംഖ്യ പിരിവ്</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">മറ്റ് പൊതു വരവുകൾ</span>
+                            <div class="stat-icon" style="background:#e0f2fe; color:#0284c7;">📈</div>
+                        </div>
+                        <div class="stat-value" id="statGeneralIncome" style="color:#0284c7;">₹0</div>
+                        <div class="stat-sub">ജുമുഅ പെട്ടി, സംഭാവനകൾ</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">ആകെ ചിലവുകൾ</span>
+                            <div class="stat-icon" style="background:#fee2e2; color:#dc2626;">📤</div>
+                        </div>
+                        <div class="stat-value" id="statTotalExpenses" style="color:#dc2626;">₹0</div>
+                        <div class="stat-sub">ശമ്പളം, കറന്റ്, അറ്റകുറ്റപ്പണി</div>
+                    </div>
+
+                    <div class="stat-card due-alert">
+                        <div class="stat-header">
+                            <span class="stat-label" style="color:#b45309;">കുടിശ്ശിക തുക (Pending Dues)</span>
+                            <div class="stat-icon" style="background:#fef3c7; color:#d97706;">⚠️</div>
+                        </div>
+                        <div class="stat-value" id="statPendingDues" style="color:#b45309;">₹0</div>
+                        <div class="stat-sub" id="statPendingSub" style="color:#d97706;">0 കുടുംബങ്ങൾക്ക് കുടിശ്ശികയുണ്ട്</div>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="actions-card">
+                    <div class="actions-title">
+                        <span>⚡ ദ്രുത കർമ്മങ്ങൾ (Quick Actions):</span>
+                    </div>
+                    <div class="actions-buttons">
+                        <button class="btn btn-primary" onclick="switchMainTab('view-subscriptions')">
+                            💵 വരിസംഖ്യ വാങ്ങുക
+                        </button>
+                        <button class="btn btn-secondary" onclick="openAddTransactionModal('INCOME')">
+                            ➕ വരവ് ചേർക്കുക
+                        </button>
+                        <button class="btn btn-outline" onclick="openAddTransactionModal('EXPENSE')">
+                            ➖ ചിലവ് ചേർക്കുക
+                        </button>
+                        <button class="btn btn-outline" onclick="openAddHouseholdModal()">
+                            👨‍👩‍👧‍👦 കുടുംബത്തെ ചേർക്കുക
+                        </button>
+                        <button class="btn btn-outline" onclick="switchMainTab('view-transparency')">
+                            🖨️ ഓഡിറ്റ് റിപ്പോർട്ട്
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Two Columns -->
+                <div class="dashboard-columns">
+                    <!-- Left: Recent Subscription Payments -->
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2>🕌 സമീപകാല വരിസംഖ്യാ രസീതുകൾ</h2>
+                            <button class="btn btn-sm btn-outline" onclick="switchMainTab('view-subscriptions')">എല്ലാം കാണുക</button>
+                        </div>
+                        <div class="section-card-body">
+                            <ul class="feed-list" id="dashboardRecentPayments">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right: Recent Cash Transactions -->
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2>📖 സമീപകാല വരവ് - ചിലവ് ഇടപാടുകൾ</h2>
+                            <button class="btn btn-sm btn-outline" onclick="switchMainTab('view-ledger')">ലെഡ്ജർ കാണുക</button>
+                        </div>
+                        <div class="section-card-body">
+                            <ul class="feed-list" id="dashboardRecentTransactions">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ============================== -->
+            <!-- TAB 2: SUBSCRIPTIONS & HOUSES  -->
+            <!-- ============================== -->
+            <section id="view-subscriptions" class="tab-view">
+                
+                <!-- Sub-tab Bar -->
+                <div style="display:flex; gap:10px; margin-bottom:16px;">
+                    <button class="btn btn-primary active" id="tabSubMonthly">
+                        🕌 പ്രതിമാസ വരിസംഖ്യ (Monthly Vari)
+                    </button>
+                    <button class="btn btn-outline" id="tabSubSpecial">
+                        🤝 പ്രത്യേക ഫണ്ടുകൾ (Special Funds)
+                    </button>
+                </div>
+
+                <!-- Section A: Monthly Vari -->
+                <div id="monthlyVariSection">
+                    <!-- Filter Toolbar -->
+                    <div class="filter-toolbar">
+                        <div class="search-box-wrapper">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                            <input type="text" id="subSearchInput" placeholder="കുടുംബനാഥൻ, വീട്ടുനമ്പർ, ഫോൺ, വാർഡ് എന്നിവ തിരയുക...">
+                        </div>
+
+                        <div class="filter-chips">
+                            <button class="chip-btn sub-filter-chip active" data-filter="ALL">എല്ലാം</button>
+                            <button class="chip-btn sub-filter-chip" data-filter="WITH_DUES">⚠️ കുടിശ്ശികയുള്ളവ</button>
+                            <button class="chip-btn sub-filter-chip" data-filter="FULLY_PAID">✓ അടച്ചുതീർത്തവ</button>
+                            <button class="chip-btn sub-filter-chip" data-filter="PENDING_VERIFICATION">വെരിഫിക്കേഷൻ</button>
+                        </div>
+
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-primary" onclick="openAddHouseholdModal()">
+                                ➕ കുടുംബത്തെ ചേർക്കുക
+                            </button>
+                            <button class="btn btn-outline" onclick="exportHouseholdsCSV()">
+                                📊 CSV റിപ്പോർട്ട്
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Subscriptions Table -->
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>വീട്ടുനമ്പർ</th>
+                                    <th>കുടുംബനാഥൻ / മേൽവിലാസം</th>
+                                    <th>ഫോൺ / വാർഡ്</th>
+                                    <th>പ്രതിമാസം</th>
+                                    <th>2026 മാസ വരിസംഖ്യാ നില (12 Months)</th>
+                                    <th>കുടിശ്ശിക</th>
+                                    <th>പ്രവർത്തനങ്ങൾ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subscriptionsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Section B: Special Funds / Additional Collections -->
+                <div id="specialFundsSection" style="display: none;">
+                    <div class="actions-card" style="margin-bottom:20px;">
+                        <div>
+                            <h3 style="font-size:1.1rem; font-weight:800;">മദ്റസാ നിർമ്മാണം, റിലീഫ് & പ്രത്യേക ഫണ്ടുകൾ</h3>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">മഹല്ലിൽ നടക്കുന്ന പ്രത്യേക ജീവകാരുണ്യ, നിർമ്മാണ പദ്ധതികൾ ഇവിടെ രേഖപ്പെടുത്താം.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="openCreateSpecialFundModal()">
+                            ➕ പുതിയ പ്രത്യേക ഫണ്ട് തുടങ്ങുക
+                        </button>
+                    </div>
+
+                    <div id="specialFundsList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ========================= -->
+            <!-- TAB 3: CASH LEDGER        -->
+            <!-- ========================= -->
+            <section id="view-ledger" class="tab-view">
+                
+                <!-- Ledger Header Stats -->
+                <div class="stats-grid" style="margin-bottom:16px;">
+                    <div class="stat-card" style="border-top:4px solid var(--success);">
+                        <span class="stat-label">ആകെ വരവ് (Income)</span>
+                        <div class="stat-value" id="ledgerTotalIncome" style="color:var(--success);">₹0</div>
+                    </div>
+                    <div class="stat-card" style="border-top:4px solid var(--danger);">
+                        <span class="stat-label">ആകെ ചിലവ് (Expenses)</span>
+                        <div class="stat-value" id="ledgerTotalExpense" style="color:var(--danger);">₹0</div>
+                    </div>
+                    <div class="stat-card" style="border-top:4px solid var(--primary);">
+                        <span class="stat-label">നീക്കിയിരിപ്പ് (Cash Balance)</span>
+                        <div class="stat-value" id="ledgerNetBalance" style="color:var(--primary);">₹0</div>
+                    </div>
+                </div>
+
+                <!-- Ledger Toolbar -->
+                <div class="filter-toolbar">
+                    <div class="search-box-wrapper">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        <input type="text" id="ledgerSearchInput" placeholder="വിവരണം, കാറ്റഗറി, വൗച്ചർ നമ്പർ എന്നിവ തിരയുക...">
+                    </div>
+
+                    <div class="filter-chips">
+                        <button class="chip-btn ledger-filter-chip active" data-filter="ALL">എല്ലാ ഇടപാടുകളും</button>
+                        <button class="chip-btn ledger-filter-chip" data-filter="INCOME">📥 വരവ് മാത്രം</button>
+                        <button class="chip-btn ledger-filter-chip" data-filter="EXPENSE">📤 ചിലവ് മാത്രം</button>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="openAddTransactionModal('INCOME')">
+                        ➕ പുതിയ ഇടപാട് ചേർക്കുക
+                    </button>
+                </div>
+
+                <!-- Ledger Table -->
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>തീയതി</th>
+                                <th>വൗച്ചർ നമ്പർ</th>
+                                <th>വിവരണം / ഹെഡിംഗ്</th>
+                                <th>കാറ്റഗറി</th>
+                                <th>രീതി</th>
+                                <th>തുക (₹)</th>
+                                <th>മാറ്റം</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledgerTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+
+            <!-- ========================= -->
+            <!-- TAB 4: TRANSPARENCY & AUDIT -->
+            <!-- ========================= -->
+            <section id="view-transparency" class="tab-view">
+                
+                <div class="section-card" style="margin-bottom:24px;">
+                    <div class="section-card-header">
+                        <h2>🛡️ സുതാര്യമായ പൊതു ഓഡിറ്റ് റിപ്പോർട്ട് (2026)</h2>
+                        <button class="btn btn-sm btn-primary" onclick="window.print()">🖨️ റിപ്പോർട്ട് പ്രിന്റ് ചെയ്യുക</button>
+                    </div>
+                    <div class="section-card-body">
+                        <p style="color:var(--text-muted); margin-bottom:16px;">
+                            <strong id="transCommunityHeader">Al-Noor Madrasa & Mahal Committee</strong> യുടെ വരവ്-ചിലവ് കണക്കുകൾ മഹല്ല് നിവാസികൾക്ക് സുതാര്യമായി പരിശോധിക്കാൻ ലഭ്യമാക്കിയിരിക്കുന്നു.
+                        </p>
+
+                        <div class="stats-grid">
+                            <div class="stat-card" style="background:#f0fdf4;">
+                                <span class="stat-label">വരിസംഖ്യ പിരിവ്</span>
+                                <div class="stat-value" id="transSubscriptionTotal" style="color:var(--success);">₹0</div>
+                            </div>
+                            <div class="stat-card" style="background:#f0f9ff;">
+                                <span class="stat-label">മറ്റ് വരുമാനം</span>
+                                <div class="stat-value" id="transGeneralIncome" style="color:var(--info);">₹0</div>
+                            </div>
+                            <div class="stat-card" style="background:#fef2f2;">
+                                <span class="stat-label">ആകെ ചിലവുകൾ</span>
+                                <div class="stat-value" id="transTotalExpenses" style="color:var(--danger);">₹0</div>
+                            </div>
+                            <div class="stat-card" style="background:#f8fafc; border:2px solid var(--primary);">
+                                <span class="stat-label">അവശേഷിക്കുന്ന നീക്കിയിരിപ്പ്</span>
+                                <div class="stat-value" id="transNetBalance" style="color:var(--primary);">₹0</div>
+                            </div>
+                        </div>
+
+                        <!-- Expense Category Breakdown -->
+                        <h3 style="font-size:1.05rem; font-weight:800; margin:24px 0 14px;">ചിലവുകളുടെ കാറ്റഗറി തിരിച്ചുള്ള വിശകലനം:</h3>
+                        <div id="transExpenseCategories">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Public Family Dues Verification Search -->
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>🔍 കുടുംബങ്ങളുടെ വരിസംഖ്യാ നില നേരിട്ട് പരിശോധിക്കുക</h2>
+                    </div>
+                    <div class="section-card-body">
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">
+                            നിങ്ങളുടെ വീട്ടുനമ്പറോ (ഉദാ: <code>H-01</code>) രജിസ്റ്റർ ചെയ്ത ഫോൺ നമ്പറോ നൽകി വരിസംഖ്യാ കുടിശ്ശിക പരിശോധിക്കാം.
+                        </p>
+                        <div style="display:flex; gap:10px; max-width:550px;">
+                            <input type="text" class="form-input" id="auditSearchInput" placeholder="വീട്ടുനമ്പർ അല്ലെങ്കിൽ ഫോൺ നമ്പർ നൽകുക...">
+                            <button class="btn btn-primary" onclick="searchHouseholdAudit()">പരിശോധിക്കുക</button>
+                        </div>
+
+                        <div id="auditSearchResult">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ========================= -->
+            <!-- TAB 5: SETTINGS           -->
+            <!-- ========================= -->
+            <section id="view-settings" class="tab-view">
+                
+                <div class="dashboard-columns">
+                    <!-- Left: Community Profile & Settings Form -->
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2>⚙️ മഹല്ല് വിവരങ്ങൾ & അക്കൗണ്ട് സെറ്റിങ്സ്</h2>
+                        </div>
+                        <div class="section-card-body">
+                            <form id="mahalSettingsForm" onsubmit="saveMahalSettings(event)">
+                                <div class="form-group">
+                                    <label class="form-label">മഹല്ലിന്റെ പേര്</label>
+                                    <input type="text" class="form-input" id="settingMahalName" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">സ്ഥലം (Location)</label>
+                                        <input type="text" class="form-input" id="settingLocation" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">ഫോൺ നമ്പർ</label>
+                                        <input type="text" class="form-input" id="settingPhone" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">രജിസ്ട്രേഷൻ നമ്പർ</label>
+                                        <input type="text" class="form-input" id="settingRegNo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">പ്രതിമാസ വരിസംഖ്യ (Default ₹)</label>
+                                        <input type="number" class="form-input" id="settingFee" required>
+                                    </div>
+                                </div>
+
+                                <h4 style="font-weight:800; font-size:0.95rem; margin-top:14px; border-top:1px solid var(--border); padding-top:14px;">ബാങ്ക് & UPI വിവരങ്ങൾ:</h4>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">ബാങ്ക് പേര് (Bank Name)</label>
+                                        <input type="text" class="form-input" id="settingBank">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">അക്കൗണ്ട് നമ്പർ (Account Number)</label>
+                                        <input type="text" class="form-input" id="settingAccNo">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">IFSC Code</label>
+                                        <input type="text" class="form-input" id="settingIfsc">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">UPI ID (GPay / PhonePe)</label>
+                                        <input type="text" class="form-input" id="settingUpi" placeholder="example@sbi">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="margin-top:14px;">
+                                    💾 വിവരങ്ങൾ സേവ് ചെയ്യുക
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right: Switch Mahal & Data Management -->
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        
+                        <!-- Switch Active Mahal -->
+                        <div class="section-card">
+                            <div class="section-card-header">
+                                <h2>🔄 വർക്ക്‌സ്പേസ് മാറ്റുക (Switch Mahal)</h2>
+                            </div>
+                            <div class="section-card-body">
+                                <div class="form-group">
+                                    <label class="form-label">മഹല്ല് തിരഞ്ഞെടുക്കുക:</label>
+                                    <select class="form-select" id="settingSwitchMahal" onchange="switchActiveMahalFromSettings(this.value)">
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Backup & CSV Export -->
+                        <div class="section-card">
+                            <div class="section-card-header">
+                                <h2>💾 ഡാറ്റ ബാക്കപ്പും സുരക്ഷയും</h2>
+                            </div>
+                            <div class="section-card-body" style="display:flex; flex-direction:column; gap:12px;">
+                                <p style="font-size:0.85rem; color:var(--text-muted);">
+                                    നിങ്ങളുടെ ലെഡ്ജർ ഡാറ്റ കമ്പ്യൂട്ടറിലേക്ക് പൂർണ്ണമായി ബാക്കപ്പ് ചെയ്യാനും ആവശ്യമുള്ളപ്പോൾ തിരികെ കൊണ്ടുവരാനും താഴെയുള്ള ഓപ്ഷനുകൾ ഉപയോഗിക്കുക.
+                                </p>
+
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="btn btn-secondary" onclick="exportBackupJSON()">
+                                        📥 ഡാറ്റ ബാക്കപ്പ് ഡൗൺലോഡ് (JSON)
+                                    </button>
+
+                                    <label class="btn btn-outline" style="cursor:pointer; margin:0;">
+                                        📤 ബാക്കപ്പ് റീസ്റ്റോർ
+                                        <input type="file" accept=".json" onchange="importBackupJSON(event)" style="display:none;">
+                                    </label>
+
+                                    <button class="btn btn-outline" onclick="exportHouseholdsCSV()">
+                                        📊 Excel / CSV ഡൗൺലോഡ്
+                                    </button>
+                                </div>
+
+                                <div style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
+                                    <button class="btn btn-sm btn-outline" style="color:var(--danger);" onclick="if(confirm('ഡെമോ ഡാറ്റ റീസെറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) AppState.resetData(); renderDashboard(); showToast('ഡെമോ ഡാറ്റ റീസെറ്റ് ചെയ്തു');">
+                                        🔄 റീസെറ്റ് ടു ഒറിജിനൽ ഡെമോ ഡാറ്റ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Android App Card -->
+                        <div class="section-card" style="background:#f0fdf4; border:1px solid #86efac;">
+                            <div class="section-card-body" style="text-align:center;">
+                                <h3 style="color:#166534; font-size:1.15rem; font-weight:800; margin-bottom:6px;">📱 ആൻഡ്രോയിഡ് ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യാം</h3>
+                                <p style="font-size:0.85rem; color:#14532d; margin-bottom:14px;">
+                                    മൊബൈൽ ഫോണിൽ ഉപയോഗിക്കാൻ ഒഫീഷ്യൽ APK ഫയൽ ലഭ്യമാണ്.
+                                </p>
+                                <button class="btn-apk" onclick="openApkDownloadModal()" style="margin:0 auto;">
+                                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
+                                    Download APK (Direct 28 MB)
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ========================= -->
+            <!-- TAB 6: SUPER ADMIN PORTAL -->
+            <!-- ========================= -->
+            <section id="view-superadmin" class="tab-view">
+                <div class="actions-card" style="border-left: 5px solid #ca8a04;">
+                    <div>
+                        <h2 style="font-size:1.2rem; font-weight:800; color:#ca8a04;">👑 സൂപ്പർ അഡ്മിൻ മാസ്റ്റർ കൺട്രോൾ പാനൽ (Master Control)</h2>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">രജിസ്റ്റർ ചെയ്ത എല്ലാ മഹല്ല് സ്ഥാപനങ്ങളും സബ്‌സ്‌ക്രിപ്ഷനുകളും നിയന്ത്രിക്കുക.</p>
+                    </div>
+                </div>
+
+                <div id="superAdminCommunitiesList">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 3. MODAL DIALOGS                          -->
+    <!-- ========================================== -->
+
+    <!-- Collect Subscription Modal -->
+    <div id="collectModalOverlay" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>💵 വരിസംഖ്യ രേഖപ്പെടുത്തുക (Collect Subscription)</h3>
+                <button class="modal-close-btn" onclick="closeModal('collectModalOverlay')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="background:#f8fafc; padding:12px 16px; border-radius:10px; border:1px solid var(--border);">
+                    <div style="font-size:0.8rem; color:var(--text-muted);">കുടുംബം:</div>
+                    <div style="font-size:1.1rem; font-weight:800; color:var(--primary);" id="collectFamilyName">-</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">പ്രതിമാസ വരിസംഖ്യ: <strong id="collectMonthlyFee">-</strong></div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <label class="form-label">അടയ്ക്കുന്ന മാസങ്ങൾ തിരഞ്ഞെടുക്കുക:</label>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn btn-sm btn-outline" type="button" onclick="selectAllUnpaidMonths()">ബാക്കിയുള്ളവ എല്ലാം</button>
+                        <button class="btn btn-sm btn-outline" type="button" onclick="clearMonthSelection()">ഒഴിവാക്കുക</button>
+                    </div>
+                </div>
+
+                <!-- 12 Months Selection Grid -->
+                <div class="month-selector-grid" id="collectMonthGrid">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <div style="background:#f0fdf4; border:1px solid #86efac; padding:12px 16px; border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:700; color:#166534;">ആകെ അടയ്ക്കേണ്ട തുക:</span>
+                    <span style="font-size:1.4rem; font-weight:900; color:#15803d;" id="collectCalculatedAmount">₹0</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">പണമിടപാട് രീതി (Payment Method)</label>
+                        <select class="form-select" id="collectPaymentMode">
+                            <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
+                            <option value="CASH">CASH (നേരിട്ട് കയ്യിൽ)</option>
+                            <option value="BANK_TRANSFER">Bank Transfer (ബാങ്ക് ട്രാൻസ്ഫർ)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">സ്വീകരിച്ച ആൾ (Collected By)</label>
+                        <input type="text" class="form-input" id="collectCollectorName" value="Treasurer - M. K. Basheer">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">കുറിപ്പ് (Notes)</label>
+                    <input type="text" class="form-input" id="collectNotes" placeholder="ഓപ്ഷണൽ കുറിപ്പ്">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('collectModalOverlay')">റദ്ദാക്കുക</button>
+                <button class="btn btn-primary" onclick="saveSubscriptionPayment()">രസീത് നൽകുക & രേഖപ്പെടുത്തുക</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add / Edit Household Modal -->
+    <div id="householdModalOverlay" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="householdModalTitle">👨‍👩‍👧‍👦 കുടുംബത്തെ ചേർക്കുക</h3>
+                <button class="modal-close-btn" onclick="closeModal('householdModalOverlay')">&times;</button>
+            </div>
+            <form id="householdForm" onsubmit="saveHousehold(event)">
+                <input type="hidden" id="householdIdInput">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">വീട്ടുനമ്പർ (House No)*</label>
+                            <input type="text" class="form-input" id="householdNumberInput" placeholder="ഉദാ: H-12" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">പ്രതിമാസ വരിസംഖ്യ (₹)*</label>
+                            <input type="number" class="form-input" id="householdFeeInput" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">കുടുംബനാഥൻ (Head of Family)*</label>
+                            <input type="text" class="form-input" id="householdHeadInput" placeholder="പേര്" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">കുടുംബപ്പേര് / വീട്ടുപേര്</label>
+                            <input type="text" class="form-input" id="householdFamilyInput" placeholder="ഉദാ: ബൈത്തുൽ നൂറ്">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ഫോൺ നമ്പർ (Phone)*</label>
+                            <input type="tel" class="form-input" id="householdPhoneInput" placeholder="10 അക്ക നമ്പർ" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">വാർഡ് (Ward)</label>
+                            <input type="text" class="form-input" id="householdWardInput" placeholder="ഉദാ: Ward 1 (East)">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ആകെ അംഗങ്ങൾ</label>
+                            <input type="number" class="form-input" id="householdMembersInput" value="4">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">റേഷൻ കാറ്റഗറി</label>
+                            <select class="form-select" id="householdRationInput">
+                                <option value="APL">APL</option>
+                                <option value="BPL">BPL</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">മേൽവിലാസം (Address)</label>
+                        <input type="text" class="form-input" id="householdAddressInput" placeholder="വീട്, റോഡ്, സ്ഥലം">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">കുറിപ്പുകൾ</label>
+                        <input type="text" class="form-input" id="householdNotesInput" placeholder="ഓപ്ഷണൽ">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('householdModalOverlay')">റദ്ദാക്കുക</button>
+                    <button type="submit" class="btn btn-primary">സേവ് ചെയ്യുക</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Add Cash Transaction Modal -->
+    <div id="transactionModalOverlay" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📖 പുതിയ വരവ് / ചിലവ് ഇടപാട്</h3>
+                <button class="modal-close-btn" onclick="closeModal('transactionModalOverlay')">&times;</button>
+            </div>
+            <form id="transactionForm" onsubmit="saveTransaction(event)">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ഇടപാട് തരം (Type)*</label>
+                            <select class="form-select" id="txTypeInput" required>
+                                <option value="INCOME">വരവ് (Income)</option>
+                                <option value="EXPENSE">ചിലവ് (Expense)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">തുക (Amount ₹)*</label>
+                            <input type="number" class="form-input" id="txAmountInput" placeholder="0.00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">ഇടപാടിന്റെ തലക്കെട്ട് (Title)*</label>
+                        <input type="text" class="form-input" id="txTitleInput" placeholder="ഉദാ: ജുമുഅ ബോക്സ് കളക്ഷൻ" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">കാറ്റഗറി (Category)*</label>
+                            <input type="text" class="form-input" id="txCategoryInput" placeholder="ഉദാ: Friday Juma Collection / Salary / Maintenance" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">വൗച്ചർ നമ്പർ (Voucher No)</label>
+                            <input type="text" class="form-input" id="txVoucherInput" placeholder="V-INC-105">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">രീതി (Payment Mode)</label>
+                            <select class="form-select" id="txModeInput">
+                                <option value="CASH">CASH</option>
+                                <option value="UPI">UPI</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">തീയതി (Date)</label>
+                            <input type="date" class="form-input" id="txDateInput">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">വിവരണം (Description)</label>
+                        <textarea class="form-textarea" id="txDescInput" rows="2" placeholder="കൂടുതൽ വിവരങ്ങൾ"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('transactionModalOverlay')">റദ്ദാക്കുക</button>
+                    <button type="submit" class="btn btn-primary">രേഖപ്പെടുത്തുക</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Create Special Fund Modal -->
+    <div id="specialFundModalOverlay" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🤝 പുതിയ പ്രത്യേക ഫണ്ട് ആരംഭിക്കുക</h3>
+                <button class="modal-close-btn" onclick="closeModal('specialFundModalOverlay')">&times;</button>
+            </div>
+            <form id="specialFundForm" onsubmit="saveSpecialFund(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">ഫണ്ടിന്റെ പേര് (Title)*</label>
+                        <input type="text" class="form-input" id="fundTitleInput" placeholder="ഉദാ: റമദാൻ കിറ്റ് വിതരണം" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">വിവരണം (Description)</label>
+                        <textarea class="form-textarea" id="fundDescInput" rows="2" placeholder="പദ്ധതിയുടെ ലക്‌ഷ്യം"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">കുടുംബത്തിന് നിശ്ചയിച്ച തുക (₹)</label>
+                            <input type="number" class="form-input" id="fundTargetFamilyInput" value="500">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ആകെ ലക്ഷ്യമിട്ട തുക (₹)</label>
+                            <input type="number" class="form-input" id="fundTargetTotalInput" value="100000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">കാറ്റഗറി</label>
+                        <input type="text" class="form-input" id="fundCategoryInput" placeholder="Relief / Construction / Education">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('specialFundModalOverlay')">റദ്ദാക്കുക</button>
+                    <button type="submit" class="btn btn-primary">ഫണ്ട് തുടങ്ങുക</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Record Special Fund Payment Modal -->
+    <div id="specialPaymentModalOverlay" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>💵 പ്രത്യേക ഫണ്ട് തുക വാങ്ങുക</h3>
+                <button class="modal-close-btn" onclick="closeModal('specialPaymentModalOverlay')">&times;</button>
+            </div>
+            <form id="specialPaymentForm" onsubmit="saveSpecialFundPayment(event)">
+                <input type="hidden" id="specialPaymentFundId">
+                <div class="modal-body">
+                    <div style="font-size:0.85rem; color:var(--text-muted);">ഫണ്ട്: <strong id="specialPaymentFundTitle" style="color:var(--primary);">-</strong></div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">കുടുംബത്തെ തിരഞ്ഞെടുക്കുക*</label>
+                        <select class="form-select" id="specialPaymentHouseholdSelect" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">തുക (Amount ₹)*</label>
+                            <input type="number" class="form-input" id="specialPaymentAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">രീതി (Payment Mode)</label>
+                            <select class="form-select" id="specialPaymentMode">
+                                <option value="UPI">UPI (GPay / PhonePe)</option>
+                                <option value="CASH">CASH</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('specialPaymentModalOverlay')">റദ്ദാക്കുക</button>
+                    <button type="submit" class="btn btn-primary">രേഖപ്പെടുത്തുക</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Digital Receipt Modal -->
+    <div id="receiptModalOverlay" class="modal-overlay">
+        <div class="modal-card" style="max-width:520px;">
+            <div class="modal-header">
+                <h3>📜 ഡിജിറ്റൽ വരിസംഖ്യാ രസീത്</h3>
+                <button class="modal-close-btn" onclick="closeModal('receiptModalOverlay')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="receipt-wrapper">
+                    <div class="receipt-header">
+                        <div style="font-size:1.8rem; margin-bottom:4px;">🕌</div>
+                        <h2 id="receiptCommunity">Al-Noor Madrasa & Mahal Committee</h2>
+                        <span class="receipt-tag">ഔദ്യോഗിക ഡിജിറ്റൽ രസീത്</span>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px;">രസീത് നമ്പർ: <strong id="receiptNo">-</strong></div>
+                    </div>
+
+                    <div class="receipt-grid">
+                        <div class="receipt-item">
+                            <div class="label">തീയതി:</div>
+                            <div class="val" id="receiptDate">-</div>
+                        </div>
+                        <div class="receipt-item">
+                            <div class="label">പണമടച്ച രീതി:</div>
+                            <div class="val" id="receiptMode">-</div>
+                        </div>
+                        <div class="receipt-item" style="grid-column: span 2;">
+                            <div class="label">കുടുംബനാഥൻ:</div>
+                            <div class="val" id="receiptHousehold">-</div>
+                        </div>
+                        <div class="receipt-item" style="grid-column: span 2;">
+                            <div class="label">അടച്ച മാസങ്ങൾ:</div>
+                            <div class="val" id="receiptMonths" style="color:var(--primary); font-weight:800;">-</div>
+                        </div>
+                    </div>
+
+                    <div class="receipt-total-box">
+                        <span class="total-label">സ്വീകരിച്ച ആകെ തുക:</span>
+                        <span class="total-amount" id="receiptAmount">₹0</span>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">
+                        <span>സ്വീകരിച്ചത്: <strong id="receiptCollector">Treasurer</strong></span>
+                        <span>സീൽ & ഒപ്പ് ആവശ്യമില്ല</span>
+                    </div>
+
+                    <div class="receipt-footer-notes">
+                        മഹല്ല് ലെഡ്ജർ സിസ്റ്റം മുഖേന സുതാര്യമായി ക്ലൗഡിൽ രേഖപ്പെടുത്തിയത്.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('receiptModalOverlay')">അടയ്ക്കുക</button>
+                <button class="btn btn-secondary" onclick="printReceipt()">🖨️ പ്രിന്റ് ചെയ്യുക</button>
+                <button class="btn btn-whatsapp" onclick="shareReceiptWhatsApp()">💬 WhatsApp വഴി അയക്കുക</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Family Due Alert & UPI Payment Modal -->
+    <div id="familyDueAlertModalOverlay" class="modal-overlay">
+        <div class="modal-card" style="max-width:480px;">
+            <div class="modal-header" style="background:#fffbeb; border-color:#fde68a;">
+                <h3 style="color:#b45309;">⚠️ വരിസംഖ്യാ കുടിശ്ശിക അറിയിപ്പ്</h3>
+                <button class="modal-close-btn" onclick="closeModal('familyDueAlertModalOverlay')">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <div style="font-size:1.15rem; font-weight:800; color:var(--text);" id="dueAlertFamilyHead">-</div>
+                <div style="font-size:0.9rem; color:var(--danger); font-weight:700; margin-top:4px;" id="dueAlertMonthsCount">-</div>
+                
+                <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:14px; margin:16px 0;">
+                    <div style="font-size:0.85rem; color:#92400e;">അടയ്ക്കാനുള്ള തുക:</div>
+                    <div style="font-size:2rem; font-weight:900; color:#b45309;" id="dueAlertAmount">₹0</div>
+                </div>
+
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
+                    താഴെയുള്ള QR കോഡ് ഫോണിലെ <strong>Google Pay, PhonePe, Paytm</strong> വഴി സ്കാൻ ചെയ്ത് ഉടൻ തുക അടയ്ക്കാം:
+                </p>
+
+                <div style="display:inline-block; padding:10px; background:#fff; border:1px solid var(--border); border-radius:12px; margin-bottom:10px;">
+                    <img id="dueAlertQrCode" src="" alt="UPI QR Code" style="width:180px; height:180px; display:block;">
+                </div>
+
+                <div style="font-size:0.8rem; color:var(--text-muted);">
+                    UPI ID: <strong id="dueAlertUpiId" style="color:var(--primary);">alnoormahal@sbi</strong>
+                </div>
+
+                <div style="margin-top:16px;">
+                    <a id="dueAlertPayUpiBtn" href="#" class="btn btn-primary" style="width:100%; justify-content:center; text-decoration:none;">
+                        📲 UPI വഴി അടയ്ക്കുക (Pay via UPI)
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('familyDueAlertModalOverlay')">പിന്നീടാവാം</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Android APK Download Modal -->
+    <div id="apkModalOverlay" class="modal-overlay">
+        <div class="modal-card" style="max-width:480px;">
+            <div class="modal-header">
+                <h3>📱 Android APK ഡൗൺലോഡ് ചെയ്യുക</h3>
+                <button class="modal-close-btn" onclick="closeModal('apkModalOverlay')">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <div style="font-size:2.5rem; margin-bottom:8px;">📱</div>
+                <h3 style="font-size:1.25rem; font-weight:800; color:var(--primary-dark);">മഹല്ല് ലെഡ്ജർ മൊബൈൽ ആപ്പ്</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">
+                    ആൻഡ്രോയിഡ് ഫോണുകളിൽ ഓഫ്‌ലൈൻ & ലൈവ് നോട്ടിഫിക്കേഷനുകളോടെ പ്രവർത്തിക്കുന്ന ഒഫീഷ്യൽ ആപ്പ്.
+                </p>
+
+                <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:12px; padding:16px; margin:20px 0; text-align:left;">
+                    <div style="font-size:0.85rem; font-weight:700; color:#166534; margin-bottom:8px;">💡 ഫോണിൽ എങ്ങനെ ഇൻസ്റ്റാൾ ചെയ്യാം?</div>
+                    <ol style="font-size:0.8rem; color:#14532d; padding-left:18px; line-height:1.6;">
+                        <li>താഴെയുള്ള ഡൗൺലോഡ് ബട്ടൺ അമർത്തുക (28 MB).</li>
+                        <li>ഡൗൺലോഡ് പൂർത്തിയായാൽ ഫയൽ തുറക്കുക.</li>
+                        <li><em>"Install Unknown Apps"</em> ചോദിച്ചാൽ Allow നൽകുക.</li>
+                    </ol>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <a href="./MahalLedger.apk" download="MahalLedger.apk" class="btn btn-primary" style="justify-content:center; padding:14px; font-size:1rem; text-decoration:none;">
+                        <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:currentColor;"><path d="M5 20h14v-2H5v2zM12 2L6.5 7.5l1.42 1.41L11 5.83V16h2V5.83l3.08 3.09 1.42-1.41L12 2z" transform="rotate(180 12 12)"/></svg>
+                        Direct APK Download (28 MB)
+                    </a>
+
+                    <a href="https://raw.githubusercontent.com/kkhmstorage/MAHALLU-LEDGER/main/MahalLedger.apk" class="btn btn-outline" style="justify-content:center; text-decoration:none;">
+                        🌐 GitHub Mirror Link
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('apkModalOverlay')">അടയ്ക്കുക</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>
