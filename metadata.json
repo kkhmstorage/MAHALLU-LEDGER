@@ -1,0 +1,6 @@
+{
+  "name": "Mahal Ledger",
+  "description": "Subscription (Vari) collection and transparent accounts management for Madrasa & Mahal communities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
