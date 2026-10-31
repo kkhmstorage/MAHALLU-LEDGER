@@ -1035,9 +1035,10 @@ fun SubAdminLoginDialog(
 @Composable
 fun SuperAdminLoginDialog(
     onDismiss: () -> Unit,
-    onLogin: (pin: String) -> Unit
+    onLogin: (username: String, password: String) -> Unit
 ) {
-    var pin by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf(false) }
 
     AlertDialog(
@@ -1048,23 +1049,36 @@ fun SuperAdminLoginDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
-                    text = "Enter Master PIN to control all onboarded Mahals and provision Sub-Admin accounts:",
+                    text = "Enter Master Username & Password to control all onboarded Mahals:",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 OutlinedTextField(
-                    value = pin,
+                    value = username,
                     onValueChange = {
-                        pin = it
+                        username = it
                         error = false
                     },
-                    label = { Text("Master PIN") },
-                    placeholder = { Text("Enter Master PIN") },
-                    visualTransformation = PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                    label = { Text("Super-Admin Username") },
+                    placeholder = { Text("Enter username") },
+                    singleLine = true,
                     isError = error,
-                    supportingText = if (error) { { Text("Invalid Master PIN") } } else null,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = {
+                        password = it
+                        error = false
+                    },
+                    label = { Text("Password") },
+                    placeholder = { Text("Enter password") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    singleLine = true,
+                    isError = error,
+                    supportingText = if (error) { { Text("Invalid credentials") } } else null,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -1072,8 +1086,8 @@ fun SuperAdminLoginDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    if (pin == "9999" || pin == "admin123") {
-                        onLogin(pin)
+                    if (username.isNotBlank() && password.isNotBlank()) {
+                        onLogin(username, password)
                     } else {
                         error = true
                     }

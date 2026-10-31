@@ -1,0 +1,8 @@
+{
+  "versionCode": 2,
+  "versionName": "2.0.0",
+  "downloadUrl": "https://raw.githubusercontent.com/kkhmstorage/MAHALLU-LEDGER/main/MahalLedger.apk",
+  "githubPageUrl": "https://kkhmstorage.github.io/MAHALLU-LEDGER/",
+  "releaseNotes": "• സൂപ്പർ അഡ്മിൻ ലോഗിൻ (AMINZAD / A4aminzad)\n• സ്ഥാപനങ്ങളുടെ പൂർണ്ണ സബ്സ്ക്രിപ്ഷൻ നിയന്ത്രണം\n• സബ് അഡ്മിൻ വർക്ക്‌സ്പേസ് പൂർണ്ണ നിയന്ത്രണം\n• ഫാമിലി വരിസംഖ്യാ കുടിശ്ശിക പോപ്പ്-അപ്പും UPI പേയ്‌മെന്റും (GPay/PhonePe/Paytm)\n• ലൈവ് ഗിറ്റ്ഹബ് അപ്‌ഡേഷൻ & ഡൗൺലോഡ്",
+  "updatedAt": "2026-10-31"
+}

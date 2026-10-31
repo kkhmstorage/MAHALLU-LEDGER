@@ -78,6 +78,17 @@ import androidx.compose.material.icons.filled.Image
 import com.example.ui.auth.CommunityLogoEmblem
 import com.example.ui.settings.CommunityLogoDialog
 
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Diamond
+import androidx.compose.material.icons.filled.Login
+import androidx.compose.material.icons.filled.OpenInBrowser
+import androidx.compose.material.icons.filled.SystemUpdate
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.platform.LocalContext
+import com.example.ui.settings.BankAndUpiSettingsDialog
+import com.example.ui.settings.ManageInstitutionSubscriptionDialog
+import com.example.util.AppUpdateChecker
+
 @Composable
 fun SettingsScreen(
     viewModel: MadrasaViewModel,
@@ -87,6 +98,8 @@ fun SettingsScreen(
     val activeMahal by viewModel.activeMahal.collectAsState()
     val activeMember by viewModel.activeMemberHousehold.collectAsState()
     val allCommunities by viewModel.allCommunities.collectAsState()
+    val isCheckingUpdate by viewModel.isCheckingUpdate.collectAsState()
+    val context = LocalContext.current
 
     var showRoleSwitcherDialog by remember { mutableStateOf(false) }
     var showSubAdminLoginDialog by remember { mutableStateOf(false) }
@@ -94,6 +107,8 @@ fun SettingsScreen(
     var showMemberOtpDialog by remember { mutableStateOf(false) }
     var showCreateMahalDialog by remember { mutableStateOf(false) }
     var showCommunityLogoDialog by remember { mutableStateOf(false) }
+    var showBankUpiDialog by remember { mutableStateOf(false) }
+    var selectedCommunityForSubscription by remember { mutableStateOf<MahalCommunity?>(null) }
 
     LazyColumn(
         modifier = modifier
@@ -304,26 +319,46 @@ fun SettingsScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "Sub-Admin Account:",
+                                    text = "Sub-Admin: ${community.subAdminUsername}",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "User: ${community.subAdminUsername}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontWeight = FontWeight.SemiBold
+                                    text = "Plan: ${community.subscriptionPlan} • Status: ${community.subscriptionStatus}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (community.subscriptionStatus == "ACTIVE") CashInflowGreen else CashOutflowRed
                                 )
                             }
+                        }
 
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
                             Button(
                                 onClick = {
-                                    viewModel.switchActiveMahal(community)
-                                    viewModel.setRole(UserRole.SUB_ADMIN)
+                                    viewModel.superAdminEnterMahalWorkspace(community)
                                 },
+                                modifier = Modifier.weight(1.3f),
                                 shape = RoundedCornerShape(8.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                             ) {
-                                Text("Open Workspace", fontSize = 12.sp)
+                                Icon(imageVector = Icons.Default.Login, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Manage as Sub-Admin", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                            }
+
+                            OutlinedButton(
+                                onClick = { selectedCommunityForSubscription = community },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Icon(imageVector = Icons.Default.Diamond, contentDescription = null, modifier = Modifier.size(14.dp))
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text("Subscription", fontSize = 11.sp)
                             }
                         }
                     }
@@ -377,6 +412,54 @@ fun SettingsScreen(
                             Icon(imageVector = Icons.Default.Image, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
                             Text("കമ്മ്യൂണിറ്റി ലോഗോ അപ്‌ലോഡ് ചെയ്യുക (Upload Logo)")
+                        }
+                    }
+                }
+            }
+
+            // Bank & UPI Settings Card for Sub-Admin
+            item {
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "ബാങ്ക് അക്കൗണ്ട് & UPI പേയ്‌മെന്റ്",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = "കുടുംബങ്ങൾക്ക് ഓൺലൈനായി വരിസംഖ്യ അടയ്ക്കാനുള്ള വിവരങ്ങൾ",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            Icon(imageVector = Icons.Default.AccountBalance, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                        DetailRow(label = "UPI ID", value = activeMahal?.upiId?.ifBlank { "Not configured" } ?: "")
+                        DetailRow(label = "Bank Name", value = activeMahal?.bankName?.ifBlank { "Not configured" } ?: "")
+                        DetailRow(label = "Account Number", value = activeMahal?.accountNumber?.ifBlank { "Not configured" } ?: "")
+                        DetailRow(label = "IFSC Code", value = activeMahal?.ifscCode?.ifBlank { "Not configured" } ?: "")
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Button(
+                            onClick = { showBankUpiDialog = true },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.AccountBalance, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text("ബാങ്ക് & QR സ്കാനർ ക്രമീകരിക്കുക (Edit Bank & UPI)")
                         }
                     }
                 }
@@ -517,13 +600,115 @@ fun SettingsScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "1. Single Mobile App on Play Store: Upload this one app to Google Play Store. Any community member across any Mahal can download it.\n\n" +
-                               "2. Super-Admin Controlled Provisioning: When a new Mahal contacts you, open Super-Admin mode (Master PIN: 9999), tap 'Add Mahal', and generate their Sub-Admin credentials.\n\n" +
+                               "2. Super-Admin Controlled Provisioning: When a new Mahal contacts you, open Super-Admin mode, tap 'Add Mahal', and generate their Sub-Admin credentials.\n\n" +
                                "3. Sub-Admin Data Entry: The Sub-Admin logs in with their credentials and registers their Mahal's households with house numbers and phone numbers.\n\n" +
                                "4. Member Self-Service with Phone OTP: Any family member enters their mobile number, verifies with OTP, and immediately sees their verified payments and dues without needing to remember complicated passwords.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         lineHeight = 20.sp
                     )
+                }
+            }
+        }
+
+        // Section E: GitHub Live Updates & Realtime Sync
+        item {
+            ElevatedCard(
+                colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth().testTag("github_update_card")
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.SystemUpdate,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Column {
+                                Text(
+                                    text = "GitHub Live App Updates",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = "Installed Version: v${AppUpdateChecker.CURRENT_VERSION_NAME}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+
+                        Surface(
+                            shape = RoundedCornerShape(12.dp),
+                            color = CashInflowContainer
+                        ) {
+                            Text(
+                                text = "v2.0.0",
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = CashInflowGreen
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = "ഗിറ്റ്ഹബ്ബിൽ നാം അപ്‌ഡേഷനുകൾ നടത്തുമ്പോൾ (version.json & APK), ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകളിൽ തത്സമയം നോട്ടിഫിക്കേഷൻ ലഭിക്കുകയും പുതിയ ഫീച്ചറുകൾ ലഭ്യമാവുകയും ചെയ്യുന്നു.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        lineHeight = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = { viewModel.checkForAppUpdates(showToastIfLatest = true) },
+                            enabled = !isCheckingUpdate,
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier.weight(1f).testTag("check_updates_btn")
+                        ) {
+                            if (isCheckingUpdate) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(16.dp),
+                                    strokeWidth = 2.dp,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("പരിശോധിക്കുന്നു...", fontSize = 12.sp)
+                            } else {
+                                Icon(Icons.Default.SystemUpdate, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Check Updates", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+
+                        OutlinedButton(
+                            onClick = {
+                                AppUpdateChecker.launchDownloadIntent(
+                                    context,
+                                    "https://kkhmstorage.github.io/MAHALLU-LEDGER/"
+                                )
+                            },
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(Icons.Default.OpenInBrowser, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text("GitHub Page", fontSize = 12.sp)
+                        }
+                    }
                 }
             }
         }
@@ -554,8 +739,8 @@ fun SettingsScreen(
     if (showSuperAdminLoginDialog) {
         SuperAdminLoginDialog(
             onDismiss = { showSuperAdminLoginDialog = false },
-            onLogin = { pin ->
-                viewModel.loginSuperAdmin(pin) { success ->
+            onLogin = { username, password ->
+                viewModel.loginSuperAdmin(username, password) { success ->
                     if (success) showSuperAdminLoginDialog = false
                 }
             }
@@ -593,6 +778,29 @@ fun SettingsScreen(
             onDismiss = { showCommunityLogoDialog = false },
             onSave = { uri, preset ->
                 viewModel.updateCommunityLogo(uri, preset)
+            }
+        )
+    }
+
+    if (showBankUpiDialog && activeMahal != null) {
+        BankAndUpiSettingsDialog(
+            activeMahal = activeMahal!!,
+            onDismiss = { showBankUpiDialog = false },
+            onSave = { upi, payee, bank, acc, ifsc, qr ->
+                viewModel.updateCommunityBankAndUpi(upi, payee, bank, acc, ifsc, qr)
+            }
+        )
+    }
+
+    selectedCommunityForSubscription?.let { targetCommunity ->
+        ManageInstitutionSubscriptionDialog(
+            community = targetCommunity,
+            onDismiss = { selectedCommunityForSubscription = null },
+            onEnterSubAdminWorkspace = {
+                viewModel.superAdminEnterMahalWorkspace(targetCommunity)
+            },
+            onUpdateSubscription = { plan, status, expiry ->
+                viewModel.updateInstitutionSubscription(targetCommunity, plan, status, expiry)
             }
         )
     }

@@ -75,11 +75,19 @@ import com.example.ui.theme.CashInflowContainer
 import com.example.ui.theme.CashInflowGreen
 import com.example.ui.theme.MahalLedgerTheme
 import com.example.ui.transparency.TransparencyScreen
-import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.TextButton
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.ui.platform.LocalContext
 import com.example.ui.auth.AnimatedSplashScreen
 import com.example.ui.auth.CommunityLogoEmblem
 import com.example.ui.auth.LoginScreen
+import com.example.ui.components.AppUpdateDialog
+import com.example.ui.subscriptions.FamilyDueAlertPopUp
+import com.example.util.AppUpdateChecker
 import kotlinx.coroutines.flow.collectLatest
 
 enum class MainTab(
@@ -124,6 +132,10 @@ fun MahalLedgerApp(
     val activeReceipt by viewModel.activeReceipt.collectAsState()
     val isSplashCompleted by viewModel.isSplashCompleted.collectAsState()
     val isAuthenticated by viewModel.isAuthenticated.collectAsState()
+    val isSuperAdminManaging by viewModel.isSuperAdminManaging.collectAsState()
+    val dueAlertDismissed by viewModel.dueAlertDismissed.collectAsState()
+    val householdSummaries by viewModel.householdSummaries.collectAsState()
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
@@ -314,30 +326,79 @@ fun MahalLedgerApp(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            when (selectedTab) {
-                MainTab.DASHBOARD -> DashboardScreen(
-                    viewModel = viewModel,
-                    onNavigateToSubscriptions = { selectedTab = MainTab.SUBSCRIPTIONS },
-                    onNavigateToLedger = { selectedTab = MainTab.LEDGER },
-                    onNavigateToTransparency = { selectedTab = MainTab.TRANSPARENCY }
-                )
-                MainTab.SUBSCRIPTIONS -> SubscriptionsScreen(
-                    viewModel = viewModel
-                )
-                MainTab.LEDGER -> LedgerScreen(
-                    viewModel = viewModel
-                )
-                MainTab.TRANSPARENCY -> TransparencyScreen(
-                    viewModel = viewModel
-                )
-                MainTab.SETTINGS -> SettingsScreen(
-                    viewModel = viewModel
-                )
+            // Super-Admin Workspace Active Banner
+            if (isSuperAdminManaging) {
+                Surface(
+                    color = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    tonalElevation = 3.dp
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("👑", fontSize = 16.sp)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Super-Admin Mode: ${activeMahal?.name ?: ""}",
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1
+                            )
+                        }
+                        TextButton(
+                            onClick = { viewModel.returnToSuperAdminPanel() },
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error
+                            )
+                        ) {
+                            Text(
+                                text = "Exit / തിരികെ",
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    }
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            ) {
+                when (selectedTab) {
+                    MainTab.DASHBOARD -> DashboardScreen(
+                        viewModel = viewModel,
+                        onNavigateToSubscriptions = { selectedTab = MainTab.SUBSCRIPTIONS },
+                        onNavigateToLedger = { selectedTab = MainTab.LEDGER },
+                        onNavigateToTransparency = { selectedTab = MainTab.TRANSPARENCY }
+                    )
+                    MainTab.SUBSCRIPTIONS -> SubscriptionsScreen(
+                        viewModel = viewModel
+                    )
+                    MainTab.LEDGER -> LedgerScreen(
+                        viewModel = viewModel
+                    )
+                    MainTab.TRANSPARENCY -> TransparencyScreen(
+                        viewModel = viewModel
+                    )
+                    MainTab.SETTINGS -> SettingsScreen(
+                        viewModel = viewModel
+                    )
+                }
             }
         }
     }
@@ -367,8 +428,8 @@ fun MahalLedgerApp(
     if (showSuperAdminLoginDialog) {
         SuperAdminLoginDialog(
             onDismiss = { showSuperAdminLoginDialog = false },
-            onLogin = { pin ->
-                viewModel.loginSuperAdmin(pin) { success ->
+            onLogin = { username, password ->
+                viewModel.loginSuperAdmin(username, password) { success ->
                     if (success) showSuperAdminLoginDialog = false
                 }
             }
@@ -394,6 +455,46 @@ fun MahalLedgerApp(
         DigitalReceiptDialog(
             receipt = receipt,
             onDismiss = { viewModel.dismissReceipt() }
+        )
+    }
+
+    // Family Due Alert Pop-Up with Instant UPI Payment
+    if (role == UserRole.MEMBER && activeMember != null && !dueAlertDismissed) {
+        val memberSummary = householdSummaries.firstOrNull { it.household.id == activeMember?.id }
+        if (memberSummary != null && memberSummary.totalPendingDue > 0) {
+            FamilyDueAlertPopUp(
+                household = activeMember!!,
+                activeMahal = activeMahal,
+                dueAmount = memberSummary.totalPendingDue,
+                pendingMonthsCount = memberSummary.pendingMonthsCount,
+                onDismiss = { viewModel.dismissDueAlert() },
+                onPayUpi = {
+                    val upi = activeMahal?.upiId ?: "mahal@upi"
+                    val payee = activeMahal?.payeeName ?: (activeMahal?.name ?: "Mahal Committee")
+                    viewModel.launchUpiPayment(
+                        context = context,
+                        upiId = upi,
+                        payeeName = payee,
+                        amount = memberSummary.totalPendingDue,
+                        transactionNote = "Mahal Vari: ${activeMember?.headOfFamily} (${activeMember?.houseNumber})"
+                    )
+                }
+            )
+        }
+    }
+
+    // In-App Update Dialog (GitHub Live Update)
+    val availableUpdate by viewModel.availableUpdate.collectAsState()
+    availableUpdate?.let { updateInfo ->
+        AppUpdateDialog(
+            updateInfo = updateInfo,
+            onDismiss = { viewModel.dismissUpdateDialog() },
+            onDownloadNow = { downloadUrl ->
+                AppUpdateChecker.launchDownloadIntent(context, downloadUrl)
+            },
+            onOpenWebPage = { webUrl ->
+                AppUpdateChecker.launchDownloadIntent(context, webUrl)
+            }
         )
     }
 }

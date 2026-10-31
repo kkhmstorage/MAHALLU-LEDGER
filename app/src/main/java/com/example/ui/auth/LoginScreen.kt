@@ -89,8 +89,9 @@ fun LoginScreen(
     var memberError by remember { mutableStateOf("") }
 
     // Super-Admin State
-    var superAdminPin by remember { mutableStateOf("") }
-    var showSuperAdminPin by remember { mutableStateOf(false) }
+    var superAdminUser by remember { mutableStateOf("") }
+    var superAdminPass by remember { mutableStateOf("") }
+    var showSuperAdminPass by remember { mutableStateOf(false) }
     var superAdminError by remember { mutableStateOf("") }
 
     Box(
@@ -455,7 +456,7 @@ fun LoginScreen(
                                 color = MaterialTheme.colorScheme.tertiary
                             )
                             Text(
-                                text = "എല്ലാ മഹല്ലുകളെയും നിയന്ത്രിക്കാനുള്ള മാസ്റ്റർ പാസ്‌വേഡ് / PIN നൽകുക:",
+                                text = "എല്ലാ മഹല്ലുകളെയും നിയന്ത്രിക്കാനുള്ള സൂപ്പർ അഡ്മിൻ വിവരങ്ങൾ നൽകുക:",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -463,27 +464,43 @@ fun LoginScreen(
                             Spacer(modifier = Modifier.height(14.dp))
 
                             OutlinedTextField(
-                                value = superAdminPin,
+                                value = superAdminUser,
                                 onValueChange = {
-                                    superAdminPin = it
+                                    superAdminUser = it
                                     superAdminError = ""
                                 },
-                                label = { Text("Master PIN / Password") },
-                                placeholder = { Text("മാസ്റ്റർ കോഡ് നൽകുക") },
+                                label = { Text("Super-Admin Username") },
+                                placeholder = { Text("യൂസർനെയിം നൽകുക") },
                                 singleLine = true,
-                                visualTransformation = if (showSuperAdminPin) VisualTransformation.None else PasswordVisualTransformation(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .testTag("superadmin_username_input")
+                            )
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            OutlinedTextField(
+                                value = superAdminPass,
+                                onValueChange = {
+                                    superAdminPass = it
+                                    superAdminError = ""
+                                },
+                                label = { Text("Password") },
+                                placeholder = { Text("പാസ്‌വേഡ് നൽകുക") },
+                                singleLine = true,
+                                visualTransformation = if (showSuperAdminPass) VisualTransformation.None else PasswordVisualTransformation(),
                                 trailingIcon = {
-                                    IconButton(onClick = { showSuperAdminPin = !showSuperAdminPin }) {
+                                    IconButton(onClick = { showSuperAdminPass = !showSuperAdminPass }) {
                                         Icon(
-                                            imageVector = if (showSuperAdminPin) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                            contentDescription = if (showSuperAdminPin) "Hide" else "Show"
+                                            imageVector = if (showSuperAdminPass) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                            contentDescription = if (showSuperAdminPass) "Hide" else "Show"
                                         )
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .testTag("superadmin_pin_input")
+                                    .testTag("superadmin_password_input")
                             )
 
                             if (superAdminError.isNotEmpty()) {
@@ -499,13 +516,13 @@ fun LoginScreen(
 
                             Button(
                                 onClick = {
-                                    if (superAdminPin.isBlank()) {
-                                        superAdminError = "മാസ്റ്റർ PIN നൽകുക."
+                                    if (superAdminUser.isBlank() || superAdminPass.isBlank()) {
+                                        superAdminError = "യൂസർനെയിമും പാസ്‌വേഡും നൽകുക."
                                         return@Button
                                     }
-                                    viewModel.loginSuperAdmin(superAdminPin) { success ->
+                                    viewModel.loginSuperAdmin(superAdminUser, superAdminPass) { success ->
                                         if (!success) {
-                                            superAdminError = "തെറ്റായ മാസ്റ്റർ PIN. പ്രവേശനം നിഷേധിക്കപ്പെട്ടു."
+                                            superAdminError = "തെറ്റായ യൂസർനെയിം അല്ലെങ്കിൽ പാസ്‌വേഡ്."
                                         }
                                     }
                                 },

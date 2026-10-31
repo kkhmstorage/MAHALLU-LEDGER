@@ -17,6 +17,8 @@ import com.example.data.model.MahalCommunity
 import com.example.data.model.SubscriptionPayment
 import com.example.data.model.TransactionType
 import com.example.data.repository.MadrasaRepository
+import com.example.util.AppUpdateChecker
+import com.example.util.AppUpdateInfo
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -71,13 +73,57 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
     private val _isSplashCompleted = MutableStateFlow(false)
     val isSplashCompleted: StateFlow<Boolean> = _isSplashCompleted.asStateFlow()
 
+    // Super-Admin Workspace Impersonation state
+    private val _isSuperAdminManaging = MutableStateFlow(false)
+    val isSuperAdminManaging: StateFlow<Boolean> = _isSuperAdminManaging.asStateFlow()
+
+    // Family Due Alert dismissal state (per session)
+    private val _dueAlertDismissed = MutableStateFlow(false)
+    val dueAlertDismissed: StateFlow<Boolean> = _dueAlertDismissed.asStateFlow()
+
+    fun dismissDueAlert() {
+        _dueAlertDismissed.value = true
+    }
+
+    // In-App GitHub Update checking
+    private val _availableUpdate = MutableStateFlow<AppUpdateInfo?>(null)
+    val availableUpdate: StateFlow<AppUpdateInfo?> = _availableUpdate.asStateFlow()
+
+    private val _isCheckingUpdate = MutableStateFlow(false)
+    val isCheckingUpdate: StateFlow<Boolean> = _isCheckingUpdate.asStateFlow()
+
+    fun checkForAppUpdates(showToastIfLatest: Boolean = false) {
+        viewModelScope.launch {
+            _isCheckingUpdate.value = true
+            val result = AppUpdateChecker.checkForUpdate()
+            _isCheckingUpdate.value = false
+            result.onSuccess { info ->
+                if (info.isUpdateAvailable) {
+                    _availableUpdate.value = info
+                } else if (showToastIfLatest) {
+                    _snackbarEvent.emit("ആപ്പ് ഏറ്റവും പുതിയ പതിപ്പിലാണ് (v${AppUpdateChecker.CURRENT_VERSION_NAME})")
+                }
+            }.onFailure {
+                if (showToastIfLatest) {
+                    _snackbarEvent.emit("അപ്‌ഡേറ്റ് പരിശോധിക്കാൻ കഴിഞ്ഞില്ല. ഇന്റർനെറ്റ് കണക്ഷൻ പരിശോധിക്കുക.")
+                }
+            }
+        }
+    }
+
+    fun dismissUpdateDialog() {
+        _availableUpdate.value = null
+    }
+
     fun completeSplash() {
         _isSplashCompleted.value = true
     }
 
     fun logout() {
         _isAuthenticated.value = false
+        _isSuperAdminManaging.value = false
         _activeMemberHousehold.value = null
+        _dueAlertDismissed.value = false
         viewModelScope.launch {
             _snackbarEvent.emit("Logged out successfully")
         }
@@ -235,6 +281,8 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             val initial = repository.getCommunityByCode("ALNOOR")
             _activeMahal.value = initial
+            // Check for GitHub updates silently in background
+            checkForAppUpdates(showToastIfLatest = false)
         }
     }
 
@@ -272,18 +320,43 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    // Super-Admin Authentication (Master Password)
-    fun loginSuperAdmin(masterPin: String, onResult: (Boolean) -> Unit) {
-        if (masterPin == "9999" || masterPin == "admin123") {
+    // Super-Admin Authentication (Username: AMINZAD, Password: A4aminzad)
+    fun loginSuperAdmin(username: String, password: String, onResult: (Boolean) -> Unit) {
+        val cleanUser = username.trim()
+        val cleanPass = password.trim()
+        if ((cleanUser.equals("AMINZAD", ignoreCase = true) && cleanPass == "A4aminzad") ||
+            (cleanUser == "admin" && cleanPass == "9999") ||
+            (cleanPass == "9999" && cleanUser.isBlank())) {
             _currentRole.value = UserRole.SUPER_ADMIN
             _activeMemberHousehold.value = null
+            _isSuperAdminManaging.value = false
             _isAuthenticated.value = true
             viewModelScope.launch {
-                _snackbarEvent.emit("Logged into Super-Admin Control Panel")
+                _snackbarEvent.emit("Welcome Super-Admin AMINZAD! Master Control Active")
             }
             onResult(true)
         } else {
             onResult(false)
+        }
+    }
+
+    // Super Admin: Enter any subscribed institution to manage as Sub-Admin
+    fun superAdminEnterMahalWorkspace(community: MahalCommunity) {
+        _activeMahal.value = community
+        repository.setActiveMahal(community.mahalCode)
+        _currentRole.value = UserRole.SUB_ADMIN
+        _isSuperAdminManaging.value = true
+        viewModelScope.launch {
+            _snackbarEvent.emit("Entered workspace for ${community.name} as Super-Admin")
+        }
+    }
+
+    // Return back to Super-Admin master dashboard
+    fun returnToSuperAdminPanel() {
+        _currentRole.value = UserRole.SUPER_ADMIN
+        _isSuperAdminManaging.value = false
+        viewModelScope.launch {
+            _snackbarEvent.emit("Returned to Super-Admin Control Panel")
         }
     }
 
@@ -328,6 +401,81 @@ class MadrasaViewModel(application: Application) : AndroidViewModel(application)
             repository.updateMahalCommunity(updated)
             _activeMahal.value = updated
             _snackbarEvent.emit("Community logo updated successfully")
+        }
+    }
+
+    // Sub-Admin: Bank & UPI Settings Update
+    fun updateCommunityBankAndUpi(
+        upiId: String,
+        payeeName: String,
+        bankName: String,
+        accountNumber: String,
+        ifscCode: String,
+        qrCodeUri: String
+    ) {
+        viewModelScope.launch {
+            val current = activeMahal.value ?: return@launch
+            val updated = current.copy(
+                upiId = upiId.trim(),
+                payeeName = payeeName.trim(),
+                bankName = bankName.trim(),
+                accountNumber = accountNumber.trim(),
+                ifscCode = ifscCode.trim(),
+                qrCodeUri = qrCodeUri
+            )
+            repository.updateMahalCommunity(updated)
+            _activeMahal.value = updated
+            _snackbarEvent.emit("Bank & UPI settings updated for ${updated.name}")
+        }
+    }
+
+    // Super-Admin: Manage Institution Subscription
+    fun updateInstitutionSubscription(
+        community: MahalCommunity,
+        plan: String,
+        status: String,
+        expiryDate: Long
+    ) {
+        viewModelScope.launch {
+            val updated = community.copy(
+                subscriptionPlan = plan,
+                subscriptionStatus = status,
+                subscriptionExpiryDate = expiryDate,
+                isActive = status.equals("ACTIVE", ignoreCase = true)
+            )
+            repository.updateMahalCommunity(updated)
+            _snackbarEvent.emit("Subscription updated for ${community.name}: $status ($plan)")
+        }
+    }
+
+    // Launch UPI Payment App (GPay / PhonePe / Paytm / BHIM)
+    fun launchUpiPayment(
+        context: Context,
+        upiId: String,
+        payeeName: String,
+        amount: Double,
+        transactionNote: String
+    ) {
+        try {
+            val cleanAmount = "%.2f".format(java.util.Locale.US, amount)
+            val uri = Uri.Builder()
+                .scheme("upi")
+                .authority("pay")
+                .appendQueryParameter("pa", upiId)
+                .appendQueryParameter("pn", payeeName.ifBlank { "Mahal Committee" })
+                .appendQueryParameter("am", cleanAmount)
+                .appendQueryParameter("cu", "INR")
+                .appendQueryParameter("tn", transactionNote)
+                .build()
+
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(Intent.createChooser(intent, "Pay via UPI App (GPay / PhonePe / Paytm)"))
+        } catch (e: Exception) {
+            viewModelScope.launch {
+                _snackbarEvent.emit("No UPI app found. Please send payment to UPI ID: $upiId")
+            }
         }
     }
 
